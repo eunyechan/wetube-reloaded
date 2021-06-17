@@ -1,0 +1,25 @@
+/node_modules
+
+# request는 누군가에게 무엇을 달라고 "요청" 하는 것 ex) 홈페이지 줘, 로그인 줘, 프로파일 줘
+# 웹사이드에 접속할 때 브라우저가 나를 데려가는게 아님 브라우저가 나를 대신해서 웹사이트를 request하고 페이지를 가져다 주는 거임
+# 사용자가 원하는 걸 요청할 때, 사용자가 직접 get request하는 게 아님. 브라우저가 get request를 보내는 거임 
+# 유저가 뭔가를 요청하거나, 보내거나, 나에게 무슨 행동을 한다, 그게 request임.
+# get request에는 route가 있다 어디로 가는지, 가려하는지 (/) ex) /home /login
+# 브라우저가 뭔가를 request하면, 서버는 거기에 응답해준다.
+
+# (middleware handler) 모든 middleware는 handler고, 모든 handler는 middleware다. handler => controller
+# next argument는 다음 함수를 호출해준다. 모든 controller가 middleware가 될 수 있다
+# handler에는 다수의 handler를 사용할 수 있다.
+# middleware는 request에 응답하지 않는다. request를 지속시켜 주는거임 (return 사용시  next()사용 불가)
+
+
+# middleware를 use하는 게 먼저오고, 그 다음에 URL의 get이 와야 함. 순서가 중요
+# express는 모든 걸 위에서 아래 순으로 실행시킴 .javaScript처럼
+# middleware를 위에다 두면, 모든  route에 적용되는 거임
+# middleware가 next()를 호출하지 않으면 handleProtected나 handleHome같은 다음 함수들은 절대 실행되지 않음.
+# middleware는 작업을 다음 함수에게 넘기는 함수임. 응답하는 함수가 아님
+# 함수가 next()를 호출하면 그건 middleware 이다. 어떤 함수는 send를 사용하는데, 그러면 그건 middleware가 아님 (연결이 중단 되기 때문에)
+# middleware는 왼쪽에서 -----> 오른쪽 순서로 작동함 next()를 실행하면 다음게 실행 됨 ex) app.get("/", logger, handleHome);
+
+# "dependencies" 는 프로젝트에 필요한 것 ex)자동차 연료
+# "devDependencies"는 개발자가 개발하는데 필요한 것 ex)자동차 네비게이션
