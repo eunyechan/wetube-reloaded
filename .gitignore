@@ -23,3 +23,13 @@
 
 # "dependencies" 는 프로젝트에 필요한 것 ex)자동차 연료
 # "devDependencies"는 개발자가 개발하는데 필요한 것 ex)자동차 네비게이션
+
+# 서버는 컴퓨터 전체를 listen할 수 없다 그래서 port가 있어야 함 port는 예를들어 컴퓨터의 창문이나 문 같은 거임
+# port 4000번을 쓰는 이유는 대부분 비어있기 때문에
+# request 를 전달하려면 url을 사용해야 한다.
+# 어떤 웹사이트를 가려면 내가 가는게 아니라 웹사이트가 오게 하는 것. 내가 요청을 하면 서버가 나의 브라우저를 보내주는 것.
+# *브라우저는 서버에게 페이지를 request하는 거임. arrow function은 return이 내포되어 있음.
+
+# routes를 만들고 controllers를 만든다
+# 중요한건 위치임(requset, response) 이름은 상관없음 첫 번째 arguments는 X, 두 번째는 Y여도 상관 x
+# controller가 있어야 할 자리에 함수를 넣어주지 않으면 에러가 생김!!***
