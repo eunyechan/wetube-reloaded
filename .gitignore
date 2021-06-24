@@ -55,3 +55,29 @@
 # 리퀘스느 오브젝트는 리퀘스트에 대한 정보를 담고 있음
 # :가 꼭 필요함 없으면 그냥 텍스트임 express는 순서대로 체크하고, upload가 있으면 거기로 데려가 줌
 # 정규식: 문자열로부터 특정 정보를 추출해내는 방법
+
+####### 5 ######
+# 5.0) node.js 안에 HTML을 다 쓰기에는 너무 길다 말이 안됨 시간아끼기 위해서 pug를 써야함
+
+# 5.1) 1.pug를 설지한다 
+#      2.view engine을 pug로 설정해야 한다 app.set("view engine", "pug");
+#      3.실제로 pug 파일을 생성한다
+# pug를 보내는 과정 pug가 home.pug 파일을 렌더링해서 평범한 html로 변환해줌
+# home.pug 파일을 그대로 유저에게 보내는게 아님
+# home.pug를 우선 pug에게 보내고 pug가 랜더링해서 평범한 html로 변환해줌
+# 그래서 유저는 home.pug를 보는일이 없고 우리가 pug로 파일을 보내면, pug가 이 평범한 html로 변환해줌
+# 기본적으로 express는 cwd + /views에서 pug 파일을 찾는다
+# cwd 루트 파일은 서버를 기동하는 파일의 위치에 따라 결정된다
+# doucuments/wetube 폴더에서 package.json이 node.js를 실행하고 있음 우리가 wetube 안에 있는 package.json에서 node.js를 실행하고 있기 때문에 이 디렉토리가 현재 작업 디렉토리가 되는거임
+# 현재 작업 디렉토리는 node.js를 실행하는 디렉토리임
+
+# 5.2) default 값을 process.cwd() + "/src/views" (현재 작업 디렉토리 + "/views/src"로 바꿔야함
+# pug의 최고 장점은 반복할 필요가 없다
+# 첫째로 파일명은 띄어쓰기가 있으면 안됨 둘째 대문자가 있어도 안됨
+# 자바스크립트 코드는 유저가 보기전에 평범한 텍스트로 변환 됨 이것이 바로 렌더링
+# partials 최고의 강점 include 파일 경로 해주면 반복작업 필요없음
+
+# 5.3) 블록이란 템플릿의 창문같은 것 무언가를 집어 넣을 수 있는 곳
+# extends(확장), inheritance(상속)은 대단함
+
+
