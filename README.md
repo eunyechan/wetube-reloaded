@@ -5,8 +5,10 @@
 /login -> Logion
 /search -> Search
 
-/users/edit -> Edit user
-/users/delete -> Delete user
+/users/:id -> See user
+/users/logout -> Log Out
+/users/edit -> Edit MY Profile
+/users/delete -> Delete MY Profile
 
 /videos/:id -> See Video
 /videos/:id/edit -> Edit Video

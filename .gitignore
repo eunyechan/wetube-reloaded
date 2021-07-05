@@ -80,4 +80,20 @@
 # 5.3) 블록이란 템플릿의 창문같은 것 무언가를 집어 넣을 수 있는 곳
 # extends(확장), inheritance(상속)은 대단함
 
+# 5.4) extend는 html의 베이스를 가질 수 있게 해주기 때문에 좋다
+# 블록은 확장한 템플릿 안에 내용을 넣을 수 있는 창문 또는 문 같은것
+# 블록 이름은 항상 같아야 함
+# 우리는 home.pug를 렌더링하는데 base.pug를 확장하고 base.pug는 우리가 직접 채우는 content 블록을 가지고 있고 그리고 base.pug는 pageTitle을 가지고 있다 그게 우리가 제공해야하는 변수임
+# 변수를 제공하는 방법은 render에 파일명을 쓰고 변수를 쓰는거다 컨트롤러에서 변수를 제공
 
+# 5.5) pug는 지저분한 html을 쓰지 않고, 파이썬처럼 깔끔한 코드를 쓸 수 있다.
+# pug는 띄어쓰기 탭으로 구분이 가능하다
+# block은 확장한 파일과 커뮤니케이션 할 수 있게 해준다
+
+#5.6) MVP.css 는 html태그들을 살짝 꾸며주는 역할 (https://andybrewer.github.io/mvp/) 사이트 임시방편으로 사용 css는 나중에 하기 때문에
+
+#5.7) h1 pageTitle을 쓰면 그냥 text인데 h1=pageTitle을 쓰면 variable로 넘어가게 된다 variable이랑 뒤에 text랑 같이쓰려면 ex) ${pageTitle} aa
+# condition if, if else 비슷한 문장임
+
+#5.8) Iteration은 기본적으로 elements의 list를 보여주는 거임
+# list를 보여주려면 첫째로, template에는 array인 variable이 있어야 함 array가 없으면 동작하지 않음
