@@ -90,10 +90,18 @@
 # pug는 띄어쓰기 탭으로 구분이 가능하다
 # block은 확장한 파일과 커뮤니케이션 할 수 있게 해준다
 
-#5.6) MVP.css 는 html태그들을 살짝 꾸며주는 역할 (https://andybrewer.github.io/mvp/) 사이트 임시방편으로 사용 css는 나중에 하기 때문에
+# 5.6) MVP.css 는 html태그들을 살짝 꾸며주는 역할 (https://andybrewer.github.io/mvp/) 사이트 임시방편으로 사용 css는 나중에 하기 때문에
 
-#5.7) h1 pageTitle을 쓰면 그냥 text인데 h1=pageTitle을 쓰면 variable로 넘어가게 된다 variable이랑 뒤에 text랑 같이쓰려면 ex) ${pageTitle} aa
+# 5.7) h1 pageTitle을 쓰면 그냥 text인데 h1=pageTitle을 쓰면 variable로 넘어가게 된다 variable이랑 뒤에 text랑 같이쓰려면 ex) ${pageTitle} aa
 # condition if, if else 비슷한 문장임
 
-#5.8) Iteration은 기본적으로 elements의 list를 보여주는 거임
+# 5.8) Iteration은 기본적으로 elements의 list를 보여주는 거임
 # list를 보여주려면 첫째로, template에는 array인 variable이 있어야 함 array가 없으면 동작하지 않음
+# controller에서의 이름이랑 다른 pugpage랑 변수명이 같아야 한다
+# Pug는 자동적으로 videos 안에 뭐가 있는지 없는지 체크한다
+# 굳이 array이어야만 할 필요는 없고, array이거나 객체도 가능 each else
+
+# 5.9) mixin이란, partials와 같은 것 데이터를 받을 수 있는 일종의 미리 만들어진 HTML block이라고 볼 수 있다
+# mixin은 똑똑한 partials이다
+
+# 5.10) Iteration은 array의 모든 element에 대해 특정 행동을 취할 때 사용함
