@@ -105,3 +105,48 @@
 # mixin은 똑똑한 partials이다
 
 # 5.10) Iteration은 array의 모든 element에 대해 특정 행동을 취할 때 사용함
+# each X in Y에서 Y는 반드시 존재해야 한다
+# each in else 같은 문법은 javascript에 없다 pug에만 있는 문법임
+# pug는 똑똑해서 Y가 빈 array 이거나 length가 0이면 바로 알아차려서 else를 보여준다
+# mixin은, 이미 만들어진 HTML 조각과 같은데 바깥 세계로부터 정보를 가져오는 역할을 한다.
+# mixin을 사용하고 싶다면 +를 붙여햐 함
+
+####### 6 ######
+# 6.0) #{} 이 기호를 쓰는 방식은 attribute에는 사용할 수 없다 href, calss나 id 같은 것들에 가능하지 않음
+# 그래서 + 하기 방식이나 ``백틱을 사용해야 한다.
+
+# 6.1) absoulte 와 relative url의 차이점 만약 href의 앞부분에 /를 넣으면 어디에 있든 상관없이 root 경로 + /edit으로 가게 된다.
+# 근데 /을 지우면? 이건 relative url이 된다
+
+# 6.2)
+
+# 6.3) 만약 get method를 사용하면, 그 form에 있는 정보가 url에 들어가기 된다
+# 너의 database를 변경할 data로 뭔가를 하는가? 뭔가를 수정하거나 추거하거나 삭제하거나 하는 경우 post를 써야한다
+# 만약 그냥 데이터를 받는 게 목적이라면, get을 사용하면 된다.
+# POST 도 GET 이랑 구조가 같다 URL이 있고 function이 있다
+# videoRouter.route("/:id(\\d+)/edit").get(getEdit).post(postEdit); 하나는 get request를 위한 것 하나는 post request를 위한 것 줄여 쓸 수 있다.
+# req.params는 우리에게 주어지는 정보
+# routes를 사용하기 전에 이 middleware를 사용해야 한다 middleware가 그 form을 이해하고, 그것들은 자바스크립트로 변형시켜줘서 우리가 사용할 수 있게 만드는 것.
+# 그걸 위해서 middleware를 route를 사용하기 전에 사용해야 한다.
+# app.use(express.urlencoded({ extended: true })); express application이 form의 value들을 이해할 수 있도록 하고 멋진 자바스크립트 형식으로 변형시킨다.
+
+# 6.4) get과 post를 따로 쓰는 대신에, 하나의 경로만 필요로 하는 route를 사용함 그러면 get request와 post request 둘 다 다뤄줌
+# 보통 2개 이상의 method를 사용하는 게 아니면, route는 사용하지 않음
+# req.body 는 form에 있는 value의 javascript representation이다.
+# 그치만 이건 우리가 아주 훌륭한 middleware를 설정해야만 가능한 일이다.
+# 바로 urlencoded가 HTML form을 이해하고 그 form을 우리가 사용할 수 있는 javascript object 형식으로 통역해준다.
+# middleware가 videoRouter 전에 오기 때문에 어떤 request가 videoRouter.post에 이르렀을 때, req.body가 이미 준비되어 있음. (중요)
+# form을 javascript으로 바꿔주는 midleware가 route 전에 있기 때문이다 그 postEdit을 가지고 있는 videoRouter 전에 있다..코드는 위에서 부터 아래로 읽기 때문에
+# input 안에 name 넣는 걸 까먹으면 req.body에서 데이터를 볼 수 없다
+# mongoose를 통해서, 자바스크립트에서 mongodb와 상호작용을 할거다
+
+# 6.5) 정리
+# 우선 controller를 만든 다음에 router를 만들어준다
+
+# 6.6) 버튼을 눌렀을 때 홈페이지를 render한게 아니라 url만 바꾼것임
+# input에서 data를 얻을 수 있는 방법은? req.body에서 유저가 input에 작성한 data를 얻을 수 있다.
+# 모든 input은 이름이 있어야 한다!
+
+# 6.7) mongodb가 훌륭한 이유는 document-based(문서 기반) 이라는 점이다 일반적으로, database는 document-based가 아니다 보통 sql-based이다 행 기반 엑셀같은
+# database도 object로 생각한다 (mongodb)에 저장한 것들은 JSON-like-document임. 그러므로 행으로 된 데이터를 저장할 필요가 없다
+# 윈도우는 chocolaty.org 를 사용해서 다운받는게 편하다
