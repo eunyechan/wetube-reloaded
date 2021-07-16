@@ -59,7 +59,8 @@
 ####### 5 ######
 # 5.0) node.js 안에 HTML을 다 쓰기에는 너무 길다 말이 안됨 시간아끼기 위해서 pug를 써야함
 
-# 5.1) 1.pug를 설지한다 
+# 5.1) 
+#      1.pug를 설지한다 
 #      2.view engine을 pug로 설정해야 한다 app.set("view engine", "pug");
 #      3.실제로 pug 파일을 생성한다
 # pug를 보내는 과정 pug가 home.pug 파일을 렌더링해서 평범한 html로 변환해줌
@@ -71,40 +72,49 @@
 # doucuments/wetube 폴더에서 package.json이 node.js를 실행하고 있음 우리가 wetube 안에 있는 package.json에서 node.js를 실행하고 있기 때문에 이 디렉토리가 현재 작업 디렉토리가 되는거임
 # 현재 작업 디렉토리는 node.js를 실행하는 디렉토리임
 
-# 5.2) default 값을 process.cwd() + "/src/views" (현재 작업 디렉토리 + "/views/src"로 바꿔야함
+# 5.2) 
+# default 값을 process.cwd() + "/src/views" (현재 작업 디렉토리 + "/views/src"로 바꿔야함
 # pug의 최고 장점은 반복할 필요가 없다
 # 첫째로 파일명은 띄어쓰기가 있으면 안됨 둘째 대문자가 있어도 안됨
 # 자바스크립트 코드는 유저가 보기전에 평범한 텍스트로 변환 됨 이것이 바로 렌더링
 # partials 최고의 강점 include 파일 경로 해주면 반복작업 필요없음
 
-# 5.3) 블록이란 템플릿의 창문같은 것 무언가를 집어 넣을 수 있는 곳
+# 5.3) 
+# 블록이란 템플릿의 창문같은 것 무언가를 집어 넣을 수 있는 곳
 # extends(확장), inheritance(상속)은 대단함
 
-# 5.4) extend는 html의 베이스를 가질 수 있게 해주기 때문에 좋다
+# 5.4) 
+# extend는 html의 베이스를 가질 수 있게 해주기 때문에 좋다
 # 블록은 확장한 템플릿 안에 내용을 넣을 수 있는 창문 또는 문 같은것
 # 블록 이름은 항상 같아야 함
 # 우리는 home.pug를 렌더링하는데 base.pug를 확장하고 base.pug는 우리가 직접 채우는 content 블록을 가지고 있고 그리고 base.pug는 pageTitle을 가지고 있다 그게 우리가 제공해야하는 변수임
 # 변수를 제공하는 방법은 render에 파일명을 쓰고 변수를 쓰는거다 컨트롤러에서 변수를 제공
 
-# 5.5) pug는 지저분한 html을 쓰지 않고, 파이썬처럼 깔끔한 코드를 쓸 수 있다.
+# 5.5) 
+# pug는 지저분한 html을 쓰지 않고, 파이썬처럼 깔끔한 코드를 쓸 수 있다.
 # pug는 띄어쓰기 탭으로 구분이 가능하다
 # block은 확장한 파일과 커뮤니케이션 할 수 있게 해준다
 
-# 5.6) MVP.css 는 html태그들을 살짝 꾸며주는 역할 (https://andybrewer.github.io/mvp/) 사이트 임시방편으로 사용 css는 나중에 하기 때문에
+# 5.6) 
+# MVP.css 는 html태그들을 살짝 꾸며주는 역할 (https://andybrewer.github.io/mvp/) 사이트 임시방편으로 사용 css는 나중에 하기 때문에
 
-# 5.7) h1 pageTitle을 쓰면 그냥 text인데 h1=pageTitle을 쓰면 variable로 넘어가게 된다 variable이랑 뒤에 text랑 같이쓰려면 ex) ${pageTitle} aa
+# 5.7) 
+# h1 pageTitle을 쓰면 그냥 text인데 h1=pageTitle을 쓰면 variable로 넘어가게 된다 variable이랑 뒤에 text랑 같이쓰려면 ex) ${pageTitle} aa
 # condition if, if else 비슷한 문장임
 
-# 5.8) Iteration은 기본적으로 elements의 list를 보여주는 거임
+# 5.8) 
+# Iteration은 기본적으로 elements의 list를 보여주는 거임
 # list를 보여주려면 첫째로, template에는 array인 variable이 있어야 함 array가 없으면 동작하지 않음
 # controller에서의 이름이랑 다른 pugpage랑 변수명이 같아야 한다
 # Pug는 자동적으로 videos 안에 뭐가 있는지 없는지 체크한다
 # 굳이 array이어야만 할 필요는 없고, array이거나 객체도 가능 each else
 
-# 5.9) mixin이란, partials와 같은 것 데이터를 받을 수 있는 일종의 미리 만들어진 HTML block이라고 볼 수 있다
+# 5.9) 
+# mixin이란, partials와 같은 것 데이터를 받을 수 있는 일종의 미리 만들어진 HTML block이라고 볼 수 있다
 # mixin은 똑똑한 partials이다
 
-# 5.10) Iteration은 array의 모든 element에 대해 특정 행동을 취할 때 사용함
+# 5.10) 
+# Iteration은 array의 모든 element에 대해 특정 행동을 취할 때 사용함
 # each X in Y에서 Y는 반드시 존재해야 한다
 # each in else 같은 문법은 javascript에 없다 pug에만 있는 문법임
 # pug는 똑똑해서 Y가 빈 array 이거나 length가 0이면 바로 알아차려서 else를 보여준다
@@ -112,15 +122,18 @@
 # mixin을 사용하고 싶다면 +를 붙여햐 함
 
 ####### 6 ######
-# 6.0) #{} 이 기호를 쓰는 방식은 attribute에는 사용할 수 없다 href, calss나 id 같은 것들에 가능하지 않음
+# 6.0)
+# {} 이 기호를 쓰는 방식은 attribute에는 사용할 수 없다 href, calss나 id 같은 것들에 가능하지 않음
 # 그래서 + 하기 방식이나 ``백틱을 사용해야 한다.
 
-# 6.1) absoulte 와 relative url의 차이점 만약 href의 앞부분에 /를 넣으면 어디에 있든 상관없이 root 경로 + /edit으로 가게 된다.
+# 6.1) 
+# absoulte 와 relative url의 차이점 만약 href의 앞부분에 /를 넣으면 어디에 있든 상관없이 root 경로 + /edit으로 가게 된다.
 # 근데 /을 지우면? 이건 relative url이 된다
 
 # 6.2)
 
-# 6.3) 만약 get method를 사용하면, 그 form에 있는 정보가 url에 들어가기 된다
+# 6.3) 
+# 만약 get method를 사용하면, 그 form에 있는 정보가 url에 들어가기 된다
 # 너의 database를 변경할 data로 뭔가를 하는가? 뭔가를 수정하거나 추거하거나 삭제하거나 하는 경우 post를 써야한다
 # 만약 그냥 데이터를 받는 게 목적이라면, get을 사용하면 된다.
 # POST 도 GET 이랑 구조가 같다 URL이 있고 function이 있다
@@ -130,7 +143,8 @@
 # 그걸 위해서 middleware를 route를 사용하기 전에 사용해야 한다.
 # app.use(express.urlencoded({ extended: true })); express application이 form의 value들을 이해할 수 있도록 하고 멋진 자바스크립트 형식으로 변형시킨다.
 
-# 6.4) get과 post를 따로 쓰는 대신에, 하나의 경로만 필요로 하는 route를 사용함 그러면 get request와 post request 둘 다 다뤄줌
+# 6.4) 
+# get과 post를 따로 쓰는 대신에, 하나의 경로만 필요로 하는 route를 사용함 그러면 get request와 post request 둘 다 다뤄줌
 # 보통 2개 이상의 method를 사용하는 게 아니면, route는 사용하지 않음
 # req.body 는 form에 있는 value의 javascript representation이다.
 # 그치만 이건 우리가 아주 훌륭한 middleware를 설정해야만 가능한 일이다.
@@ -140,13 +154,75 @@
 # input 안에 name 넣는 걸 까먹으면 req.body에서 데이터를 볼 수 없다
 # mongoose를 통해서, 자바스크립트에서 mongodb와 상호작용을 할거다
 
-# 6.5) 정리
+# 6.5) 
+# 정리
 # 우선 controller를 만든 다음에 router를 만들어준다
 
-# 6.6) 버튼을 눌렀을 때 홈페이지를 render한게 아니라 url만 바꾼것임
+# 6.6) 
+# 버튼을 눌렀을 때 홈페이지를 render한게 아니라 url만 바꾼것임
 # input에서 data를 얻을 수 있는 방법은? req.body에서 유저가 input에 작성한 data를 얻을 수 있다.
 # 모든 input은 이름이 있어야 한다!
 
-# 6.7) mongodb가 훌륭한 이유는 document-based(문서 기반) 이라는 점이다 일반적으로, database는 document-based가 아니다 보통 sql-based이다 행 기반 엑셀같은
+# 6.7) 
+# mongodb가 훌륭한 이유는 document-based(문서 기반) 이라는 점이다 일반적으로, database는 document-based가 아니다 보통 sql-based이다 행 기반 엑셀같은
 # database도 object로 생각한다 (mongodb)에 저장한 것들은 JSON-like-document임. 그러므로 행으로 된 데이터를 저장할 필요가 없다
 # 윈도우는 chocolaty.org 를 사용해서 다운받는게 편하다
+
+# 6.8) 
+# mongoose란 node.js와 mongoDB를 이어주는 다리
+# jjavascript를 적으면, mongoose.가 mongoDB에게 전해 준다
+
+# 6.9) CRUD (Creat, Read, Update, Delete) 라고 한다 
+
+# 6.10) 
+# 우선 video의 형태를 정의해 줘야 한다 예) title은 string형식 이다 데이터의 형식을 정의해주고
+# 그 다음에 model을 만든다 데이터의 형태인 schema로 구성하면 된다
+# 그 다음 해당 model 을 default로 export 해주면 된다
+# server.js에 database 를 import해서 연결시킨 후 해당 연결이 성공적일 때, video를 import 해주는 것
+# 이것으로 db는 우리 video model을 인지하게 된다
+# db를 mongoose와 연결시켜서 video model을 인식시키는 것임
+
+# 6.11)
+# 관련된 부분들에 따라 분리시키고 있음 
+# 그 이유는 server.js 는 express 된 것들과 server 의 configuration 에 관련된 코드만 처리하기 위해 만들어졌지
+# database 나 models 같은 것들을 import 를 하기 위함은 아니여서
+# callback 이란 무언가가 발생하고 난 다음 호출되는 function 을 말한다
+# callback은 특별한게 아니라 javascript 에서 기다림을 표현하는 하나의 방법이라 생각하면 편함
+# database 는 javascript 밖에 존재한다. 그래서 데이터 전송까지 시간이 걸려 약간의 기다림이 필요하다
+# 2가지 방식이 있다 callback promise 
+# {} 중괄호는 search terms 를 나타낸다 search terms 가 비어있으면 모든 형식을 찾는다는 것을 뜻 함
+# callback 은 err 와 docs 라는 signature 를 가짐
+
+# 6.12)
+# callback 의 사용법
+
+####callback####
+# Video.find({}, (error, videos) => {});
+#   Video.find({}, (error, videos) => {
+#    if(error){
+#     return res.render("server-error")
+#    }
+#    return res.render("home", {pageTitle: "Home", vudeos})
+#  });
+# callback 세계관에선 start, finished 다음에 videos 를 출력해준다
+
+# 6.13)
+# promise 는 callback 의 최신 버전이라 생각하면 편함
+# callback 이랑 차이점은, await 을 find 앞에 적으면 find는 내가 callback 을 필요로 하지 않는다는 걸 알게 됨
+
+####promise####
+# export const home = async (req, res) => {
+#  try {
+#     console.log("start");
+#     const videos = await Video.find({});
+#     console.log(videos);
+#     console.log("finished");
+#     return res.render("home", { pageTitle: "Home", videos });
+#   } catch {
+#     return res.render("server-error");
+#   }
+# };
+# await가 대단한 이유는 database를 기다려주기 때문이다
+# javascript는 기다려주는 기능이 없었다 await이 나오기 전까지는
+# acync 와 await 의 최대 장점은 직관적이라는 것 javascript가 어디서 어떻게 기다리는지 바로 알 수 있기 때문이다
+# 
