@@ -171,6 +171,7 @@
 # 6.8) 
 # mongoose란 node.js와 mongoDB를 이어주는 다리
 # jjavascript를 적으면, mongoose.가 mongoDB에게 전해 준다
+# 'sudo service mongodb start' 실행 방법
 
 # 6.9) CRUD (Creat, Read, Update, Delete) 라고 한다 
 
@@ -188,8 +189,8 @@
 # database 나 models 같은 것들을 import 를 하기 위함은 아니여서
 # callback 이란 무언가가 발생하고 난 다음 호출되는 function 을 말한다
 # callback은 특별한게 아니라 javascript 에서 기다림을 표현하는 하나의 방법이라 생각하면 편함
-# database 는 javascript 밖에 존재한다. 그래서 데이터 전송까지 시간이 걸려 약간의 기다림이 필요하다
-# 2가지 방식이 있다 callback promise 
+# database 는 javascript 바깥에 존재한다. 그래서 데이터 전송까지 시간이 걸려 약간의 기다림이 필요하다
+# 기다림에는 2가지 방식이 있다 callback promise 
 # {} 중괄호는 search terms 를 나타낸다 search terms 가 비어있으면 모든 형식을 찾는다는 것을 뜻 함
 # callback 은 err 와 docs 라는 signature 를 가짐
 
@@ -205,6 +206,7 @@
 #    return res.render("home", {pageTitle: "Home", vudeos})
 #  });
 # callback 세계관에선 start, finished 다음에 videos 를 출력해준다
+
 
 # 6.13)
 # promise 는 callback 의 최신 버전이라 생각하면 편함
@@ -222,7 +224,61 @@
 #     return res.render("server-error");
 #   }
 # };
-# await가 대단한 이유는 database를 기다려주기 때문이다
-# javascript는 기다려주는 기능이 없었다 await이 나오기 전까지는
-# acync 와 await 의 최대 장점은 직관적이라는 것 javascript가 어디서 어떻게 기다리는지 바로 알 수 있기 때문이다
-# 
+# await 이 대단한 이유는 database 를 기다려주기 때문이다
+# javascript 는 기다려주는 기능이 없었다 await 이 나오기 전까지는
+# acync 와 await 의 최대 장점은 직관적이라는 것 javascript 가 어디서 어떻게 기다리는지 바로 알 수 있기 때문이다
+# promise 세계관에서는 위에서부터 아래로 순서대로 
+# 코딩 규칙상 await 는 function 안에서만 사용이 가능한데 해당 function 이 asynchronous 일 때만 가능하다 그렇기에 asyn를 적어주는 것
+# 코드 실행 중 어떤 에러가 발생하든 javascript 는 await 내 출력 값을 출력 안하고 아래 에러 출력 코드를 실행시킨다
+
+# 6.14)
+# function 안에 return은 그냥 function을 마무리 할 뿐이다
+# 무엇을 return 하는 것이 중요한게 아니라 어떤 function 을 호출하는지가 더 중요하다
+# return 이 아니라 실행되는 function 들에 집중해야 한다
+# render 한 것은 다시 render 할 수 없음 - redirect(), sendStatus(), end() 등등 포함 (express에서 오류 발생)
+# return 은 아무것도 안하는데 존재하는 이유 function 을 종료시켜 주는 기능을 하기때문에
+# return 을 적어서 실수를 방지하는 것이 좋다
+
+# 6.15)
+# form 에는 URL 이란 action 이 있다 이 부분을 삭제하면 HTML 은 이 URL 또는 form 이 부여해주는 주소로 간다는 말
+# document 는 데이터를 가진 비디오라 생각하면 편함 그리고 document 를 database 에 저장해야 함
+# schema 와 같은 모양으로 document 를 만듦 차이점이 있다면 document 는 실제로 데이터를 담음
+# split 은 string 들을 분리 하는 기능을 가지고 있다 splitter 또는 separator 가 그 분리의 기준이 된다
+# object 는 document 처럼 ID 가 있어야 한다 고유식별번호가 꼭 필요하다 우리가 다하면 재미가 없으니까 시스템이 랜덤한 id 를 부여해준다.
+# 첫 video 를 만든게 맞다 그치만 안나오는 이유는 이 object 는 Javascript 세계에서는 존재하지만 아직 저장이 안 된 상태
+
+# 6.16)
+# number 데이터를 넣어도 문제없이 string 으로 변환된다
+# 잘못된 정보를 기록하면 올바른 정보가 아니라 document 데이터에 포함되지 않는다
+# mongoose 가 데이터 타입의 유효성 검사를 도와주고 있다.(데이터 형태를 미리 정해뒀을 때 얻는 장점 중 하나)
+# video.save 를 실행하지만 await 해야함 그 이유는 데이터를 database 에 전송하는데 시간이 걸리기 때문이다 그렇기 때문에 무조건 기다려야 함
+# 그리고 video.save 는 생성된 video 를 return 해준다 그리고 그 video 는 database 에 속한 video 이다.
+# video.find 는 우리의 video 들을 불러준다
+# 진짜 라는 의미는 database 상 존재 한다는 말임
+# collections 이란 document 들의 묶음이라 생각
+# 어떤 것이든 하는 방법은 두 가지 이상이다
+# 하나는 Javascript object 를 만들고 object 를 database 에 저장하는 것
+# 두번째는 video.create 방금 작성한 코드와 기능은 똑같은데 Javascript object 를 만들어주는 과정을 우리가 안해도 된다
+# 제일 중요 ***mongoose 는 우리를 멍청함에서 구해준다...***
+
+# 6.17)
+# 'await' 되는 코드에 오류가 있다면 Javascript 는 더 이상 코드를 실행시키지 않은것이다
+# catch 가 없으면 아무것도 실행을 안시킬 것이다
+
+# 6.18)
+# 데이터에 대한 구체적인 설정은 정말 정말 중요하다****
+# maxlength 를 form 에서도 할 수 있는데 왜 database 에서도 해야 하나? (둘 다 해야함)
+# 사용자를 위한 것인데 만약 누가 홈페이지를 해킹 했을 때 HTML 에 들어가서 코드를 삭제 할 수 있기 때문에
+# 이렇게 하면 최대, 최소 글자 수 변형을 이용한 비정상적인 업로드는 할 수가 없게 되는 것이다.
+
+# 6.19)
+# hexadecimal string(16진수) 0~9 까지의 숫자와 6개의 기로호 이루어진 string
+# regular expressions 는 개발자들에게 매우 유용하다
+# findOne 은 내가 보내는 모든 condition 을 적용시켜준다
+# findById 은  id 로 영상을 찾아낼 수 있는 기능을 지원해준다
+# req.param 은 router 가 주는 express 의 기능이다
+
+# 6.20)
+# exec Mongoose 내부적으로 만약 내가 excute 를 호출하면 promise 가 return 될 거다
+# if 안에 return 이 없으면 Javascript 는 영상이 없을 때 if 안의 코드를 실행하고
+# array 를 string 오 format 하는 방법 join() function 을 사용한다
