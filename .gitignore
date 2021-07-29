@@ -286,3 +286,20 @@
 # 6.21)
 # 복습 new Video() => video.create() => video.update()
 # 고생을 해 봐야 지름길의 고마움을 안다
+
+# 6.22)
+# findByIdAndUpdate() 2개의 argument 가 필요하다 하나는 업데이트 하고자 하는 영상의 ID, 두 번째 인수는 업데이트 할 정보 혹은 내용
+# 대문자 V 의 Video는 우리가 만든 영상 Model 이고 소문자 v 의 video 는 데이터베이스에서 검색한 영상 object고. 아주다르다
+# exist() 같은 경우엔 ID만 받지 않는다. filter 를 받는다
+# mongoose에도 middleware 가 있다
+# exist()는 필터를 필요로 하고 영상의 어떤 property도 필터 가능하다 하지만 findByid 는 꼭 id 를 인자(argument)로 받는다
+
+# 6.23)
+# Mongoose에서 middleware라는 건 document 에 무슨 일이 생기기 전이나 후에 middleware를 적용할 수 있다.
+# middleware는 무조건 model 이 생성되기 전에 만들어야 한다
+
+# 6.24)
+# statics
+
+# 6.25)
+# findByIdAndDelete이용하여 비디오 삭제
