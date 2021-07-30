@@ -303,3 +303,24 @@
 
 # 6.25)
 # findByIdAndDelete이용하여 비디오 삭제
+# findByIdAndDelete findByRemove의 차이점 간다히 말해서 간절히 필요하지않는이상 findByIdAndDelete 사용하는 것을 지향한다
+
+# 6.26)
+# pageTitle 이 필요한 이유는 base.pug에서 쓰이는 변수이기 때문에 search는 extends base.pug 라 pageTitle 을 꼭 입력해야 함
+# keyword 는 검색할 때만 생긴다 그래서 사용자가 search 페이지에 도착할 때는 keyword 가 undefined 이다
+
+# 6.27)
+# regex = regular expreession 의 약자
+# `$&{kyword}` 는 앞에 시작하는 단어로 검색가능 `${keyword}$`는 뒤에 끝나는 단어로 검색가능 Mongoose 가 아닌 MongoDB 가 하는 기능
+# const videos 를 if 안에다 만들면 바깥에 있는 videos 는 undefined 가 된다 let 을 사용
+# Mongoose 는 나랑 MongoDB 의 다리 역할
+
+# 6.28)
+# 아직 시작도 안함.. Mongoose 랑 친해지기 위해 한 것
+
+# 7.1)
+# join.pug input 안에 name 을 꼭 써줘야함(필수) 안그러면 백엔드에서 사용하지 못함
+
+# 7.2)
+# DeprecationWarning 같은 경고는 오래 된 기능이니 업데이트 하라고 알려주는 것 unique: true를 사용해서 뜨는것임
+# useCreateIndex: true, 를 db.js에 추가
