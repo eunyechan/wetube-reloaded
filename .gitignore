@@ -1,4 +1,5 @@
 /node_modules
+.env
 
 # request는 누군가에게 무엇을 달라고 "요청" 하는 것 ex) 홈페이지 줘, 로그인 줘, 프로파일 줘
 # 웹사이드에 접속할 때 브라우저가 나를 데려가는게 아님 브라우저가 나를 대신해서 웹사이트를 request하고 페이지를 가져다 주는 거임
@@ -331,6 +332,76 @@
 # 같은 입력값으로는 항상 같은 해시값이 나온다 deterministic function(결정적 함수)
 # rainbow table 공격을 bcrypt 가 막아준다
 # 항상 password 를 해싱 해줘야 한다 필수!!
+# $or operator 를 쓰면 각 조건이 true 일 때 실행되게 만들 수 있다
 
 # 7.4)
-# $or operator 를 쓰면 각 조건이 true 일 때 실행되게 만들 수 있다
+# return.status(400) 을 사용해줘야 함
+# 브라우저에서 방문한 웹사이트의 히스토리를 저장하는데 어떤 웹사이트를 방문했을 때, 상태 코드 200으로 응답하면 그 사이트를 방문했다고 히스토리에 기록을 남긴다
+# 그런데 웹사이트를 방문하고 상태 코드 400을 받는다면  브라우저가 그 URL 을 히스토리에 남기지 않는다 그래서 알맞은 상태 코드를 보내주는게 유저들을 위해 좋을 수 있다
+
+# 7.5)
+# /login 으로 post 요청을 받았을 때 해야할 일
+# 우선 입력한 username 을 가진 User 가 존재하는지 확인해야함 해당 계정이 존재하는지
+# 그리고 password 를 확인해야 함
+
+# 7.6)
+# 가장 재밌고 중요한 controller 중 하나는 post이다
+# get controller 는 페이지를 render 만 하지만 post controller 는 실제로 사용되어지는 기능을 담당한다
+# 데이터를 다루고 에러 처리, 유효성 체크 등을 하면서 DB 와 통신을 하기 때문에
+# 해싱은 결정적 함수니까 입력값이 같으면 항상 같은 출력값을 가진다
+
+# 7.7)
+# 세션이란 백엔드와 브라우저 간에 어떤 활동을 했는지 기억하는걸 말한다 
+# 2주정도 후에는 세션이 사라진다 그러면 다시 로그인 해야한다
+# 세션은 브라우저와 백엔드 사이의 memory, history 같은 것
+# 이것이 작동하려면 백엔드와 브라우저가 서로에 대한 정보를 가지고 있어야 한다
+# stateless 한 번 연결이 되었다가 끝나는 것 이 둘 사이 연결에 state 가 없는 것
+
+# 7.8)
+# req.session object 에 정보를 저장하고 있음
+
+# 7.9)
+
+# 7.10)
+# pug 랑 Express 가 서로 locals 를 공유 할 수 있도록 설정되어 있다
+# locals object 를 바꾼다고 한다면 templates 에서 locals object 의 내용을 확인 할 수 있다는 것이다
+# 모든 pug 파일들은 locals object 에 그냥 접근할 수 있다
+# localsMiddleware 는 session middleware 다음에 있다 (순서가 정말 중요)
+# 그래야 licalsMiddleware 가 session object 에 접근 할 수 있다
+# req.session 에 user 도 있다
+# user 값을 template 와 공유가 가능하다
+
+# 7.11)
+# cookie 란 backend 가 나의 브라우저에 주는 정보
+# cookie 에는 정해진 규칙이 있기 때문에 매번 backend 에 request 를 할 떄 브라우저는 알아서 그 request 에 cookie 를 덧붙이게 된다
+# session middleware 가 브라우저에 cookie 를 보내고 브라우저는 cookie 로 뭘 할지, 어디에 넣을지 다 알고 있다
+# 게다가 브라우저는 우리가 매번 backend localhost 에 있는 URL 로 request 를 보낼 때마다 cookie 가 request 랑 같이 전송된다는 것도 알고 있다
+# http 는 stateless 이다 -> 우리가 homepage 를 들어가면 connection 이 열리고 render 가 끝나면 connection 연결이 끊긴다 connection 이 계속 유지되지 않는다
+# 나와 와이파이 공유기랑의 관계는 계속 유지가 된다 하지만 브라우저와 backend 와 같은 경우엔, 살아있는 connection 이라곤 없다 connection 은 render 가 끝나거나, redirect 가 발생하거나
+# 우리가 post request 를 보내거나, 응답없음을 받으면 connection 은 바로 끝난다 그래서 우리는 사용자에게 session ID 를 주는것이다 그 session ID 를 넣을 곳이 바로 cookie 인것이다
+# 두 가지가 있는데, 하나는 바로 cookie 이고 이걸 사용해서 backend 와 frontend 간의 정보교환을 하는 것이고, 다른 하나는 session ID 이다
+# cookie 랑 session 은 별개의 개념이다`
+# session store 는 우리가 session 을 저장하는 곳이다 서버가 재시작 되면 session store 도 재시작된다
+# backend 가 session store 안에 이 session ID를 저장하고 있기 때문
+# 같은 코드라도 브라우저마다 다른 결과를 낸다
+# 브라우저마다 req.session 이 다르기 때문에 몇몇 정보를 req.session object 를 붙이는 것이다
+# locals 안에 넣기만 하면 pug remplate 에서 쓸 수 있다
+
+# 7.12)
+# session id 는 쿠키에 저장하지만, 데이터 자체는 서버에 저장된다
+# 세션은 브라우저가 우리의 backend 를 방문할 때 만들어진다 그것만 있으면 세션을 만들 수 있음
+
+# 7.13)
+# 익명사용자에게는 session 을 주지 않는다 로그인 한 사람에게만 준다
+# 웹사이트를 배포할 때, string 을 복붙하지 않는게 좋다 secret 도 마찬가지
+
+# 7.14)
+# secret 은 우리가 쿠키에 sign 할 때 사용하는 string 이다
+# 쿠키에 sign 하는 이유는 우리 backend 가 쿠키를 줬다는걸 보여주기 위함이다
+# Domain 은 이 쿠키를 만든 backend 가 누구인지 알려준다
+# 브라우저는 Domain 에 따라 쿠키를 저장하도록 되어있다
+# Domain 은 쿠키가 어디에서 왔는지, 어디로 가야하는지 알려주는것
+# Expired 만료날짜를 지정하지 않으면 이건 session cookie 로 설정되고 사용자가 닫으면 session cookie 는 끝나게 된다
+# 예를 들어서, 몇몇 브라우저에서 프로그램을 닫으면 이 쿠키가 사라지는 것, 아니면 컴퓨터를 재시작 할 때 세션이 사라지게 된다
+# 사용자가 닫지 않는 한 계속 살아있다
+# Max-Age는 말그래도 언제 세션이 만료되는지 알려주는것
