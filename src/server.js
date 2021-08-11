@@ -1,29 +1,33 @@
 import express from "express";
-
-const PORT = 4000;
+import morgan from "morgan";
+import session from "express-session";
+import MongoStore from "connect-mongo";
+import rootRouter from "./routers/rootRouter";
+import videoRouter from "./routers/videoRouter";
+import userRouter from "./routers/userRouter";
+import { localsMiddleware } from "./middlewares";
 
 const app = express();
+const logger = morgan("dev");
 
-const logger = (req, res, next) => {
-  console.log(`${req.method} :${req.url}`);
-  next();
-};
-const privateMiddleware = (req, res, next) => {
-  const url = req.url;
-  if (url === "/protected") {
-    return res.send("<h1>Not Allowed</h1>");
-  }
-  console.log("Allowed, you may");
-  next();
-};
+app.set("view engine", "pug");
+app.set("views", process.cwd() + "/src/views");
+app.use(logger);
+app.use(express.urlencoded({ extended: true }));
 
-const handleHome = (req, res) => {
-  return res.send("l love");
-};
+app.use(
+  session({
+    secret: process.env.COOKIE_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
+  })
+);
 
-app.get("/", logger, handleHome);
+app.use(localsMiddleware);
+app.use("/uploads", express.static("uploads"));
+app.use("/", rootRouter);
+app.use("/videos", videoRouter);
+app.use("/users", userRouter);
 
-const handleListening = () =>
-  console.log("📢Server listenting on port http://localhost:${PORT}💨");
-
-app.listen(PORT, handleListening);
+export default app;

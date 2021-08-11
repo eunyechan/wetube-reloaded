@@ -1,0 +1,11 @@
+extends base.pug
+
+
+block content 
+    video(src="/" + video.fileUrl, controls)
+    div
+        p=video.description
+        small=video.createdAt
+    a(href=`${video.id}/edit`) 비디오 수정하기 &rarr;
+    br
+    a(href=`${video.id}/delete`) 비디오 삭제하기 &rarr;
