@@ -43,15 +43,18 @@ export const getUpload = (req, res) => {
   return res.render("upload", { pageTitle: "upload Video" });
 };
 export const postUpload = async (req, res) => {
+  const { path: fileUrl } = req.file;
   const { title, description, hashtags } = req.body;
   try {
     await Video.create({
       title,
       description,
+      fileUrl,
       hashtags: Video.formatHashtags(hashtags),
     });
     return res.redirect("/");
   } catch (error) {
+    console.log(error);
     return res.status(400).render("upload", {
       pageTitle: "Upload Video",
       errorMessage: error._message,
@@ -59,7 +62,7 @@ export const postUpload = async (req, res) => {
   }
 };
 
-export const delecteVideo = async (req, res) => {
+export const deleteVideo = async (req, res) => {
   const { id } = req.params;
   await Video.findByIdAndDelete(id);
   return res.redirect("/");
