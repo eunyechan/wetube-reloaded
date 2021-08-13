@@ -24,7 +24,6 @@ export const getEdit = async (req, res) => {
   if (!video) {
     return res.status(404).render("404", { pageTitle: "Video not found." });
   }
-  console.log(video.owner, _id);
   if (String(video.owner) !== String(_id)) {
     return res.status(403).redirect("/");
   }
@@ -75,7 +74,6 @@ export const postUpload = async (req, res) => {
     user.save();
     return res.redirect("/");
   } catch (error) {
-    console.log(error);
     return res.status(400).render("upload", {
       pageTitle: "Upload Video",
       errorMessage: error._message,
@@ -108,7 +106,6 @@ export const search = async (req, res) => {
         $regex: new RegExp(keyword, "i"),
       },
     });
-    console.log(videos);
   }
   return res.render("search", { pageTitle: "Search", videos });
 };
