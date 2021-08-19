@@ -1,34 +1,12 @@
 doctype html
 html(lang="ko")
     head
-        title #{pageTitle} | Wetube
-        link(rel="stylesheet", href="https://unpkg.com/mvp.css")
+        title #{pageTitle} | #{siteName}
+        link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css")
         link(rel="stylesheet", href="/static/css/styles.css")
     body 
-        header
-            h1=pageTitle
-            nav 
-                ul 
-                    li 
-                        a(href="/") 홈
-                    if loggedIn
-                        li 
-                            a(href="/videos/upload") 비디오 업로드
-                        li 
-                            a(href=`/users/${loggedInUser._id}`) 내 프로필
-                        li 
-                            a(href="/users/edit") 프로필 수정하기
-                        li
-                            a(href="/users/logout") 로그아웃
-                    else 
-                        li 
-                            a(href="/join") 회원가입
-                        li 
-                            a(href="/login") 로그인
-                    li 
-                        a(href="/search") 검색하기
-                    
+        include partials/header                
         main
             block content
-    include partials/footer.pug
+        include partials/footer
     script(src="/static/js/main.js")

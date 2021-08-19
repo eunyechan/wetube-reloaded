@@ -3,8 +3,8 @@ include mixins/video
 
 
 block content 
-    each video in videos 
-        +video(video)
-    else
-        li 아무것도 찾을 수 없습니다. 
-        li 아무것도 찾을 수 없습니다.
+    div.video-grid
+        each video in videos 
+            +video(video)
+        else
+            span.emoty__message 비디오를 찾을 수 없습니다

@@ -569,3 +569,10 @@
 # console을 두가지 사용하지 않으면 SCSS에서 무언가를 바꿀 때 "이건 동작하지 않는다"라거나 "CSS가 변경되지 않는다"는 comment 같은 걸 보게 될것..Webpack을 사용하지 않아서
 # 꼭 두가지 같이 실행해야 함
 # nodemon은 nodemon.json파일을 찾고 webpack은 webpack.config.js를 찾는다
+
+# 9.7)
+# Webpack 정리
+
+# 10.0(
+# scss 시작
+# ctrl+[ 들여쓰기
