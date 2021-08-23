@@ -573,6 +573,63 @@
 # 9.7)
 # Webpack 정리
 
-# 10.0(
+# 10.0 ~ 10.3)
 # scss 시작
 # ctrl+[ 들여쓰기
+
+# 11.0)
+# webpack file 이름이 같으면 에러가 뜰 수 있어서 [name]이라는 것을 사용해준다
+
+# 11.1)
+# 비디오 element와 오디오 element는 둘 다 html media element로부터 상속을 받는다
+# function 안에서 text를 바꿀수도 있지만 이벤트에서 할 수도 있다
+
+# 11.2)
+# play, volume 설정
+
+# 11.3)
+# range event를 input 으로 하면 실시간으로 반영
+
+# 11.4) event
+# loadedmetadata meta data가 로드 될 때 실행이 된다
+# meta data는 비디오를 제외한 모든 것을 말한다 예) 비디오 시간, 비디오 가로 세로 크기 비디오에서 움직이는 이미지들을 제외한 모든 엑스트라 녀석
+# timeupdate event는 비디오의 시간이 변할 때마다 발생된다
+
+# 11.5)
+# date Constructor란 JavaScript 안에 있는 date class 시간은 1970/1/1 부터 카운터 한다 ms기준으로
+# 시작점에서 원하는 길이만큼 자를 수 있다 substr function을 사용하여
+
+# 11.6)
+# minimum, maximum이 있어야 자바스크립트가 어디가 끝인지 알 수 있다
+# minimum이 있어야 시작이 어딘지 알 수 있다
+# maximum value가 비디오의 마지막 시간이랑 같기 때문에 비디오와 똑같은 길이를 가지게 된다
+# video.cuttentTime은 getter나 setter가 될 수 있다.
+
+# 11.7) screen
+# fullscreenElement는 우리에게 element를 준다 현재 풀스크린 모드인 element가
+# 만약 fullScreenElement가 null를 반환한다면 풀스크린인 element가 없다는 뜻이다
+# requestFullScreen은 element에서 불려져야 한다
+# exitFullScreen은 document에서 불려져야 하고
+
+# 11.8)
+# mouseMove, mouseLeave event 배움
+
+# 11.9)
+# controlsMovementTimeout = null 이다
+
+# 11.10) 복습
+# video element는 굉장히 많은 property를 가지고 있다
+# 예) video.paused play라는 method와 paused라는 property는 video element를 가리킨다는 점에서 특별한 존재이다
+# 만일 div element를 선택했다고 하면 paused와 play가 없을것이다 이것들을 가지고 있지 않기 때문에
+# video element는 muted도 가지고 있다 그리고 muted는 getter 혹은 setter일 수도 있다
+# 어떤 property들은 읽기 전용이지만, 어떤건 getter와 setter일 수도 있다
+# volumeRange는 value를 가지고 있다 왜냐하면 input element리고, input은 value를 가지고 있기때문 그래서 음소거가 됐을 땐 input 값을 0으로 만들어준다
+# range input의 input event는 여기 value를 움직일 때 발생한다
+# range는 굉장히 유용함 JavaScript가 모든 계산을 해주고 최솟값과 최댓값을 설정해주고 step으로 나눠준다
+# video는 volume property를 가지고 있는 특별한 HTMLVideoElement다 그리고 이 property 또한 getter와 setter를 가지고 있다
+# timeupdate는 사용자가 비디오를 시청하고 있을 때 비디오 시간이 바뀌면 발생한다
+# timelien value가 0인 range input을 의미한다 만일 비디오가 시간을 바꾸면,video event가 timeline range를 update 한다
+# 업데이트하는 방식에는 2가지가 있다
+# 1. 만일 비디오 시간이 바뀌면, timeline 또한 비디오에 맞춰 바뀐다
+# 2. timeline을 이렇게 조절하면, 해당 function이 비디오의 currentTime을 바꿔준다
+# formattime 숫자들을 가져오는 멋진 방법
