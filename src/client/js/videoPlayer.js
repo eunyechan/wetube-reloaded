@@ -29,6 +29,17 @@ const videoKeyButton = (e) => {
   }
   if (keyButton === "KeyM") {
     handleMuteClick();
+    const volumeProgress =
+      ((volumeRange.value - volumeRange.min) /
+        (volumeRange.max - volumeRange.min)) *
+      100;
+    const color =
+      "linear-gradient(90deg, rgb(255,255,255)" +
+      volumeProgress +
+      "%, rgb(189,189,189)" +
+      volumeProgress +
+      "%)";
+    volumeRange.style.background = color;
   }
 };
 
@@ -53,15 +64,12 @@ const handleMuteClick = (e) => {
   volumeRange.value = video.muted ? 0 : volumeValue;
 };
 
-const handleVolumeTrue = (event) => {
+const handleVolumeChange = (event) => {
   const {
     target: { value },
   } = event;
   if (video.muted) {
-    video.muted = true;
-    muteBtnIcon.classList = video.muted
-      ? "fas fa-volume-up"
-      : "fas fa-volume-mute";
+    video.muted = false;
   }
   volumeValue = value;
   video.volume = value;
@@ -80,16 +88,31 @@ const handleTimeUpdate = () => {
   timeline.value = Math.floor(video.currentTime);
 };
 
-timeline.addEventListener("mousemove", function () {
-  const x = ((timeline.value - this.min) / (this.max - this.min)) * 100;
+const handleTimelineProgress = () => {
+  const timelineProgress =
+    ((timeline.value - timeline.min) / (timeline.max - timeline.min)) * 100;
   const color =
     "linear-gradient(90deg, rgb(255,36,36)" +
-    x +
+    timelineProgress +
     "%, rgb(189,189,189)" +
-    x +
+    timelineProgress +
     "%)";
   timeline.style.background = color;
-});
+};
+
+const hanleVolumeProgress = (e) => {
+  const volumeProgress =
+    ((volumeRange.value - volumeRange.min) /
+      (volumeRange.max - volumeRange.min)) *
+    100;
+  const color =
+    "linear-gradient(90deg, rgb(255,255,255)" +
+    volumeProgress +
+    "%, rgb(189,189,189)" +
+    volumeProgress +
+    "%)";
+  volumeRange.style.background = color;
+};
 
 const handleTimelineChange = (event) => {
   const {
@@ -128,12 +151,23 @@ const handleMouseLeave = () => {
   controlsTimeout = setTimeout(hideControls, 3000);
 };
 
+const handleEnded = () => {
+  const { id } = videoContainer.dataset;
+  fetch(`/api/videos/${id}/view`, {
+    method: "POST",
+  });
+};
+
 video.addEventListener("click", handlePlayClick);
-playBtn.addEventListener("click", handlePlayClick);
-muteBtn.addEventListener("click", handleMuteClick);
-volumeRange.addEventListener("input", handleVolumeTrue);
 video.addEventListener("loadeddata", handleLoadedMetadata);
 video.addEventListener("timeupdate", handleTimeUpdate);
+video.addEventListener("timeupdate", handleTimelineProgress);
+video.addEventListener("ended", handleEnded);
+videoControls.addEventListener("input", hanleVolumeProgress);
+videoControls.addEventListener("mousemove", hanleVolumeProgress);
+playBtn.addEventListener("click", handlePlayClick);
+muteBtn.addEventListener("click", handleMuteClick);
+volumeRange.addEventListener("input", handleVolumeChange);
 videoContainer.addEventListener("mousemove", handleMouseMove);
 videoContainer.addEventListener("mouseleave", handleMouseLeave);
 timeline.addEventListener("input", handleTimelineChange);
