@@ -21,6 +21,27 @@ block content
                         span#fullScreen
                             i.fas.fa-expand
 
+    div.video__data
+        p.video__title=video.title
+        small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
+            span &nbsp;
+            a(href=`/users/${video.owner._id}`)=video.owner.name
+        small.video__owner 남의 동영상 
+        br
+        if String(video.owner._id) === String(loggedInUser._id)
+            a(href=`${video.id}/edit`) 비디오 수정 &rarr;
+            br
+            a(href=`${video.id}/delete`) 비디오 삭제 &rarr;
+
+
+        if loggedIn
+            div.video__comments#aa
+                form.video__comment-form#commentForm   
+                    textarea(cols="30", rows="10", placeholder="댓글을 입력해주세요..")
+                    button 작성하기
+
 
 block scripts
     script(src="/static/js/videoPlayer.js")
+    if loggedIn
+        script(src="/static/js/commentSection.js")

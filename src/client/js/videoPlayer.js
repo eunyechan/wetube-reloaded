@@ -12,6 +12,7 @@ const fullScreenBtn = document.getElementById("fullScreen");
 const fullScreenIcon = fullScreenBtn.querySelector("i");
 const videoContainer = document.getElementById("videoContainer");
 const videoControls = document.getElementById("videoControls");
+const videoComments = document.getElementById("aa");
 
 let controlsTimeout = null;
 let controlsMovementTimeout = null;
@@ -41,6 +42,10 @@ const videoKeyButton = (e) => {
       "%)";
     volumeRange.style.background = color;
   }
+};
+
+const handleStop = (e) => {
+  e.stopPropagation();
 };
 
 const handlePlayClick = (e) => {
@@ -173,3 +178,4 @@ videoContainer.addEventListener("mouseleave", handleMouseLeave);
 timeline.addEventListener("input", handleTimelineChange);
 fullScreenBtn.addEventListener("click", handleFullscreen);
 document.addEventListener("keydown", videoKeyButton);
+videoComments.addEventListener("keydown", handleStop);
