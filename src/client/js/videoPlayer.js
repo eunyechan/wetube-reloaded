@@ -12,11 +12,7 @@ const fullScreenBtn = document.getElementById("fullScreen");
 const fullScreenIcon = fullScreenBtn.querySelector("i");
 const videoContainer = document.getElementById("videoContainer");
 const videoControls = document.getElementById("videoControls");
-<<<<<<< HEAD
 const videoComments = document.getElementById("video__comment");
-=======
-const videoComments = document.getElementById("aa");
->>>>>>> 9442ec1f0399d8c3ffc93b309538c16da72cffad
 
 let controlsTimeout = null;
 let controlsMovementTimeout = null;

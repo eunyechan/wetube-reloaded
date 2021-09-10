@@ -53,11 +53,8 @@ const handleDownload = async () => {
   const mp4Url = URL.createObjectURL(mp4Blob);
   const thumbUrl = URL.createObjectURL(thumbBlob);
 
-<<<<<<< HEAD
   // downloadFile(mp4Url, "MyRecording.mp4");
   // downloadFile(thumbUrl, "MyThumbnail.jpg");
-=======
->>>>>>> 9442ec1f0399d8c3ffc93b309538c16da72cffad
   downloadFile(mp4Url, "MyRecording.mp4");
   downloadFile(thumbUrl, "MyThumbnail.jpg");
 
@@ -85,11 +82,7 @@ const handleStart = () => {
     video.src = videoFile;
     video.loop = true;
     video.play();
-<<<<<<< HEAD
-    actionBtn.innerText = "Download";
-=======
     actionBtn.innerText = "다운받기";
->>>>>>> 9442ec1f0399d8c3ffc93b309538c16da72cffad
     actionBtn.disabled = false;
     actionBtn.addEventListener("click", handleDownload);
   };
