@@ -1,0 +1,120 @@
+form {
+  max-width: 420px;
+  margin: 0 auto;
+  &:not(.search__form) {
+    padding: 30px;
+    background-color: rgba($color: $bg, $alpha: 0.7);
+    border-radius: 10px;
+    border: 1px solid rgba($color: #fff, $alpha: 0.1);
+  }
+}
+
+input:not(input[type="range"]),
+input[type="submit"] {
+  all: unset;
+  padding: 15px 20px;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: black;
+  margin-bottom: 5px;
+  font-size: 16px;
+  color: white;
+  width: 90%;
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .social__btn {
+    border-radius: 5px;
+    padding: 12px 20px;
+    text-align: center;
+    background-color: white !important;
+    color: rgba($color: $red, $alpha: 1) !important;
+    text-align: center !important;
+    cursor: pointer;
+    display: block;
+    border: none;
+    &:focus {
+      outline: none;
+    }
+    &:disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
+}
+.social__btn {
+  cursor: pointer;
+  display: block;
+  border: none;
+  text-align: center !important;
+  &:focus {
+    outline: none;
+  }
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+@keyframes signupHoverColor {
+  from {
+    color: white;
+  }
+  to {
+    color: cornflowerblue;
+  }
+}
+
+@keyframes signupColor {
+  from {
+    color: whcornflowerblueite;
+  }
+  to {
+    color: white;
+  }
+}
+.auth__switch-signup {
+  animation: signupColor 0.5s ease-out;
+}
+.auth__switch-signup:hover {
+  animation: signupHoverColor 0.5s ease-in;
+  color: cornflowerblue;
+}
+
+@keyframes sheen {
+  0% {
+    background-color: black;
+    color: white;
+  }
+  100% {
+    background-color: white;
+  }
+}
+
+input[type="submit"] {
+  border-radius: 5px;
+  padding: 12px 20px;
+  background-color: black;
+  // background-color: white !important;
+  color: white;
+  text-align: center !important;
+  cursor: pointer;
+  display: block;
+  border: none;
+  &:focus {
+    outline: none;
+  }
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  &:hover {
+    animation: sheen 0.5s ease-in-out;
+    background-color: white;
+    color: rgba($color: $red, $alpha: 1) !important;
+  }
+}
+
+// input[type="submit"]:hover {
+
+// }

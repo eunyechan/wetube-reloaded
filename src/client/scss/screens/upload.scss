@@ -1,0 +1,36 @@
+.upload__container {
+  width: 100%;
+  .upload__video {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    video {
+      max-width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+  input[type="submit"] {
+    border-radius: 5px;
+    padding: 12px 20px;
+    background-color: black;
+    // background-color: white !important;
+    color: white;
+    text-align: center !important;
+    cursor: pointer;
+    display: block;
+    border: none;
+    &:focus {
+      outline: none;
+    }
+    &:disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    &:hover {
+      animation: sheen 0.5s ease-in-out;
+      background-color: white;
+      color: rgba($color: $red, $alpha: 1) !important;
+    }
+  }
+}
