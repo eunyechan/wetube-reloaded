@@ -7,6 +7,7 @@ block content
     form(method="POST")
         input(placeholder="UserName" name="username", type="text", required)
         input(placeholder="Password" name="password", type="password", required)
+<<<<<<< HEAD
         input.login-button(type="submit", value="Login")
         include partials/social-login
     div.auth-switch
@@ -14,3 +15,10 @@ block content
         br
         a.auth__switch-signup(href="/join")
             span 회원가입 하러가기 &rarr;
+=======
+        input(type="submit", value="Login")
+        include partials/social-login
+    div.auth-switch
+        span 회원이 아니신가요?  
+        a(href="/join") 회원가입 하러가기 &rarr;
+>>>>>>> dc19e4ea335809e83e80c7db39a1ce7b103eeab2

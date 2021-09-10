@@ -10,9 +10,13 @@ const videoSchema = new mongoose.Schema({
   meta: {
     views: { type: Number, default: 0, required: true },
   },
+<<<<<<< HEAD
   comments: [
     { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Comment" },
   ],
+=======
+  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Video" }],
+>>>>>>> dc19e4ea335809e83e80c7db39a1ce7b103eeab2
   owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
 });
 

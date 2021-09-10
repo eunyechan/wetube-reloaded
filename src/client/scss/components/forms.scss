@@ -26,6 +26,8 @@ input[type="submit"] {
   .social__btn {
     border-radius: 5px;
     padding: 12px 20px;
+    background-color: white;
+    color: rgba($color: $red, $alpha: 1);
     text-align: center;
     background-color: white !important;
     color: rgba($color: $red, $alpha: 1) !important;
@@ -115,6 +117,14 @@ input[type="submit"] {
   }
 }
 
-// input[type="submit"]:hover {
 
-// }
+input[type="submit"],
+.social__btn {
+  border-radius: 5px;
+  padding: 12px 20px;
+  background-color: white;
+  color: rgba($color: $red, $alpha: 1);
+  text-align: center;
+  cursor: pointer;
+  display: block;
+}

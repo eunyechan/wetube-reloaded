@@ -48,6 +48,8 @@ export const postEdit = async (req, res) => {
   if (String(video.owner) !== String(_id)) {
     req.flash("success", "변경 사항이 저장되었습니다");
     return res.redirect(`/videos/${id}`);
+    req.flash("error", "동영상 계정의 주인이 아닙니다");
+    return res.status(403).redirect("/");
   }
   await Video.findByIdAndUpdate(id, {
     title,
@@ -67,8 +69,8 @@ export const postUpload = async (req, res) => {
     user: { _id },
   } = req.session;
   const { video, thumb } = req.files;
+  console.log(video, thumb);
   const { title, description, hashtags } = req.body;
-  const isHeroku = process.env.NODE_ENV === "production";
   try {
     const newVideo = await Video.create({
       title,
@@ -114,6 +116,7 @@ export const search = async (req, res) => {
     videos = await Video.find({
       title: {
         $regex: new RegExp(`${keyword}$`, "i"),
+        // $regex: new RegExp(keyword, "i"),
       },
     }).populate("owner");
   }
@@ -149,4 +152,10 @@ export const createComment = async (req, res) => {
   video.comments.push(comment._id);
   video.save();
   return res.status(201).json({ newCommentId: comment._id });
+  export const createComment = (req, res) => {
+    console.log(req.params);
+    console.log(req.body);
+    console.log(req.body.text, req.body.rating);
+    return res.end();
+  }
 };

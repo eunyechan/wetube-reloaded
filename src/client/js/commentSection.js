@@ -15,13 +15,7 @@ const addComment = (text, id) => {
 };
 
 const handleSubmit = async (event) => {
-  event.preventDefault();
-  const textarea = form.querySelector("textarea");
-  const text = textarea.value;
-  const videoId = videoContainer.dataset.id;
-  if (text === "") {
-    return;
-  }
+
   const response = await fetch(`/api/videos/${videoId}/comment`, {
     method: "POST",
     headers: {

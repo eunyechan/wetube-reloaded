@@ -8,5 +8,8 @@ const commentSchema = new mongoose.Schema({
 });
 
 const Comment = mongoose.model("Comment", commentSchema);
+<<<<<<< HEAD
 
+=======
+>>>>>>> dc19e4ea335809e83e80c7db39a1ce7b103eeab2
 export default Comment;
