@@ -2,7 +2,9 @@ import Video from "../models/Video";
 import User from "../models/User";
 
 export const home = async (req, res) => {
-  const videos = await Video.find({}).sort({ createdAt: "desc" });
+  const videos = await Video.find({})
+    .sort({ createdAt: "desc" })
+    .populate("owner");
   return res.render("home", { pageTitle: "Home", videos });
 };
 
@@ -24,8 +26,8 @@ export const getEdit = async (req, res) => {
   if (!video) {
     return res.status(404).render("404", { pageTitle: "Video not found." });
   }
-  console.log(video.owner, _id);
   if (String(video.owner) !== String(_id)) {
+    req.flash("error", "승인되지 않았습니다");
     return res.status(403).redirect("/");
   }
   res.render("edit", { pageTitle: `Edit ${video.title}`, video });
@@ -42,6 +44,7 @@ export const postEdit = async (req, res) => {
     return res.status(404).render("404", { pageTitle: "Video not found." });
   }
   if (String(video.owner) !== String(_id)) {
+    req.flash("error", "동영상 계정의 주인이 아닙니다");
     return res.status(403).redirect("/");
   }
   await Video.findByIdAndUpdate(id, {
@@ -49,7 +52,6 @@ export const postEdit = async (req, res) => {
     description,
     hashtags: Video.formatHashtags(hashtags),
   });
-
   return res.redirect(`/videos/${id}`);
 };
 
@@ -60,13 +62,15 @@ export const postUpload = async (req, res) => {
   const {
     user: { _id },
   } = req.session;
-  const { path: fileUrl } = req.file;
+  const { video, thumb } = req.files;
+  console.log(video, thumb);
   const { title, description, hashtags } = req.body;
   try {
     const newVideo = await Video.create({
       title,
       description,
-      fileUrl,
+      fileUrl: video[0].path,
+      thumbUrl: thumb[0].path,
       owner: _id,
       hashtags: Video.formatHashtags(hashtags),
     });
@@ -75,7 +79,6 @@ export const postUpload = async (req, res) => {
     user.save();
     return res.redirect("/");
   } catch (error) {
-    console.log(error);
     return res.status(400).render("upload", {
       pageTitle: "Upload Video",
       errorMessage: error._message,
@@ -107,8 +110,25 @@ export const search = async (req, res) => {
       title: {
         $regex: new RegExp(keyword, "i"),
       },
-    });
-    console.log(videos);
+    }).populate("owner");
   }
   return res.render("search", { pageTitle: "Search", videos });
+};
+
+export const registerView = async (req, res) => {
+  const { id } = req.params;
+  const video = await Video.findById(id);
+  if (!video) {
+    return res.sendStatus(404);
+  }
+  video.meta.views = video.meta.views + 1;
+  await video.save();
+  return res.sendStatus(200);
+};
+
+export const createComment = (req, res) => {
+  console.log(req.params);
+  console.log(req.body);
+  console.log(req.body.text, req.body.rating);
+  return res.end();
 };
