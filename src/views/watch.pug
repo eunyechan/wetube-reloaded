@@ -35,6 +35,7 @@ block content
 
 
         if loggedIn
+<<<<<<< HEAD
             div.video__add-comments#aa
                 form.video__comment-form#commentForm   
                     textarea#video__comment(cols="30", rows="10", placeholder="댓글을 입력해주세요..")
@@ -51,3 +52,15 @@ block content
 block scripts
     if loggedIn
         script(src="/static/js/commentSection.js")  
+=======
+            div.video__comments#aa
+                form.video__comment-form#commentForm   
+                    textarea(cols="30", rows="10", placeholder="댓글을 입력해주세요..")
+                    button 작성하기
+
+
+block scripts
+    script(src="/static/js/videoPlayer.js")
+    if loggedIn
+        script(src="/static/js/commentSection.js")
+>>>>>>> 9442ec1f0399d8c3ffc93b309538c16da72cffad

@@ -26,6 +26,11 @@ input[type="submit"] {
   .social__btn {
     border-radius: 5px;
     padding: 12px 20px;
+<<<<<<< HEAD
+=======
+    background-color: white;
+    color: rgba($color: $red, $alpha: 1);
+>>>>>>> 9442ec1f0399d8c3ffc93b309538c16da72cffad
     text-align: center;
     background-color: white !important;
     color: rgba($color: $red, $alpha: 1) !important;
@@ -42,6 +47,7 @@ input[type="submit"] {
     }
   }
 }
+<<<<<<< HEAD
 .social__btn {
   cursor: pointer;
   display: block;
@@ -118,3 +124,16 @@ input[type="submit"] {
 // input[type="submit"]:hover {
 
 // }
+=======
+
+input[type="submit"],
+.social__btn {
+  border-radius: 5px;
+  padding: 12px 20px;
+  background-color: white;
+  color: rgba($color: $red, $alpha: 1);
+  text-align: center;
+  cursor: pointer;
+  display: block;
+}
+>>>>>>> 9442ec1f0399d8c3ffc93b309538c16da72cffad
