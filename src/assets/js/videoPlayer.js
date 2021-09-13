@@ -12,7 +12,7 @@ const fullScreenBtn = document.getElementById("fullScreen");
 const fullScreenIcon = fullScreenBtn.querySelector("i");
 const videoContainer = document.getElementById("videoContainer");
 const videoControls = document.getElementById("videoControls");
-const videoComments = document.getElementById("video__comment");
+const videoComments = document.getElementById("aa");
 
 let controlsTimeout = null;
 let controlsMovementTimeout = null;
@@ -49,6 +49,7 @@ const handleStop = (e) => {
 };
 
 const handlePlayClick = (e) => {
+  console.log("sdf");
   if (video.paused) {
     video.play();
   } else {

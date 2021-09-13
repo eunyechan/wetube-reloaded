@@ -24,37 +24,92 @@ block content
     div.video__data
         p.video__title=video.title
         hr
-        br
         small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
             span &nbsp;
             a.video__owner-name(href=`/users/${video.owner._id}`)=video.owner.name
-            small.video__owner 님의 동영상
-            br
-            if String(video.owner._id) === String(loggedInUser._id)
-                div.video__editDelete-box
-                    button.video__edit-btn(href=`${video.id}/edit`) 비디오 수정
-                    br
-                    button.video__delete-btn(href=`${video.id}/delete`) 비디오 삭제
+            small.video__owner 님의 동영상 
+        br
+        if String(video.owner._id) === String(loggedInUser._id)
+            div.video__editDelete-box
+                a.video__edit-btn(href=`${video.id}/edit`) 비디오 수정 
+                br
+                a.video__delete-btn(href=`${video.id}/delete`) 비디오 삭제 
         br
         br
         hr
 
         if loggedIn
             div.video__add-comments#video__comments-box
-                form.video__comment-form#comment-form   
-                    textarea#video__comment-textarea(placeholder="댓글을 입력해주세요..")
-                div.video__comment__button-box
-                    //- button.video__comment__calcle-button 취소
-                    button.video__comment__write-button 작성하기
+                form.video__comment-form#commentForm
+                    div#video__comment-textarea-box
+                        textarea#video__comment-textarea(placeholder="댓글 추가..")
+                        div.video__comment__button-box
+                            button#video__comment__cancle-button 취소
+                            button#video__comment__write-button 작성
 
-        div.video__comments
-            ul
-                each comment in video.comments.reverse()
-                    li.video__comment-list
-                        span  #{comment.text}
+            div.video__comments
+                ul
+                    each comment in video.comments.reverse()
+                        li.video__comment(data-id=comment.id)
+                            span  #{comment.text}
 
 
 
 block scripts
-    if loggedIn
-        script(src="/static/js/commentSection.js")  
+    script(src="/static/js/videoPlayer.js")
+        if loggedIn
+            script(src="/static/js/commentSection.js")  
+
+//- extends base.pug
+
+
+//- block content
+//-     div#videoContainer(data-id=video._id)
+//-         video(src="/" + video.fileUrl)
+//-         div#videoControls.videoControls
+//-             input(type="range",step="1", value="0", min="0")#timeline.videoControls__timeline
+//-             div.videoControls__play
+//-                 span#play.videoControls__playBtn
+//-                     i.fas.fa-play
+//-                 div.videoControls__volume
+//-                     span#mute
+//-                         i.fas.fa-volume-up
+//-                     input(type="range",step="0.1", value=0.5, min="0", max="1")#volume
+//-                     div.videoControls__time
+//-                         span#currenTime 00:00
+//-                         span  / 
+//-                         span#totalTime 00:00
+//-                     div#fullScreen__box
+//-                         span#fullScreen
+//-                             i.fas.fa-expand
+
+//-     div.video__data
+//-         p.video__title=video.title
+//-         small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
+//-             span &nbsp;
+//-             a(href=`/users/${video.owner._id}`)=video.owner.name
+//-         small.video__owner 남의 동영상 
+//-         br
+//-         if String(video.owner._id) === String(loggedInUser._id)
+//-             a(href=`${video.id}/edit`) 비디오 수정 &rarr;
+//-             br
+//-             a(href=`${video.id}/delete`) 비디오 삭제 &rarr;
+
+
+//-         if loggedIn
+//-             div.video__add-comments#aa
+//-                 form.video__comment-form#commentForm   
+//-                     textarea#video__comment(cols="30", rows="10", placeholder="댓글을 입력해주세요..")
+//-                     button 작성하기
+
+//-         div.video__comments
+//-             ul
+//-                 each comment in video.comments.reverse()
+//-                     li.video__comment
+//-                         span  #{comment.text}
+
+
+
+//- block scripts
+//-     if loggedIn
+//-         script(src="/static/js/commentSection.js")  

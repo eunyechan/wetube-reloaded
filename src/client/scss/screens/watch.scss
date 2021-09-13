@@ -2,6 +2,7 @@
   margin-top: 20px;
   display: flex;
   flex-direction: column;
+  position: relative;
   .video__title {
     font-size: 26px;
     margin-bottom: 5px;
@@ -36,8 +37,10 @@
     display: flex;
     position: absolute;
     right: 0;
+    margin-top: 75px;
   }
   .video__edit-btn {
+    display: flex;
     background-color: transparent;
     color: white;
     border: 1px solid steelblue;
@@ -50,11 +53,13 @@
     }
   }
   .video__delete-btn {
+    display: flex;
     margin-left: 20px;
     background-color: transparent;
     color: white;
     border: 1px solid rgba($color: $red, $alpha: 1);
     border-radius: 9999px;
+    padding: 10px;
     &:hover {
       animation: sheen 0.5s ease-in-out;
       background-color: white;
@@ -63,51 +68,60 @@
   }
 }
 
-.video__comment-form {
-  display: flex;
+#video__comments-box {
   width: 100%;
-  margin-top: 20px;
-  resize: none;
-  margin-bottom: 10px;
-  #video__comment-textarea {
-    width: 100%;
-    height: 20px;
-    background-color: transparent;
-    resize: none;
-    border: none;
-    margin-top: 20px;
-    color: white;
-    font-size: 15px;
-    border-bottom: 1px solid rgba($color: #eee, $alpha: 0.2);
-  }
-  #video__comment-textarea:focus {
-    outline: none;
-  }
-}
-.video__comment__button-box {
-  width: 100%;
-  display: flex;
   position: relative;
-  .video__comment__button {
+  .video__comment-form {
     display: flex;
-    position: absolute;
-    right: 0;
+    width: 100%;
+    margin-top: 20px;
+    resize: none;
+    margin-bottom: 10px;
+    #video__comment-textarea-box {
+      width: 100%;
+      #video__comment-textarea {
+        width: 100%;
+        height: 20px;
+        background-color: transparent;
+        resize: none;
+        border: none;
+        margin-top: 20px;
+        color: white;
+        font-size: 18px;
+        border-bottom: 1px solid rgba($color: #eee, $alpha: 0.2);
+      }
+      #video__comment-textarea:focus {
+        outline: none;
+      }
+    }
+    .video__comment__button-box {
+      position: absolute;
+      right: 0;
+      margin-top: 10px;
+      #video__comment__cancle-button {
+        margin-right: 10px;
+        padding: 10px;
+        display: none;
+      }
+      #video__comment__write-button {
+        padding: 10px;
+        display: none;
+      }
+    }
   }
 }
 
 .video__comments {
   display: flex;
   flex-direction: column;
-  max-width: 320px;
   width: 100%;
   margin: 0 auto;
-  margin-top: 20px;
+  margin-top: 50px;
   .video__comment {
-    padding: 10px;
-    border-radius: 9999px;
-    background-color: white;
-    color: black;
-    margin-bottom: 10px;
+    background-color: transparent;
+    color: white;
+    margin-bottom: 20px;
+    font-size: 15px;
   }
 }
 

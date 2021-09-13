@@ -1,5 +1,5 @@
 const videoContainer = document.getElementById("videoContainer");
-const form = document.getElementById("commentForm");
+const form = document.getElementById("commentForm  ");
 
 const addComment = (text, id) => {
   const videoComments = document.querySelector(".video__comments ul");
@@ -16,6 +16,7 @@ const addComment = (text, id) => {
 
 const handleSubmit = async (event) => {
   event.preventDefault();
+  console.log("asdfas");
   const textarea = form.querySelector("textarea");
   const text = textarea.value;
   const videoId = videoContainer.dataset.id;
@@ -37,5 +38,5 @@ const handleSubmit = async (event) => {
 };
 
 if (form) {
-  form.addEventListener("submit", handleSubmit);
+  form.addEventListener("click", handleSubmit);
 }
