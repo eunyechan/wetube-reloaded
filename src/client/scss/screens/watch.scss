@@ -8,16 +8,93 @@
   }
   .video__createdAt {
     font-size: 12px;
-  }
-  .video__owner {
-    margin-bottom: 5px;
-    font-size: 14px;
-    a {
+    display: flex;
+    position: relative;
+    .video__owner-name {
       color: cornflowerblue;
       text-decoration: underline;
+      display: flex;
+    }
+    .video__owner {
+      margin-bottom: 5px;
+      font-size: 14px;
+      display: flex;
+    }
+  }
+
+  @keyframes sheen {
+    0% {
+      background-color: black;
+      color: white;
+    }
+    100% {
+      background-color: white;
+    }
+  }
+
+  .video__editDelete-box {
+    display: flex;
+    position: absolute;
+    right: 0;
+  }
+  .video__edit-btn {
+    background-color: transparent;
+    color: white;
+    border: 1px solid steelblue;
+    border-radius: 9999px;
+    padding: 10px;
+    &:hover {
+      animation: sheen 0.5s ease-in-out;
+      background-color: white;
+      color: steelblue !important;
+    }
+  }
+  .video__delete-btn {
+    margin-left: 20px;
+    background-color: transparent;
+    color: white;
+    border: 1px solid rgba($color: $red, $alpha: 1);
+    border-radius: 9999px;
+    &:hover {
+      animation: sheen 0.5s ease-in-out;
+      background-color: white;
+      color: rgba($color: $red, $alpha: 1) !important;
     }
   }
 }
+
+.video__comment-form {
+  display: flex;
+  width: 100%;
+  margin-top: 20px;
+  resize: none;
+  margin-bottom: 10px;
+  #video__comment-textarea {
+    width: 100%;
+    height: 20px;
+    background-color: transparent;
+    resize: none;
+    border: none;
+    margin-top: 20px;
+    color: white;
+    font-size: 15px;
+    border-bottom: 1px solid rgba($color: #eee, $alpha: 0.2);
+  }
+  #video__comment-textarea:focus {
+    outline: none;
+  }
+}
+.video__comment__button-box {
+  width: 100%;
+  display: flex;
+  position: relative;
+  .video__comment__button {
+    display: flex;
+    position: absolute;
+    right: 0;
+  }
+}
+
 .video__comments {
   display: flex;
   flex-direction: column;
@@ -32,4 +109,11 @@
     color: black;
     margin-bottom: 10px;
   }
+}
+
+hr {
+  width: 100%;
+  border-top: 1px;
+  opacity: 0.2;
+  // background-color: grey;
 }

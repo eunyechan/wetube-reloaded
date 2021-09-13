@@ -1,32 +1,181 @@
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
-/******/ (() => { // webpackBootstrap
-/******/ 	var __webpack_modules__ = ({
+const video = document.querySelector("video");
+const playBtn = document.getElementById("play");
+const playBtnIcon = playBtn.querySelector("i");
+const muteBtn = document.getElementById("mute");
+const muteBtnIcon = muteBtn.querySelector("i");
+const volumeRange = document.getElementById("volume");
+const currenTime = document.getElementById("currenTime");
+const totalTime = document.getElementById("totalTime");
+const timeline = document.getElementById("timeline");
+const selectValue = document.getElementById("selectValue");
+const fullScreenBtn = document.getElementById("fullScreen");
+const fullScreenIcon = fullScreenBtn.querySelector("i");
+const videoContainer = document.getElementById("videoContainer");
+const videoControls = document.getElementById("videoControls");
+const videoComments = document.getElementById("video__comment");
 
-/***/ "./src/client/js/videoPlayer.js":
-/*!**************************************!*\
-  !*** ./src/client/js/videoPlayer.js ***!
-  \**************************************/
-/***/ (() => {
+let controlsTimeout = null;
+let controlsMovementTimeout = null;
+let volumeValue = 0.5;
 
-eval("var video = document.querySelector(\"video\");\nvar playBtn = document.getElementById(\"play\");\nvar playBtnIcon = playBtn.querySelector(\"i\");\nvar muteBtn = document.getElementById(\"mute\");\nvar muteBtnIcon = muteBtn.querySelector(\"i\");\nvar volumeRange = document.getElementById(\"volume\");\nvar currenTime = document.getElementById(\"currenTime\");\nvar totalTime = document.getElementById(\"totalTime\");\nvar timeline = document.getElementById(\"timeline\");\nvar selectValue = document.getElementById(\"selectValue\");\nvar fullScreenBtn = document.getElementById(\"fullScreen\");\nvar fullScreenIcon = fullScreenBtn.querySelector(\"i\");\nvar videoContainer = document.getElementById(\"videoContainer\");\nvar videoControls = document.getElementById(\"videoControls\");\nvar videoComments = document.getElementById(\"aa\");\nvar controlsTimeout = null;\nvar controlsMovementTimeout = null;\nvar volumeValue = 0.5;\nvideo.volume = volumeValue;\n\nvar videoKeyButton = function videoKeyButton(e) {\n  var keyButton = e.code;\n\n  if (keyButton === \"Space\") {\n    handlePlayClick();\n  }\n\n  if (keyButton === \"KeyF\") {\n    handleFullscreen();\n  }\n\n  if (keyButton === \"KeyM\") {\n    handleMuteClick();\n    var volumeProgress = (volumeRange.value - volumeRange.min) / (volumeRange.max - volumeRange.min) * 100;\n    var color = \"linear-gradient(90deg, rgb(255,255,255)\" + volumeProgress + \"%, rgb(189,189,189)\" + volumeProgress + \"%)\";\n    volumeRange.style.background = color;\n  }\n};\n\nvar handleStop = function handleStop(e) {\n  e.stopPropagation();\n};\n\nvar handlePlayClick = function handlePlayClick(e) {\n  if (video.paused) {\n    video.play();\n  } else {\n    video.pause();\n  }\n\n  playBtnIcon.classList = video.paused ? \"fas fa-play\" : \"fas fa-pause\";\n};\n\nvar handleMuteClick = function handleMuteClick(e) {\n  if (video.muted) {\n    video.muted = false;\n  } else {\n    video.muted = true;\n  }\n\n  muteBtnIcon.classList = video.muted ? \"fas fa-volume-mute\" : \"fas fa-volume-up\";\n  volumeRange.value = video.muted ? 0 : volumeValue;\n};\n\nvar handleVolumeChange = function handleVolumeChange(event) {\n  var value = event.target.value;\n\n  if (video.muted) {\n    video.muted = false;\n  }\n\n  volumeValue = value;\n  video.volume = value;\n};\n\nvar formatTime = function formatTime(seconds) {\n  return new Date(seconds * 1000).toISOString().substr(14, 5);\n};\n\nvar handleLoadedMetadata = function handleLoadedMetadata() {\n  totalTime.innerText = formatTime(Math.floor(video.duration));\n  timeline.max = Math.floor(video.duration);\n};\n\nvar handleTimeUpdate = function handleTimeUpdate() {\n  currenTime.innerText = formatTime(Math.floor(video.currentTime));\n  timeline.value = Math.floor(video.currentTime);\n};\n\nvar handleTimelineProgress = function handleTimelineProgress() {\n  var timelineProgress = (timeline.value - timeline.min) / (timeline.max - timeline.min) * 100;\n  var color = \"linear-gradient(90deg, rgb(255,36,36)\" + timelineProgress + \"%, rgb(189,189,189)\" + timelineProgress + \"%)\";\n  timeline.style.background = color;\n};\n\nvar hanleVolumeProgress = function hanleVolumeProgress(e) {\n  var volumeProgress = (volumeRange.value - volumeRange.min) / (volumeRange.max - volumeRange.min) * 100;\n  var color = \"linear-gradient(90deg, rgb(255,255,255)\" + volumeProgress + \"%, rgb(189,189,189)\" + volumeProgress + \"%)\";\n  volumeRange.style.background = color;\n};\n\nvar handleTimelineChange = function handleTimelineChange(event) {\n  var value = event.target.value;\n  video.currentTime = value;\n};\n\nvar handleFullscreen = function handleFullscreen() {\n  var fullscreen = document.fullscreenElement;\n\n  if (fullscreen) {\n    document.exitFullscreen();\n    fullScreenIcon.classList = \"fas fa-expand\";\n  } else {\n    videoContainer.requestFullscreen();\n    fullScreenIcon.classList = \"fas fa-compress\";\n  }\n};\n\nvar hideControls = function hideControls() {\n  return videoControls.classList.remove(\"showing\");\n};\n\nvar handleMouseMove = function handleMouseMove() {\n  if (controlsTimeout) {\n    clearTimeout(controlsTimeout);\n    controlsTimeout = null;\n  }\n\n  if (controlsMovementTimeout) {\n    clearTimeout(controlsMovementTimeout);\n    controlsMovementTimeout = null;\n  }\n\n  videoControls.classList.add(\"showing\");\n  controlsMovementTimeout = setTimeout(hideControls, 3000);\n};\n\nvar handleMouseLeave = function handleMouseLeave() {\n  controlsTimeout = setTimeout(hideControls, 3000);\n};\n\nvar handleEnded = function handleEnded() {\n  var id = videoContainer.dataset.id;\n  fetch(\"/api/videos/\".concat(id, \"/view\"), {\n    method: \"POST\"\n  });\n};\n\nvideo.addEventListener(\"click\", handlePlayClick);\nvideo.addEventListener(\"loadeddata\", handleLoadedMetadata);\nvideo.addEventListener(\"timeupdate\", handleTimeUpdate);\nvideo.addEventListener(\"timeupdate\", handleTimelineProgress);\nvideo.addEventListener(\"ended\", handleEnded);\nvideoControls.addEventListener(\"input\", hanleVolumeProgress);\nvideoControls.addEventListener(\"mousemove\", hanleVolumeProgress);\nplayBtn.addEventListener(\"click\", handlePlayClick);\nmuteBtn.addEventListener(\"click\", handleMuteClick);\nvolumeRange.addEventListener(\"input\", handleVolumeChange);\nvideoContainer.addEventListener(\"mousemove\", handleMouseMove);\nvideoContainer.addEventListener(\"mouseleave\", handleMouseLeave);\ntimeline.addEventListener(\"input\", handleTimelineChange);\nfullScreenBtn.addEventListener(\"click\", handleFullscreen);\ndocument.addEventListener(\"keydown\", videoKeyButton);\nvideoComments.addEventListener(\"keydown\", handleStop);\n\n//# sourceURL=webpack://wetube/./src/client/js/videoPlayer.js?");
+video.volume = volumeValue;
 
-/***/ })
+const videoKeyButton = (e) => {
+  const keyButton = e.code;
+  if (keyButton === "Space") {
+    handlePlayClick();
+  }
+  if (keyButton === "KeyF") {
+    handleFullscreen();
+  }
+  if (keyButton === "KeyM") {
+    handleMuteClick();
+    const volumeProgress =
+      ((volumeRange.value - volumeRange.min) /
+        (volumeRange.max - volumeRange.min)) *
+      100;
+    const color =
+      "linear-gradient(90deg, rgb(255,255,255)" +
+      volumeProgress +
+      "%, rgb(189,189,189)" +
+      volumeProgress +
+      "%)";
+    volumeRange.style.background = color;
+  }
+};
 
-/******/ 	});
-/************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = {};
-/******/ 	__webpack_modules__["./src/client/js/videoPlayer.js"]();
-/******/ 	
-/******/ })()
-;
+const handleStop = (e) => {
+  e.stopPropagation();
+};
+
+const handlePlayClick = (e) => {
+  if (video.paused) {
+    video.play();
+  } else {
+    video.pause();
+  }
+  playBtnIcon.classList = video.paused ? "fas fa-play" : "fas fa-pause";
+};
+
+const handleMuteClick = (e) => {
+  if (video.muted) {
+    video.muted = false;
+  } else {
+    video.muted = true;
+  }
+  muteBtnIcon.classList = video.muted
+    ? "fas fa-volume-mute"
+    : "fas fa-volume-up";
+  volumeRange.value = video.muted ? 0 : volumeValue;
+};
+
+const handleVolumeChange = (event) => {
+  const {
+    target: { value },
+  } = event;
+  if (video.muted) {
+    video.muted = false;
+  }
+  volumeValue = value;
+  video.volume = value;
+};
+
+const formatTime = (seconds) =>
+  new Date(seconds * 1000).toISOString().substr(14, 5);
+
+const handleLoadedMetadata = () => {
+  totalTime.innerText = formatTime(Math.floor(video.duration));
+  timeline.max = Math.floor(video.duration);
+};
+
+const handleTimeUpdate = () => {
+  currenTime.innerText = formatTime(Math.floor(video.currentTime));
+  timeline.value = Math.floor(video.currentTime);
+};
+
+const handleTimelineProgress = () => {
+  const timelineProgress =
+    ((timeline.value - timeline.min) / (timeline.max - timeline.min)) * 100;
+  const color =
+    "linear-gradient(90deg, rgb(255,36,36)" +
+    timelineProgress +
+    "%, rgb(189,189,189)" +
+    timelineProgress +
+    "%)";
+  timeline.style.background = color;
+};
+
+const hanleVolumeProgress = (e) => {
+  const volumeProgress =
+    ((volumeRange.value - volumeRange.min) /
+      (volumeRange.max - volumeRange.min)) *
+    100;
+  const color =
+    "linear-gradient(90deg, rgb(255,255,255)" +
+    volumeProgress +
+    "%, rgb(189,189,189)" +
+    volumeProgress +
+    "%)";
+  volumeRange.style.background = color;
+};
+
+const handleTimelineChange = (event) => {
+  const {
+    target: { value },
+  } = event;
+  video.currentTime = value;
+};
+
+const handleFullscreen = () => {
+  const fullscreen = document.fullscreenElement;
+  if (fullscreen) {
+    document.exitFullscreen();
+    fullScreenIcon.classList = "fas fa-expand";
+  } else {
+    videoContainer.requestFullscreen();
+    fullScreenIcon.classList = "fas fa-compress";
+  }
+};
+
+const hideControls = () => videoControls.classList.remove("showing");
+
+const handleMouseMove = () => {
+  if (controlsTimeout) {
+    clearTimeout(controlsTimeout);
+    controlsTimeout = null;
+  }
+  if (controlsMovementTimeout) {
+    clearTimeout(controlsMovementTimeout);
+    controlsMovementTimeout = null;
+  }
+  videoControls.classList.add("showing");
+  controlsMovementTimeout = setTimeout(hideControls, 3000);
+};
+
+const handleMouseLeave = () => {
+  controlsTimeout = setTimeout(hideControls, 3000);
+};
+
+const handleEnded = () => {
+  const { id } = videoContainer.dataset;
+  fetch(`/api/videos/${id}/view`, {
+    method: "POST",
+  });
+};
+
+video.addEventListener("click", handlePlayClick);
+video.addEventListener("loadeddata", handleLoadedMetadata);
+video.addEventListener("timeupdate", handleTimeUpdate);
+video.addEventListener("timeupdate", handleTimelineProgress);
+video.addEventListener("ended", handleEnded);
+videoControls.addEventListener("input", hanleVolumeProgress);
+videoControls.addEventListener("mousemove", hanleVolumeProgress);
+playBtn.addEventListener("click", handlePlayClick);
+muteBtn.addEventListener("click", handleMuteClick);
+volumeRange.addEventListener("input", handleVolumeChange);
+videoContainer.addEventListener("mousemove", handleMouseMove);
+videoContainer.addEventListener("mouseleave", handleMouseLeave);
+timeline.addEventListener("input", handleTimelineChange);
+fullScreenBtn.addEventListener("click", handleFullscreen);
+document.addEventListener("keydown", videoKeyButton);
+videoComments.addEventListener("keydown", handleStop);

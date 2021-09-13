@@ -1,32 +1,41 @@
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
-/******/ (() => { // webpackBootstrap
-/******/ 	var __webpack_modules__ = ({
+const videoContainer = document.getElementById("videoContainer");
+const form = document.getElementById("commentForm");
 
-/***/ "./src/client/js/commentSection.js":
-/*!*****************************************!*\
-  !*** ./src/client/js/commentSection.js ***!
-  \*****************************************/
-/***/ (() => {
+const addComment = (text, id) => {
+  const videoComments = document.querySelector(".video__comments ul");
+  const newComment = document.createElement("li");
+  newComment.dataset.id = id;
+  newComment.className = "video__comment";
+  const span = document.createElement("span");
+  span.innerText = ` ${text}`;
+  const span2 = document.createElement("span");
+  span2.innerText = "❌";
+  newComment.appendChild(span);
+  videoComments.prepend(newComment);
+};
 
-eval("var videoContainer = document.getElementById(\"videoContainer\");\nvar form = document.getElementById(\"commentForm\");\n\nvar handleSubmit = function handleSubmit(event) {\n  event.preventDefault();\n  var textarea = form.querySelector(\"textarea\");\n  var text = textarea.value;\n  var videoId = videoContainer.dataset.id;\n\n  if (text === \"\") {\n    return;\n  }\n\n  fetch(\"/api/videos/\".concat(videoId, \"/comment\"), {\n    method: \"POST\",\n    headers: {\n      \"Content-Type\": \"application/json\"\n    },\n    body: JSON.stringify({\n      text: text\n    })\n  });\n};\n\nif (form) {\n  form.addEventListener(\"submit\", handleSubmit);\n}\n\n//# sourceURL=webpack://wetube/./src/client/js/commentSection.js?");
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  const textarea = form.querySelector("textarea");
+  const text = textarea.value;
+  const videoId = videoContainer.dataset.id;
+  if (text === "") {
+    return;
+  }
+  const response = await fetch(`/api/videos/${videoId}/comment`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ text }),
+  });
+  if (response.status === 201) {
+    textarea.value = "";
+    const { newCommentId } = await response.json();
+    addComment(text, newCommentId);
+  }
+};
 
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = {};
-/******/ 	__webpack_modules__["./src/client/js/commentSection.js"]();
-/******/ 	
-/******/ })()
-;
+if (form) {
+  form.addEventListener("submit", handleSubmit);
+}
