@@ -11,8 +11,16 @@ const selectValue = document.getElementById("selectValue");
 const fullScreenBtn = document.getElementById("fullScreen");
 const fullScreenIcon = fullScreenBtn.querySelector("i");
 const videoContainer = document.getElementById("videoContainer");
-const videoControls = document.getElementById("videoControls");
-const videoComments = document.getElementById("video__comment");
+// const videoControls = document.getElementById("videoControls");
+const videoControls = document.querySelector("body");
+const videoComments = document.getElementById("video__comments-box");
+const videoCommentTextarea = document.getElementById("video__comment-textarea");
+const videoCommentCancleBtn = document.getElementById(
+  "video__comment__cancle-button"
+);
+const videoCommentWriteBtn = document.getElementById(
+  "video__comment__write-button"
+);
 
 let controlsTimeout = null;
 let controlsMovementTimeout = null;
@@ -163,6 +171,24 @@ const handleEnded = () => {
   });
 };
 
+const handleText = () => {
+  console.log("sdf");
+  videoCommentCancleBtn.style.display = "block";
+  videoCommentWriteBtn.style.display = "block";
+  console.log(videoCommentTextarea.value.length);
+  if (videoCommentTextarea.value.length > 0) {
+    videoCommentWriteBtn.style.cursor = "pointer";
+    videoCommentWriteBtn.style.pointerEvents = "stroke";
+    videoCommentWriteBtn.style.backgroundColor = "white";
+    videoCommentWriteBtn.style.color = "#cc0d00";
+  }
+  if (videoCommentTextarea.value.length < 1) {
+    videoCommentWriteBtn.style.pointerEvents = "none";
+    videoCommentWriteBtn.style.backgroundColor = "#484848";
+    videoCommentWriteBtn.style.color = "#717171";
+  }
+};
+
 video.addEventListener("click", handlePlayClick);
 video.addEventListener("loadeddata", handleLoadedMetadata);
 video.addEventListener("timeupdate", handleTimeUpdate);
@@ -179,3 +205,5 @@ timeline.addEventListener("input", handleTimelineChange);
 fullScreenBtn.addEventListener("click", handleFullscreen);
 document.addEventListener("keydown", videoKeyButton);
 videoComments.addEventListener("keydown", handleStop);
+videoCommentTextarea.addEventListener("click", handleText);
+videoCommentTextarea.addEventListener("input", handleText);

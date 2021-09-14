@@ -94,18 +94,27 @@
         outline: none;
       }
     }
-    .video__comment__button-box {
-      position: absolute;
-      right: 0;
+    #video__comment__button-box {
+      width: 100%;
       margin-top: 10px;
+      display: flex;
+      justify-content: end;
+      // align-items: flex-end;
       #video__comment__cancle-button {
-        margin-right: 10px;
-        padding: 10px;
+        margin-right: 20px;
+        padding: 8px 15px;
         display: none;
+        background-color: transparent;
+        border: none;
+        color: rgb(231, 224, 224);
+        cursor: pointer;
       }
       #video__comment__write-button {
-        padding: 10px;
+        padding: 8px 15px;
         display: none;
+        color: #717171;
+        background-color: #484848;
+        border: none;
       }
     }
   }
@@ -116,7 +125,7 @@
   flex-direction: column;
   width: 100%;
   margin: 0 auto;
-  margin-top: 50px;
+  margin-top: 100px;
   .video__comment {
     background-color: transparent;
     color: white;
