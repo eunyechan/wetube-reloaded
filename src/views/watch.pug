@@ -1,6 +1,7 @@
 extends base.pug
 
 
+
 block content
     div#videoContainer(data-id=video._id)
         video(src="/" + video.fileUrl)
@@ -38,24 +39,27 @@ block content
         br
         hr
 
-        if loggedIn
-            div.video__add-comments#video__comments-box
-                form.video__comment-form#commentForm
-                    div#video__comment-textarea-box
-                        textarea#video__comment-textarea(placeholder="댓글 추가..")
-                        div#video__comment__button-box
-                            button#video__comment__cancle-button 취소
-                            button#video__comment__write-button 작성
+    if loggedIn
+        div.video__add-comments#video__comments-box
+            form.video__comment-form#commentForm
+                div#video__comment-textarea-box
+                    textarea#video__comment-textarea(placeholder="댓글 추가..")
+                    div#video__comment__button-box
+                        span#video__comment__cancle-button 취소
+                        button#video__comment__write-button 작성
 
-        div.video__comments
-            ul
-                each comment in video.comments.reverse()
-                    li.video__comment(data-id=comment.id)
-                        span  #{comment.text}
-
+    div.video__comments
+        ul  
+            each comment in video.comments.reverse()
+                li.video__comment(data-id=comment.id)
+                    if loggedIn && (loggedInUser._id === String(comment.owner)) 
+                        img.header__avatar(src="/" + avatarUrl)
+                    div
+                        span.user__name=`${userName}`
+                        span.user__comment  #{comment.text}
 
 
 block scripts
     script(src="/static/js/videoPlayer.js")
-        if loggedIn
-            script(src="/static/js/commentSection.js")  
+    if loggedIn
+        script(src="/static/js/commentSection.js")  

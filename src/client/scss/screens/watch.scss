@@ -130,7 +130,20 @@
     background-color: transparent;
     color: white;
     margin-bottom: 20px;
-    font-size: 15px;
+    display: flex;
+    padding: 10px;
+  }
+  .header__avatar {
+    display: flex;
+    margin-right: 15px;
+  }
+  .user__name {
+    display: flex;
+    // border: 2px solid white;
+    margin-bottom: 13px;
+    font-weight: bold;
+  }
+  .user__comment {
   }
 }
 
