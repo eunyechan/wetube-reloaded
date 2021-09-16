@@ -1,34 +1,29 @@
+import { async } from "regenerator-runtime";
+
 const videoContainer = document.getElementById("videoContainer");
-const videoEditDeleteBox = document.getElementById("video__editDelete-box");
 const form = document.getElementById("commentForm");
-const videoComments = document.getElementById("video__comments-box");
+const videoCommentsBox = document.getElementById("video__comments-box");
 const videoCommentTextarea = document.getElementById("video__comment-textarea");
+const videoComments = document.querySelector(".video__comments ul");
 const videoCommentCancleBtn = document.getElementById(
   "video__comment__cancle-button"
 );
 const videoCommentWriteBtn = document.getElementById(
   "video__comment__write-button"
 );
+const deleteBtn = document.getElementById("user__comment-deleteBtn");
 
 const addComment = (text, id) => {
-  const videoComments = document.querySelector(".video__comments ul");
   const newComment = document.createElement("li");
-  const userAvatar = document.querySelector(".header__avatar");
-  const username = document.querySelector(".user__name");
-  newComment.dataset.id = id;
+  newComment.dataset.commentid = id;
   newComment.className = "video__comment";
   const span = document.createElement("span");
   span.innerText = ` ${text}`;
-  // const span2 = document.createElement("span");
-  // span2.innerText = "❌";
-  newComment.style.display = "flex";
-  username.style.display = "flex";
-  span.style.display = "flex";
-  newComment.appendChild(userAvatar);
-  newComment.appendChild(username);
+  const span2 = document.createElement("button");
+  span2.innerText = " ❌";
+  span2.className = "deleteBtn";
   newComment.appendChild(span);
-  // span.style.border = "1px, solid, white";
-  // newComment.appendChild(span2);
+  newComment.appendChild(span2);
   videoComments.prepend(newComment);
 };
 
@@ -54,11 +49,25 @@ const handleSubmit = async (event) => {
   }
 };
 
-const editDeleteVideo = () => {
-  if (loggedIn === true) {
-    videoEditDeleteBox.style.opacity = 1;
+const handleDelete = async (event) => {
+  console.log(event.target.parentElement);
+  const selectBtn = event.target.parentElement;
+  const id = selectBtn.parentElement.dataset.id;
+  if (selectBtn.innerText === "❌") {
+    const response = await fetch(`/api/videos/${id}/delete`, {
+      method: "DELETE",
+    });
+    deleteComment(selectBtn.parentElement);
   }
 };
+
+const deleteComment = (selectBtn) => {
+  selectBtn.parentNode.removeChild(selectBtn);
+  console.log("asd");
+};
+
+if (form) form.addEventListener("submit", handleSubmit);
+deleteBtn.addEventListener("click", handleDelete);
 
 const handleStop = (e) => {
   e.stopPropagation();
@@ -87,11 +96,10 @@ const hanldeTextCancle = () => {
   textarea.value = "";
 };
 
-if (form) {
-  form.addEventListener("submit", handleSubmit);
-}
+// form.addEventListener("submit", handleSubmit);
 
-videoComments.addEventListener("keydown", handleStop);
+videoCommentsBox.addEventListener("keydown", handleStop);
 videoCommentTextarea.addEventListener("click", handleText);
 videoCommentTextarea.addEventListener("input", handleText);
 videoCommentCancleBtn.addEventListener("click", hanldeTextCancle);
+// commentdeleteBtn.addEventListener("click", handleDelete);

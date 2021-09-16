@@ -11,15 +11,27 @@
     font-size: 12px;
     display: flex;
     position: relative;
+    // align-items: center;
+    .aaa {
+      display: flex;
+    }
     .video__owner-name {
       color: cornflowerblue;
       text-decoration: underline;
       display: flex;
     }
     .video__owner {
-      margin-bottom: 5px;
-      font-size: 14px;
+      margin-bottom: 15px;
+      font-size: 16px;
       display: flex;
+    }
+    .video__editDelete-box {
+      display: flex;
+      width: 60%;
+      justify-content: end;
+      margin-left: 150px;
+      padding-top: 40px;
+      text-align: center;
     }
   }
 
@@ -33,19 +45,13 @@
     }
   }
 
-  .video__editDelete-box {
-    display: flex;
-    position: absolute;
-    right: 0;
-    margin-top: 75px;
-  }
   .video__edit-btn {
     display: flex;
     background-color: transparent;
     color: white;
     border: 1px solid steelblue;
     border-radius: 9999px;
-    padding: 10px;
+    padding: 20px;
     &:hover {
       animation: sheen 0.5s ease-in-out;
       background-color: white;
@@ -59,7 +65,7 @@
     color: white;
     border: 1px solid rgba($color: $red, $alpha: 1);
     border-radius: 9999px;
-    padding: 10px;
+    padding: 20px;
     &:hover {
       animation: sheen 0.5s ease-in-out;
       background-color: white;
