@@ -5,6 +5,7 @@ const form = document.getElementById("commentForm");
 const videoCommentsBox = document.getElementById("video__comments-box");
 const videoCommentTextarea = document.getElementById("video__comment-textarea");
 const videoComments = document.querySelector(".video__comments ul");
+const videoCommentList = document.querySelector(".video__comment");
 const videoCommentCancleBtn = document.getElementById(
   "video__comment__cancle-button"
 );
@@ -21,7 +22,7 @@ const addComment = (text, id) => {
   span.innerText = ` ${text}`;
   const span2 = document.createElement("button");
   span2.innerText = " ❌";
-  span2.className = "deleteBtn";
+  span2.className = "deleteButton";
   newComment.appendChild(span);
   newComment.appendChild(span2);
   videoComments.prepend(newComment);
@@ -50,24 +51,23 @@ const handleSubmit = async (event) => {
 };
 
 const handleDelete = async (event) => {
-  console.log(event.target.parentElement);
   const selectBtn = event.target.parentElement;
-  const id = selectBtn.parentElement.dataset.id;
-  if (selectBtn.innerText === "❌") {
-    const response = await fetch(`/api/videos/${id}/delete`, {
-      method: "DELETE",
-    });
+  const id = selectBtn.dataset.commentid;
+  console.log(selectBtn);
+  const response = await fetch(`/api/videos/${id}/commentDelete`, {
+    method: "DELETE",
+  });
+  if (response.status === 201) {
     deleteComment(selectBtn.parentElement);
   }
 };
 
 const deleteComment = (selectBtn) => {
   selectBtn.parentNode.removeChild(selectBtn);
-  console.log("asd");
+  videoCommentList.style.display = "none";
 };
 
 if (form) form.addEventListener("submit", handleSubmit);
-deleteBtn.addEventListener("click", handleDelete);
 
 const handleStop = (e) => {
   e.stopPropagation();
@@ -96,10 +96,8 @@ const hanldeTextCancle = () => {
   textarea.value = "";
 };
 
-// form.addEventListener("submit", handleSubmit);
-
 videoCommentsBox.addEventListener("keydown", handleStop);
 videoCommentTextarea.addEventListener("click", handleText);
 videoCommentTextarea.addEventListener("input", handleText);
 videoCommentCancleBtn.addEventListener("click", hanldeTextCancle);
-// commentdeleteBtn.addEventListener("click", handleDelete);
+deleteBtn && deleteBtn.addEventListener("click", handleDelete, false);

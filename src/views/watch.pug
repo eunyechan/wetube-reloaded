@@ -30,7 +30,7 @@ block content
                 a.video__owner-name(href=`/users/${video.owner._id}`)=video.owner.name
                 span.video__owner 님의 동영상 
                     br
-            if String(video.owner._id) === String(loggedInUser._id)
+            if loggedIn && (loggedInUser._id === String(video.owner._id))
                 div.video__editDelete-box
                     a.video__edit-btn(href=`${video.id}/edit`) 비디오 수정 
                     br
@@ -47,20 +47,22 @@ block content
                     div#video__comment__button-box
                         span#video__comment__cancle-button 취소
                         button#video__comment__write-button 작성
+    else 
+        span 댓글을 작성하려면 로그인을 해주세요
 
     div.video__comments
         ul  
             each comment in video.comments.reverse()
                 li.video__comment(data-commentid=comment.id)
-                    //- if loggedInUser.avatarUrl === ""
-                    //-     span asfasf
+                    //- if loggedIn && (loggedInUser._id === String(comment.owner)) === undifined
+                    //-     span 😀
                     //- else
-                        //- img.header__avatar(src="/" + loggedInUser.avatarUrl)
+                    //-     img.header__avatar(src="/" + comment.avatarUrl)
                     //- div
-                        //- span.user__name #{comment.id}
+                    //-     span.user__name=`${username}`
                     span.user__comment  #{comment.text}
-                    if loggedIn && (loggedInUser._id === String(comment.owner)) 
-                        button#user__comment-deleteBtn(data-commentid=comment._id) ❌
+                    if loggedIn && (loggedInUser._id === String(comment.owner))
+                        button#user__comment-deleteBtn ❌
     //- div.video__comment
     //-     form#commentForm.comment__form
     //-         textarea( placeholder="write a comment")

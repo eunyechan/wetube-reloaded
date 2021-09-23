@@ -145,6 +145,7 @@ export const createComment = async (req, res) => {
   const comment = await Comment.create({
     text,
     owner: user._id,
+    // username: username,
     video: id,
   });
   video.comments.push(comment._id);
@@ -154,8 +155,8 @@ export const createComment = async (req, res) => {
 
 export const deleteComment = async (req, res) => {
   const {
-    params: { id },
     session: { user },
+    params: { id },
   } = req;
   const comment = await Comment.findById(id).populate("owner");
   const video = await Video.findById(comment.video);
