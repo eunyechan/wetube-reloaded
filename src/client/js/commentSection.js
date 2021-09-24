@@ -33,6 +33,7 @@ const handleSubmit = async (event) => {
   const textarea = form.querySelector("textarea");
   const text = textarea.value;
   const videoId = videoContainer.dataset.id;
+
   if (text === "") {
     return;
   }
@@ -44,6 +45,7 @@ const handleSubmit = async (event) => {
     body: JSON.stringify({ text }),
   });
   if (response.status === 201) {
+    // setTimeout("location.reload()");
     textarea.value = "";
     const { newCommentId } = await response.json();
     addComment(text, newCommentId);
@@ -53,18 +55,25 @@ const handleSubmit = async (event) => {
 const handleDelete = async (event) => {
   const selectBtn = event.target.parentElement;
   const id = selectBtn.dataset.commentid;
-  console.log(selectBtn);
+  locationReload();
+  // console.log(id);
   const response = await fetch(`/api/videos/${id}/commentDelete`, {
     method: "DELETE",
   });
   if (response.status === 201) {
-    deleteComment(selectBtn.parentElement);
+    deleteComment(id);
+  }
+};
+
+const locationReload = () => {
+  setTimeout("location.reload()");
+  if (window.location.reload === true) {
+    videoCommentList.style.display = "none";
   }
 };
 
 const deleteComment = (selectBtn) => {
   selectBtn.parentNode.removeChild(selectBtn);
-  videoCommentList.style.display = "none";
 };
 
 if (form) form.addEventListener("submit", handleSubmit);

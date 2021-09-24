@@ -163,8 +163,8 @@ export const deleteComment = async (req, res) => {
   if (String(comment.owner._id) !== String(user._id)) {
     return res.sendStatus(404);
   }
-  await Comment.findByIdAndRemove(id);
-  video.comments.remove(id);
-  video.save();
+  await Comment.findByIdAndRemove(comment.id);
+  // console.log(Comment.findByIdAndRemove(id));
+  // video.comments.remove(id);
   return res.sendStatus(200);
 };
