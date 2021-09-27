@@ -45,7 +45,7 @@ export const postLogin = async (req, res) => {
   if (!user) {
     return res.status(400).render("login", {
       pageTitle,
-      errorMessage: "An account with this username does not exists.",
+      errorMessage: "사용자 이름을 가진 계정이 없습니다.",
     });
   }
   const ok = await bcrypt.compare(password, user.password);
