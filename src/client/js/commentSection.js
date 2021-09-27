@@ -4,7 +4,6 @@ const videoContainer = document.getElementById("videoContainer");
 const form = document.getElementById("commentForm");
 const videoCommentsBox = document.getElementById("video__comments-box");
 const videoCommentTextarea = document.getElementById("video__comment-textarea");
-const videoComments = document.querySelector(".video__comments ul");
 const videoCommentList = document.querySelector(".video__comment");
 const videoCommentCancleBtn = document.getElementById(
   "video__comment__cancle-button"
@@ -12,20 +11,30 @@ const videoCommentCancleBtn = document.getElementById(
 const videoCommentWriteBtn = document.getElementById(
   "video__comment__write-button"
 );
+const userCommentContainerBox = document.querySelector(
+  ".user__comment__container-box"
+);
+const userCommentFirstdBtn = document.querySelector(
+  ".user__comment__hover-firstbtn"
+);
+const userCommentSecondBtn = document.getElementById("user__comment-deleteBtn");
 const deleteBtn = document.getElementById("user__comment-deleteBtn");
 
+let toggleValue = true;
+
 const addComment = (text, id) => {
-  const newComment = document.createElement("li");
-  newComment.dataset.commentid = id;
-  newComment.className = "video__comment";
-  const span = document.createElement("span");
-  span.innerText = ` ${text}`;
-  const span2 = document.createElement("button");
-  span2.innerText = " ❌";
-  span2.className = "deleteButton";
-  newComment.appendChild(span);
-  newComment.appendChild(span2);
-  videoComments.prepend(newComment);
+  locationReloadSubmit();
+  // const newComment = document.createElement("li");
+  // newComment.className = "video__comment";
+  // const span = document.createElement("span");
+  // span.innerText = ` ${text}`;
+  // newComment.dataset.commentid = id;
+  // const span2 = document.createElement("button");
+  // span2.innerText = " ❌";
+  // span2.className = "deleteButton";
+  // newComment.appendChild(span);
+  // newComment.appendChild(span2);
+  // videoComments.prepend(newComment);
 };
 
 const handleSubmit = async (event) => {
@@ -45,7 +54,6 @@ const handleSubmit = async (event) => {
     body: JSON.stringify({ text }),
   });
   if (response.status === 201) {
-    // setTimeout("location.reload()");
     textarea.value = "";
     const { newCommentId } = await response.json();
     addComment(text, newCommentId);
@@ -55,8 +63,8 @@ const handleSubmit = async (event) => {
 const handleDelete = async (event) => {
   const selectBtn = event.target.parentElement;
   const id = selectBtn.dataset.commentid;
-  locationReload();
-  // console.log(id);
+  locationReloadDelete();
+  console.log(id);
   const response = await fetch(`/api/videos/${id}/commentDelete`, {
     method: "DELETE",
   });
@@ -65,7 +73,11 @@ const handleDelete = async (event) => {
   }
 };
 
-const locationReload = () => {
+const locationReloadSubmit = () => {
+  setTimeout("location.reload()");
+};
+
+const locationReloadDelete = () => {
   setTimeout("location.reload()");
   if (window.location.reload === true) {
     videoCommentList.style.display = "none";
@@ -105,8 +117,42 @@ const hanldeTextCancle = () => {
   textarea.value = "";
 };
 
+const hanldeBtnOver = () => {
+  if (toggleValue === true) {
+    userCommentFirstdBtn.style.display = "block";
+    toggleValue = false;
+  } else {
+    hanldeBtnOut();
+  }
+};
+const hanldeBtnOut = () => {
+  userCommentFirstdBtn.style.display = "none";
+  toggleValue = true;
+};
+
+const handleDeleteBtn = () => {
+  if (toggleValue === false) {
+    toggleValue = true;
+    userCommentSecondBtn.style.display = "flex";
+    userCommentSecondBtn.style.marginLeft = "-5px";
+    userCommentSecondBtn.style.top = "30px";
+    userCommentSecondBtn.style.position = "absolute";
+    userCommentSecondBtn.style.margintop = "40px";
+  } else {
+    toggleValue = false;
+    userCommentSecondBtn.style.display = "none";
+    userCommentSecondBtn.style.marginLeft = "-5px";
+    userCommentSecondBtn.style.top = "30px";
+    userCommentSecondBtn.style.position = "absolute";
+    userCommentSecondBtn.style.margintop = "40px";
+  }
+};
+
 videoCommentsBox.addEventListener("keydown", handleStop);
 videoCommentTextarea.addEventListener("click", handleText);
 videoCommentTextarea.addEventListener("input", handleText);
 videoCommentCancleBtn.addEventListener("click", hanldeTextCancle);
 deleteBtn && deleteBtn.addEventListener("click", handleDelete, false);
+userCommentFirstdBtn.addEventListener("click", handleDeleteBtn);
+userCommentContainerBox.addEventListener("mouseover", hanldeBtnOver);
+userCommentContainerBox.addEventListener("mouseout", hanldeBtnOut);

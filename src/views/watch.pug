@@ -53,16 +53,25 @@ block content
     div.video__comments
         ul  
             each comment in video.comments.reverse()
-                li.video__comment(data-commentid=comment.id)
+                div.user__comment__container-box
+                    li.user__comment-list
+                        span.user__comment  #{comment.text}
+                        span.user__comment__hover-firstbtn(data-commentid=comment.id)
+                            i.fas.fa-ellipsis-v 
+                            if loggedIn && (loggedInUser._id === String(comment.owner))
+                                button#user__comment-deleteBtn(data-commentid=comment.id)
+                                    i.far.fa-trash-alt
+                                    span.user__comment__deleteBtn-span 삭제
+                            //- else 
+                                //- span 댓글 주인이 아닙니다
+                            //- li.user__comment-list-secondbtn
                     //- if loggedIn && (loggedInUser._id === String(comment.owner)) === undifined
                     //-     span 😀
                     //- else
                     //-     img.header__avatar(src="/" + comment.avatarUrl)
                     //- div
                     //-     span.user__name=`${username}`
-                    span.user__comment  #{comment.text}
-                    if loggedIn && (loggedInUser._id === String(comment.owner))
-                        button#user__comment-deleteBtn ❌
+                            
     //- div.video__comment
     //-     form#commentForm.comment__form
     //-         textarea( placeholder="write a comment")

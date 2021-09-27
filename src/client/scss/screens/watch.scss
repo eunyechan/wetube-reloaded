@@ -132,30 +132,65 @@
   width: 100%;
   margin: 0 auto;
   margin-top: 100px;
-  .video__comment {
-    background-color: transparent;
-    color: white;
+  .user__comment__container-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    margin-bottom: 100px;
+    height: 60px;
+  }
+  // .user__comment__container-box:hover {
+  //   .user__comment__hover-firstbtn {
+  //     display: block;
+  //   }
+  // }
+  .user__comment-list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
-    display: flex;
-    padding: 10px;
-  }
-  .header__avatar {
-    display: flex;
-    margin-right: 15px;
-  }
-  .user__name {
-    display: flex;
-    // border: 2px solid white;
-    margin-bottom: 13px;
-    font-weight: bold;
-  }
-  .user__comment {
-  }
-}
 
-hr {
-  width: 100%;
-  border-top: 1px;
-  opacity: 0.2;
-  // background-color: grey;
+    .user__comment__hover-firstbtn {
+      display: none;
+      position: absolute;
+      right: 0;
+      font-size: 24px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    #user__comment-deleteBtn {
+      margin-left: 140px;
+      background-color: transparent;
+      padding: 10px;
+      width: 100px;
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 16px;
+      color: white;
+    }
+    .user__comment__deleteBtn-span {
+      padding-left: 10px;
+    }
+    .header__avatar {
+      padding: 10px;
+      display: flex;
+      margin-right: 15px;
+    }
+    .user__name {
+      display: flex;
+      margin-bottom: 13px;
+      font-weight: bold;
+    }
+  }
+
+  hr {
+    width: 100%;
+    border-top: 1px;
+    opacity: 0.2;
+    // background-color: grey;
+  }
 }
