@@ -121,30 +121,29 @@ const hanldeBtnOver = () => {
   if (toggleValue === true) {
     userCommentFirstdBtn.style.display = "block";
     toggleValue = false;
-  } else {
-    hanldeBtnOut();
   }
 };
-const hanldeBtnOut = () => {
-  userCommentFirstdBtn.style.display = "none";
-  toggleValue = true;
+const hanldeBtnLeave = () => {
+  if (toggleValue === false) {
+    userCommentFirstdBtn.style.display = "none";
+    userCommentSecondBtn.style.display = "none";
+    toggleValue = true;
+  }
 };
 
 const handleDeleteBtn = () => {
   if (toggleValue === false) {
-    toggleValue = true;
     userCommentSecondBtn.style.display = "flex";
     userCommentSecondBtn.style.marginLeft = "-5px";
-    userCommentSecondBtn.style.top = "30px";
+    userCommentSecondBtn.style.top = "50px";
     userCommentSecondBtn.style.position = "absolute";
-    userCommentSecondBtn.style.margintop = "40px";
+    toggleValue = true;
   } else {
-    toggleValue = false;
     userCommentSecondBtn.style.display = "none";
     userCommentSecondBtn.style.marginLeft = "-5px";
-    userCommentSecondBtn.style.top = "30px";
+    userCommentSecondBtn.style.top = "50px";
     userCommentSecondBtn.style.position = "absolute";
-    userCommentSecondBtn.style.margintop = "40px";
+    toggleValue = false;
   }
 };
 
@@ -155,4 +154,4 @@ videoCommentCancleBtn.addEventListener("click", hanldeTextCancle);
 deleteBtn && deleteBtn.addEventListener("click", handleDelete, false);
 userCommentFirstdBtn.addEventListener("click", handleDeleteBtn);
 userCommentContainerBox.addEventListener("mouseover", hanldeBtnOver);
-userCommentContainerBox.addEventListener("mouseout", hanldeBtnOut);
+userCommentContainerBox.addEventListener("mouseleave", hanldeBtnLeave);
