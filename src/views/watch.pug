@@ -24,9 +24,14 @@ block content
 
     div.video__data
         p.video__title=video.title
-        hr
+
+        br
+        hr.video__data-hr
+        br
+
+
         small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
-            div.aaa
+            div.video__data-box
                 a.video__owner-name(href=`/users/${video.owner._id}`)=video.owner.name
                 span.video__owner 님의 동영상 
                     br
@@ -35,9 +40,9 @@ block content
                     a.video__edit-btn(href=`${video.id}/edit`) 비디오 수정 
                     br
                     a.video__delete-btn(href=`${video.id}/delete`) 비디오 삭제 
-        br
-        br
-        hr
+    //- br
+    br
+    hr.video__data-hr
 
     if loggedIn
         div.video__add-comments#video__comments-box

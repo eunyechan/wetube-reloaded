@@ -8,8 +8,12 @@
     "url": "git+https://github.com/eunyechan/wetube-reloaded.git"
   },
   "scripts": {
+    "start": "node build/init.js",
+    "build": "npm run build:server && npm run build:assets",
+    "build:server": "babel src -d build",
+    "build:assets": "webpack --mode=production",
     "dev:server": "nodemon",
-    "dev:assets": "webpack"
+    "dev:assets": "webpack --mode=development -w"
   },
   "author": "eunyechan",
   "license": "MIT",
@@ -35,7 +39,8 @@
     "regenerator-runtime": "^0.13.9"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.3",
+    "@babel/cli": "^7.15.7",
+    "@babel/core": "^7.15.5",
     "@babel/node": "^7.14.2",
     "@babel/preset-env": "^7.14.4",
     "babel-loader": "^8.2.2",
