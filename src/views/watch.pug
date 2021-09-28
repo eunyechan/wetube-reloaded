@@ -1,6 +1,7 @@
 extends base.pug
 
 
+
 block content
     div#videoContainer(data-id=video._id)
         video(src="/" + video.fileUrl)
@@ -23,25 +24,74 @@ block content
 
     div.video__data
         p.video__title=video.title
-        small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
-            span &nbsp;
-            a(href=`/users/${video.owner._id}`)=video.owner.name
-        small.video__owner 남의 동영상 
+
         br
-        if String(video.owner._id) === String(loggedInUser._id)
-            a(href=`${video.id}/edit`) 비디오 수정 &rarr;
-            br
-            a(href=`${video.id}/delete`) 비디오 삭제 &rarr;
+        hr.video__data-hr
+        br
 
 
-        if loggedIn
-            div.video__comments#aa
-                form.video__comment-form#commentForm   
-                    textarea(cols="30", rows="10", placeholder="댓글을 입력해주세요..")
-                    button 작성하기
+        small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
+            div.video__data-box
+                a.video__owner-name(href=`/users/${video.owner._id}`)=video.owner.name
+                span.video__owner 님의 동영상 
+                    br
+            if loggedIn && (loggedInUser._id === String(video.owner._id))
+                div.video__editDelete-box
+                    a.video__edit-btn(href=`${video.id}/edit`) 비디오 수정 
+                    br
+                    a.video__delete-btn(href=`${video.id}/delete`) 비디오 삭제 
+    //- br
+    br
+    hr.video__data-hr
+
+    if loggedIn
+        div.video__add-comments#video__comments-box
+            form.video__comment-form#commentForm
+                div#video__comment-textarea-box
+                    textarea#video__comment-textarea(placeholder="댓글 추가..")
+                    div#video__comment__button-box
+                        span#video__comment__cancle-button 취소
+                        button#video__comment__write-button 작성
+    else 
+        span 댓글을 작성하려면 로그인을 해주세요
+
+    div.video__comments
+        ul  
+            each comment in video.comments.reverse()
+                div.user__comment__container-box
+                    li.user__comment-list
+                        span.user__comment  #{comment.text}
+                        span.user__comment__hover-firstbtn(data-commentid=comment.id)
+                            i.fas.fa-ellipsis-v 
+                            if loggedIn && (loggedInUser._id === String(comment.owner))
+                                button#user__comment-deleteBtn(data-commentid=comment.id)
+                                    i.far.fa-trash-alt
+                                    span.user__comment__deleteBtn-span 삭제
+                            //- else 
+                                //- span 댓글 주인이 아닙니다
+                            //- li.user__comment-list-secondbtn
+                    //- if loggedIn && (loggedInUser._id === String(comment.owner)) === undifined
+                    //-     span 😀
+                    //- else
+                    //-     img.header__avatar(src="/" + comment.avatarUrl)
+                    //- div
+                    //-     span.user__name=`${username}`
+                            
+    //- div.video__comment
+    //-     form#commentForm.comment__form
+    //-         textarea( placeholder="write a comment")
+    //-         button add comment
+    //-     ul
+    //-         each comment in video.comments
+    //-             li
+    //-                 i.fas.fa-comment.fa-lg
+    //-                 span=comment.text
+    //-                 if String(comment.owner) === String(loggedInUser._id)   
+    //-                     button#delBtn(data-commentid=comment._id) ❌ 
+
 
 
 block scripts
     script(src="/static/js/videoPlayer.js")
     if loggedIn
-        script(src="/static/js/commentSection.js")
+        script(src="/static/js/commentSection.js")  

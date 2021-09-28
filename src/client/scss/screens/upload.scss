@@ -10,9 +10,26 @@
       margin-bottom: 10px;
     }
   }
-  #submit {
-    background-color: white;
-    color: black;
-    //color
+  input[type="submit"] {
+    border-radius: 5px;
+    padding: 12px 20px;
+    background-color: black;
+    color: white;
+    text-align: center !important;
+    cursor: pointer;
+    display: block;
+    border: none;
+    &:focus {
+      outline: none;
+    }
+    &:disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    &:hover {
+      animation: sheen 0.5s ease-in-out;
+      background-color: white;
+      color: rgba($color: $red, $alpha: 1) !important;
+    }
   }
 }
