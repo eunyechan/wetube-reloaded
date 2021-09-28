@@ -24,6 +24,7 @@
   "dependencies": {
     "@ffmpeg/core": "^0.8.5",
     "@ffmpeg/ffmpeg": "^0.9.7",
+    "aws-sdk": "^2.996.0",
     "bcrypt": "^5.0.1",
     "connect-mongo": "^4.5.0",
     "dotenv": "^10.0.0",
@@ -31,9 +32,10 @@
     "express-flash": "0.0.2",
     "express-session": "^1.17.2",
     "mongoose": "^5.12.3",
-    "morgan": "^1.10.0",
     "mongoose-session": "0.0.4",
+    "morgan": "^1.10.0",
     "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
     "node-fetch": "^2.6.1",
     "pug": "^3.0.2",
     "regenerator-runtime": "^0.13.9"
