@@ -165,10 +165,11 @@ export const postEdit = async (req, res) => {
       });
     }
   }
-  const updateUser = await User.findByIdAndUpdate(
+  console.log(file);
+  const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
-      avatarUrl: file ? file.path : avatarUrl,
+      avatarUrl: file ? file.location : avatarUrl,
       name,
       email,
       username,
@@ -176,7 +177,7 @@ export const postEdit = async (req, res) => {
     },
     { new: true }
   );
-  req.session.user = updateUser;
+  req.session.user = updatedUser;
   return res.redirect("/users/edit");
 };
 
