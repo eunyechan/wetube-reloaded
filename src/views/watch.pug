@@ -55,39 +55,33 @@ block content
     else 
         span 댓글을 작성하려면 로그인을 해주세요
 
+    //- div.video__comments
+    //-     ul 
+    //-         each comment in video.comments.reverse()
+    //-             div.user__comment__container-box
+    //-                 li.user__comment-list(data-id=comment.id)
+    //-                     span=comment.text
+    //-                     span.user__comment__hover-firstbtn(data-id=comment.id)
+    //-                         i.fas.fa-ellipsis-v 
+    //-                         if String(comment.owner._id) === String(loggedInUser._id)
+    //-                             button.user__comment-deleteBtn(data-commentid=comment.id)
+    //-                                 i.far.fa-trash-alt
+    //-                                 span.deleteBtn ❌
+    //-                         //- else
+    //-                         //-     span 댓글의 주인이 아닙니다.
+
     div.video__comments
-        ul  
+        ul 
             each comment in video.comments.reverse()
                 div.user__comment__container-box
-                    li.user__comment-list
-                        span.user__comment  #{comment.text}
-                        span.user__comment__hover-firstbtn(data-commentid=comment.id)
-                            i.fas.fa-ellipsis-v 
-                            if loggedIn && (loggedInUser._id === String(comment.owner))
-                                button#user__comment-deleteBtn(data-commentid=comment.id)
-                                    i.far.fa-trash-alt
-                                    span.user__comment__deleteBtn-span 삭제
-                            //- else 
-                                //- span 댓글 주인이 아닙니다
-                            //- li.user__comment-list-secondbtn
-                    //- if loggedIn && (loggedInUser._id === String(comment.owner)) === undifined
-                    //-     span 😀
-                    //- else
-                    //-     img.header__avatar(src="/" + comment.avatarUrl)
-                    //- div
-                    //-     span.user__name=`${username}`
-                            
-    //- div.video__comment
-    //-     form#commentForm.comment__form
-    //-         textarea( placeholder="write a comment")
-    //-         button add comment
-    //-     ul
-    //-         each comment in video.comments
-    //-             li
-    //-                 i.fas.fa-comment.fa-lg
-    //-                 span=comment.text
-    //-                 if String(comment.owner) === String(loggedInUser._id)   
-    //-                     button#delBtn(data-commentid=comment._id) ❌ 
+                    li.user__comment-list(data-id=comment.id)
+                        span=comment.text
+                        span.user__comment__hover-firstbtn(data-id=comment.id)
+                            i.fas.fa-ellipsis-v
+                                if String(comment.owner._id) === String(loggedInUser._id)
+                                    button#user__comment-deleteBtn(data-commentid=comment.id)
+                                        i.far.fa-trash-alt.user__comment__deleteBtn-span
+                                        span.user__comment__deleteBtn-span 삭제
 
 
 

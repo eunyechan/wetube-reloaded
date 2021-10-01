@@ -141,16 +141,10 @@
     margin-bottom: 60px;
     height: 60px;
   }
-  // .user__comment__container-box:hover {
-  //   .user__comment__hover-firstbtn {
-  //     display: block;
-  //   }
-  // }
   .user__comment-list {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    // text-align: center;
 
     .user__comment__hover-firstbtn {
       display: none;
@@ -160,28 +154,49 @@
       background-color: transparent;
       border: none;
       cursor: pointer;
-      // margin-bottom: 10px;
       padding: 15px 20px;
       text-align: center;
       justify-self: center;
       border-radius: 9999px;
     }
+    // .user__comment__hover-firstbtn:active {
+    //   background-color: black;
+    //   border: 1px solid #181818;
+    //   opacity: 0.3;
+    //   transition: all 0.2s ease-in;
+    // }
     #user__comment-deleteBtn {
       margin-left: 140px;
       background-color: transparent;
-      padding: 10px;
+      padding: 0;
       width: 100px;
+      height: 60px;
       display: none;
       justify-content: space-between;
       align-items: center;
+      text-align: center;
       font-size: 16px;
       color: white;
       cursor: pointer;
+      background-color: transparent;
     }
     .user__comment__deleteBtn-span {
-      padding-left: 10px;
+      display: flex;
       cursor: pointer;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
     }
+    .user__comment__deleteBtn-span:not(i) {
+      padding: 3px, 13px, 13px, 0;
+    }
+    .far.fa-trash-alt {
+      padding: 0px, 13px, 13px, 3px;
+      font-size: 20px;
+    }
+
     .header__avatar {
       padding: 10px;
       display: flex;
@@ -193,7 +208,14 @@
       font-weight: bold;
     }
   }
+
+  .user__comment__container-box:hover {
+    .user__comment__hover-firstbtn {
+      display: flex;
+    }
+  }
 }
+
 .video__data-hr {
   width: 100%;
   opacity: 0.2;

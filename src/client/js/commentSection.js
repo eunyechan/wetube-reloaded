@@ -1,4 +1,4 @@
-import { async } from "regenerator-runtime";
+import fetch from "node-fetch";
 
 const videoContainer = document.getElementById("videoContainer");
 const form = document.getElementById("commentForm");
@@ -14,27 +14,36 @@ const videoCommentWriteBtn = document.getElementById(
 const userCommentContainerBox = document.querySelector(
   ".user__comment__container-box"
 );
+const deleteBtns = document.getElementsByClassName(
+  "user__comment__deleteBtn-span"
+);
 const userCommentFirstdBtn = document.querySelector(
   ".user__comment__hover-firstbtn"
 );
 const userCommentSecondBtn = document.getElementById("user__comment-deleteBtn");
-const deleteBtn = document.getElementById("user__comment-deleteBtn");
 
 let toggleValue = true;
 
 const addComment = (text, id) => {
   locationReloadSubmit();
+  // const videoComments = document.querySelector(".video__comments ul");
   // const newComment = document.createElement("li");
+  // newComment.dataset.id = id;
   // newComment.className = "video__comment";
-  // const span = document.createElement("span");
-  // span.innerText = ` ${text}`;
-  // newComment.dataset.commentid = id;
-  // const span2 = document.createElement("button");
-  // span2.innerText = " ❌";
-  // span2.className = "deleteButton";
-  // newComment.appendChild(span);
+  // const icon = document.createElement("i");
+  // icon.className = "fas fa-comment";
+  // icon.innerText = ` ${text}`;
+  // const span2 = document.createElement("span");
+  // span2.innerText = "❌";
+  // span2.className = "deleteBtn";
+  // newComment.appendChild(icon);
   // newComment.appendChild(span2);
   // videoComments.prepend(newComment);
+  // span2.addEventListener("click", handleDelete);
+};
+
+const locationReloadSubmit = () => {
+  setTimeout("location.reload()");
 };
 
 const handleSubmit = async (event) => {
@@ -42,7 +51,6 @@ const handleSubmit = async (event) => {
   const textarea = form.querySelector("textarea");
   const text = textarea.value;
   const videoId = videoContainer.dataset.id;
-
   if (text === "") {
     return;
   }
@@ -61,20 +69,19 @@ const handleSubmit = async (event) => {
 };
 
 const handleDelete = async (event) => {
-  const selectBtn = event.target.parentElement;
-  const id = selectBtn.dataset.commentid;
-  locationReloadDelete();
-  console.log(id);
-  const response = await fetch(`/api/videos/${id}/commentDelete`, {
+  const comment = event.target.parentNode.parentNode.parentNode;
+  const commentId = comment.dataset.id;
+  console.log(commentId);
+  const response = await fetch(`/api/videos/${commentId}/commentDelete`, {
     method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ commentId }),
   });
-  if (response.status === 201) {
-    deleteComment(id);
+  if (response.status === 200) {
+    locationReloadDelete();
   }
-};
-
-const locationReloadSubmit = () => {
-  setTimeout("location.reload()");
 };
 
 const locationReloadDelete = () => {
@@ -83,12 +90,6 @@ const locationReloadDelete = () => {
     videoCommentList.style.display = "none";
   }
 };
-
-const deleteComment = (selectBtn) => {
-  selectBtn.parentNode.removeChild(selectBtn);
-};
-
-if (form) form.addEventListener("submit", handleSubmit);
 
 const handleStop = (e) => {
   e.stopPropagation();
@@ -132,6 +133,7 @@ const hanldeBtnLeave = () => {
 };
 
 const handleDeleteBtn = () => {
+  console.log("asd");
   if (toggleValue === false) {
     userCommentSecondBtn.style.display = "flex";
     userCommentSecondBtn.style.marginLeft = "-5px";
@@ -151,7 +153,15 @@ videoCommentsBox.addEventListener("keydown", handleStop);
 videoCommentTextarea.addEventListener("click", handleText);
 videoCommentTextarea.addEventListener("input", handleText);
 videoCommentCancleBtn.addEventListener("click", hanldeTextCancle);
-deleteBtn && deleteBtn.addEventListener("click", handleDelete, false);
+if (form) {
+  form.addEventListener("submit", handleSubmit);
+}
+
+if (deleteBtns) {
+  for (let i = 0; i < deleteBtns.length; i++) {
+    deleteBtns[i].addEventListener("click", handleDelete);
+  }
+}
 userCommentFirstdBtn.addEventListener("click", handleDeleteBtn);
 userCommentContainerBox.addEventListener("mouseover", hanldeBtnOver);
 userCommentContainerBox.addEventListener("mouseleave", hanldeBtnLeave);
