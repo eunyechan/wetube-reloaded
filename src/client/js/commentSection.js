@@ -11,16 +11,19 @@ const videoCommentCancleBtn = document.getElementById(
 const videoCommentWriteBtn = document.getElementById(
   "video__comment__write-button"
 );
-const userCommentContainerBox = document.querySelector(
-  ".user__comment__container-box"
+const userCommentContainerBox = document.getElementsByClassName(
+  "user__comment__container-box"
 );
 const deleteBtns = document.getElementsByClassName(
-  "user__comment__deleteBtn-span"
+  "user__comment__deletebtn-span"
 );
-const userCommentFirstdBtn = document.querySelector(
-  ".user__comment__hover-firstbtn"
+
+const userCommentFirstdBtn = document.getElementsByClassName(
+  "user__comment__hover-firstbtn"
 );
-const userCommentSecondBtn = document.getElementById("user__comment-deleteBtn");
+const userCommentSecondBtn = document.getElementsByClassName(
+  "user__comment-deletebtn"
+);
 
 let toggleValue = true;
 
@@ -81,6 +84,7 @@ const handleDelete = async (event) => {
   });
   if (response.status === 200) {
     locationReloadDelete();
+    console.log("asd");
   }
 };
 
@@ -118,34 +122,29 @@ const hanldeTextCancle = () => {
   textarea.value = "";
 };
 
-const hanldeBtnOver = () => {
-  if (toggleValue === true) {
-    userCommentFirstdBtn.style.display = "block";
-    toggleValue = false;
-  }
-};
 const hanldeBtnLeave = () => {
   if (toggleValue === false) {
-    userCommentFirstdBtn.style.display = "none";
-    userCommentSecondBtn.style.display = "none";
-    toggleValue = true;
+    for (let i = 0; i < userCommentSecondBtn.length; i++) {
+      userCommentSecondBtn[i].style.display = "none";
+      toggleValue = true;
+    }
   }
 };
 
 const handleDeleteBtn = () => {
-  console.log("asd");
-  if (toggleValue === false) {
-    userCommentSecondBtn.style.display = "flex";
-    userCommentSecondBtn.style.marginLeft = "-5px";
-    userCommentSecondBtn.style.top = "50px";
-    userCommentSecondBtn.style.position = "absolute";
-    toggleValue = true;
-  } else {
-    userCommentSecondBtn.style.display = "none";
-    userCommentSecondBtn.style.marginLeft = "-5px";
-    userCommentSecondBtn.style.top = "50px";
-    userCommentSecondBtn.style.position = "absolute";
+  if (toggleValue === true) {
+    for (let i = 0; i < userCommentSecondBtn.length; i++) {
+      userCommentSecondBtn[i].style.display = "flex";
+      userCommentSecondBtn[i].style.marginLeft = "-40px";
+      userCommentSecondBtn[i].style.top = "50px";
+      userCommentSecondBtn[i].style.position = "absolute";
+    }
     toggleValue = false;
+  } else {
+    for (let i = 0; i < userCommentSecondBtn.length; i++) {
+      userCommentSecondBtn[i].style.display = "none";
+    }
+    toggleValue = true;
   }
 };
 
@@ -153,6 +152,7 @@ videoCommentsBox.addEventListener("keydown", handleStop);
 videoCommentTextarea.addEventListener("click", handleText);
 videoCommentTextarea.addEventListener("input", handleText);
 videoCommentCancleBtn.addEventListener("click", hanldeTextCancle);
+
 if (form) {
   form.addEventListener("submit", handleSubmit);
 }
@@ -162,6 +162,15 @@ if (deleteBtns) {
     deleteBtns[i].addEventListener("click", handleDelete);
   }
 }
-userCommentFirstdBtn.addEventListener("click", handleDeleteBtn);
-userCommentContainerBox.addEventListener("mouseover", hanldeBtnOver);
-userCommentContainerBox.addEventListener("mouseleave", hanldeBtnLeave);
+
+if (userCommentFirstdBtn) {
+  for (let i = 0; i < userCommentFirstdBtn.length; i++) {
+    userCommentFirstdBtn[i].addEventListener("click", handleDeleteBtn);
+  }
+}
+
+if (userCommentContainerBox) {
+  for (let i = 0; i < userCommentContainerBox.length; i++) {
+    userCommentContainerBox[i].addEventListener("mouseleave", hanldeBtnLeave);
+  }
+}

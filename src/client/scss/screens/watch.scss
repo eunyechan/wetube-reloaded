@@ -159,13 +159,14 @@
       justify-self: center;
       border-radius: 9999px;
     }
-    // .user__comment__hover-firstbtn:active {
-    //   background-color: black;
-    //   border: 1px solid #181818;
-    //   opacity: 0.3;
-    //   transition: all 0.2s ease-in;
-    // }
-    #user__comment-deleteBtn {
+
+    .user__comment__hover-firstbtn:active {
+      background-color: rgb(29, 28, 28);
+      border: 1px solid #181818;
+      opacity: 0.3;
+      transition: all ease-in;
+    }
+    .user__comment-deletebtn:not(div) {
       margin-left: 140px;
       background-color: transparent;
       padding: 0;
@@ -179,17 +180,30 @@
       color: white;
       cursor: pointer;
       background-color: transparent;
+      margin-left: -5px;
+      position: absolute;
+      border-radius: 9999px;
+      border: 1px solid grey;
+      .user__comment__deletebtn-span {
+        display: flex;
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+      }
+      .far.fa-trash-alt.user__comment__deletebtn-span-icon {
+        display: flex;
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+      }
     }
-    .user__comment__deleteBtn-span {
-      display: flex;
-      cursor: pointer;
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      justify-content: center;
-      align-items: center;
-    }
-    .user__comment__deleteBtn-span:not(i) {
+    .user__comment__deletebtn-span:not(i) {
       padding: 3px, 13px, 13px, 0;
     }
     .far.fa-trash-alt {
@@ -207,6 +221,20 @@
       margin-bottom: 13px;
       font-weight: bold;
     }
+  }
+
+  #user__comment__not-owener {
+    width: 120px;
+    display: none;
+    position: absolute;
+    cursor: default;
+    font-size: 16px;
+    text-align: center;
+    right: -40px;
+    border-radius: 9999px;
+  }
+  #user__comment__not-owener-span {
+    padding: 50px;
   }
 
   .user__comment__container-box:hover {

@@ -55,20 +55,21 @@ block content
     else 
         span 댓글을 작성하려면 로그인을 해주세요
 
+
     //- div.video__comments
     //-     ul 
     //-         each comment in video.comments.reverse()
     //-             div.user__comment__container-box
     //-                 li.user__comment-list(data-id=comment.id)
     //-                     span=comment.text
-    //-                     span.user__comment__hover-firstbtn(data-id=comment.id)
-    //-                         i.fas.fa-ellipsis-v 
-    //-                         if String(comment.owner._id) === String(loggedInUser._id)
-    //-                             button.user__comment-deleteBtn(data-commentid=comment.id)
-    //-                                 i.far.fa-trash-alt
-    //-                                 span.deleteBtn ❌
-    //-                         //- else
-    //-                         //-     span 댓글의 주인이 아닙니다.
+    //-                     div.user__comment__hover-firstbtn(data-id=comment.id)
+    //-                         i.fas.fa-ellipsis-v.user__comment__hover__firstbtn-icon
+    //-                             if String(comment.owner._id) === String(loggedInUser._id)
+    //-                                 button#user__comment-deleteBtn(data-commentid=comment.id)
+    //-                                     i.far.fa-trash-alt.user__comment__deleteBtn-span
+    //-                                     span 삭제
+    //-                             else
+    //-                                 span 주인이 아닙니다
 
     div.video__comments
         ul 
@@ -76,12 +77,15 @@ block content
                 div.user__comment__container-box
                     li.user__comment-list(data-id=comment.id)
                         span=comment.text
-                        span.user__comment__hover-firstbtn(data-id=comment.id)
-                            i.fas.fa-ellipsis-v
+                        div.user__comment__hover-firstbtn(data-id=comment.id)
+                            i.fas.fa-ellipsis-v.user__comment__hover__firstbtn-icon
                                 if String(comment.owner._id) === String(loggedInUser._id)
-                                    button#user__comment-deleteBtn(data-commentid=comment.id)
-                                        i.far.fa-trash-alt.user__comment__deleteBtn-span
-                                        span.user__comment__deleteBtn-span 삭제
+                                    button#user__comment-deletebtn.user__comment-deletebtn(data-commentid=comment.id)
+                                        i.far.fa-trash-alt.user__comment__deletebtn-span
+                                        span.user__comment__deletebtn-span 삭제 
+                                else
+                                    div#user__comment__not-owener.user__comment-deletebtn
+                                        span#user__comment__not-owener-span.user__comment__deletebtn-span 댓글 작성자가 아닙니다
 
 
 
