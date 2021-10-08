@@ -183,7 +183,7 @@
       margin-left: -5px;
       position: absolute;
       border-radius: 9999px;
-      border: 1px solid grey;
+      border: 1px solid rgba($color: rgb(126, 121, 121), $alpha: 0.4);
       .user__comment__deletebtn-span {
         display: flex;
         cursor: pointer;
@@ -232,9 +232,6 @@
     text-align: center;
     right: -40px;
     border-radius: 9999px;
-  }
-  #user__comment__not-owener-span {
-    padding: 50px;
   }
 
   .user__comment__container-box:hover {
