@@ -384,7 +384,7 @@ var postEdit = /*#__PURE__*/function () {
             }));
 
           case 10:
-            console.log(file);
+            console.log("as");
             _context4.next = 13;
             return _User["default"].findByIdAndUpdate(_id, {
               avatarUrl: file ? file.location : avatarUrl,
