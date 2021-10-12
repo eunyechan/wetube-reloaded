@@ -339,7 +339,7 @@ exports.getEdit = getEdit;
 
 var postEdit = /*#__PURE__*/function () {
   var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(req, res) {
-    var _req$session$user, _id, avatarUrl, sessionEmail, sessionUsername, _req$body3, name, email, username, location, file, searchParam, foundUser, updateUser;
+    var _req$session$user, _id, avatarUrl, sessionEmail, sessionUsername, _req$body3, name, email, username, location, file, searchParam, foundUser, updatedUser;
 
     return regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
@@ -384,9 +384,10 @@ var postEdit = /*#__PURE__*/function () {
             }));
 
           case 10:
-            _context4.next = 12;
+            console.log(file);
+            _context4.next = 13;
             return _User["default"].findByIdAndUpdate(_id, {
-              avatarUrl: file ? file.path : avatarUrl,
+              avatarUrl: file ? file.location : avatarUrl,
               name: name,
               email: email,
               username: username,
@@ -395,12 +396,12 @@ var postEdit = /*#__PURE__*/function () {
               "new": true
             });
 
-          case 12:
-            updateUser = _context4.sent;
-            req.session.user = updateUser;
+          case 13:
+            updatedUser = _context4.sent;
+            req.session.user = updatedUser;
             return _context4.abrupt("return", res.redirect("/users/edit"));
 
-          case 15:
+          case 16:
           case "end":
             return _context4.stop();
         }

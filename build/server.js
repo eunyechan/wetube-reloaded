@@ -45,6 +45,12 @@ app.use((0, _expressSession["default"])({
   })
 }));
 app.use(function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
   res.header("Cross-Origin-Embedder-Policy", "require-corp");
   res.header("Cross-Origin-Opener-Policy", "same-origin");
   next();
@@ -55,12 +61,7 @@ app.use("/uploads", _express["default"]["static"]("uploads"));
 app.use("/static", _express["default"]["static"]("assets"));
 app.use("/", _rootRouter["default"]);
 app.use("/videos", _videoRouter["default"]);
-app.use("/users", _userRouter["default"]); // app.use(
-//   "/static",
-//   express.static("assets"),
-//   express.static("node_modules/@ffmpeg/core/dist")
-// );
-
+app.use("/users", _userRouter["default"]);
 app.use("/api", _apiRouter["default"]);
 var _default = app;
 exports["default"] = _default;

@@ -1,6 +1,8 @@
 "use strict";
 
-var _regeneratorRuntime = require("regenerator-runtime");
+var _nodeFetch = _interopRequireDefault(require("node-fetch"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -13,24 +15,31 @@ var videoCommentTextarea = document.getElementById("video__comment-textarea");
 var videoCommentList = document.querySelector(".video__comment");
 var videoCommentCancleBtn = document.getElementById("video__comment__cancle-button");
 var videoCommentWriteBtn = document.getElementById("video__comment__write-button");
-var userCommentContainerBox = document.querySelector(".user__comment__container-box");
-var userCommentFirstdBtn = document.querySelector(".user__comment__hover-firstbtn");
-var userCommentSecondBtn = document.getElementById("user__comment-deleteBtn");
-var deleteBtn = document.getElementById("user__comment-deleteBtn");
+var userCommentContainerBox = document.getElementsByClassName("user__comment__container-box");
+var deleteBtns = document.getElementsByClassName("user__comment__deletebtn-span");
+var userCommentFirstdBtn = document.getElementsByClassName("user__comment__hover-firstbtn");
+var userCommentSecondBtn = document.getElementsByClassName("user__comment-deletebtn");
 var toggleValue = true;
 
 var addComment = function addComment(text, id) {
-  locationReloadSubmit(); // const newComment = document.createElement("li");
+  locationReloadSubmit(); // const videoComments = document.querySelector(".video__comments ul");
+  // const newComment = document.createElement("li");
+  // newComment.dataset.id = id;
   // newComment.className = "video__comment";
-  // const span = document.createElement("span");
-  // span.innerText = ` ${text}`;
-  // newComment.dataset.commentid = id;
-  // const span2 = document.createElement("button");
-  // span2.innerText = " ❌";
-  // span2.className = "deleteButton";
-  // newComment.appendChild(span);
+  // const icon = document.createElement("i");
+  // icon.className = "fas fa-comment";
+  // icon.innerText = ` ${text}`;
+  // const span2 = document.createElement("span");
+  // span2.innerText = "❌";
+  // span2.className = "deleteBtn";
+  // newComment.appendChild(icon);
   // newComment.appendChild(span2);
   // videoComments.prepend(newComment);
+  // span2.addEventListener("click", handleDelete);
+};
+
+var locationReloadSubmit = function locationReloadSubmit() {
+  setTimeout("location.reload()");
 };
 
 var handleSubmit = /*#__PURE__*/function () {
@@ -55,7 +64,7 @@ var handleSubmit = /*#__PURE__*/function () {
 
           case 6:
             _context.next = 8;
-            return fetch("/api/videos/".concat(videoId, "/comment"), {
+            return (0, _nodeFetch["default"])("/api/videos/".concat(videoId, "/comment"), {
               method: "POST",
               headers: {
                 "Content-Type": "application/json"
@@ -97,28 +106,34 @@ var handleSubmit = /*#__PURE__*/function () {
 
 var handleDelete = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(event) {
-    var selectBtn, id, response;
+    var comment, commentId, response;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            selectBtn = event.target.parentElement;
-            id = selectBtn.dataset.commentid;
-            locationReloadDelete();
-            console.log(id);
-            _context2.next = 6;
-            return fetch("/api/videos/".concat(id, "/commentDelete"), {
-              method: "DELETE"
+            comment = event.target.parentNode.parentNode.parentNode;
+            commentId = comment.dataset.id;
+            console.log(commentId);
+            _context2.next = 5;
+            return (0, _nodeFetch["default"])("/api/videos/".concat(commentId, "/commentDelete"), {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                commentId: commentId
+              })
             });
 
-          case 6:
+          case 5:
             response = _context2.sent;
 
-            if (response.status === 201) {
-              deleteComment(id);
+            if (response.status === 200) {
+              locationReloadDelete();
+              console.log("asd");
             }
 
-          case 8:
+          case 7:
           case "end":
             return _context2.stop();
         }
@@ -131,10 +146,6 @@ var handleDelete = /*#__PURE__*/function () {
   };
 }();
 
-var locationReloadSubmit = function locationReloadSubmit() {
-  setTimeout("location.reload()");
-};
-
 var locationReloadDelete = function locationReloadDelete() {
   setTimeout("location.reload()");
 
@@ -142,12 +153,6 @@ var locationReloadDelete = function locationReloadDelete() {
     videoCommentList.style.display = "none";
   }
 };
-
-var deleteComment = function deleteComment(selectBtn) {
-  selectBtn.parentNode.removeChild(selectBtn);
-};
-
-if (form) form.addEventListener("submit", handleSubmit);
 
 var handleStop = function handleStop(e) {
   e.stopPropagation();
@@ -178,34 +183,31 @@ var hanldeTextCancle = function hanldeTextCancle() {
   textarea.value = "";
 };
 
-var hanldeBtnOver = function hanldeBtnOver() {
-  if (toggleValue === true) {
-    userCommentFirstdBtn.style.display = "block";
-    toggleValue = false;
-  }
-};
-
 var hanldeBtnLeave = function hanldeBtnLeave() {
   if (toggleValue === false) {
-    userCommentFirstdBtn.style.display = "none";
-    userCommentSecondBtn.style.display = "none";
-    toggleValue = true;
+    for (var i = 0; i < userCommentSecondBtn.length; i++) {
+      userCommentSecondBtn[i].style.display = "none";
+      toggleValue = true;
+    }
   }
 };
 
 var handleDeleteBtn = function handleDeleteBtn() {
-  if (toggleValue === false) {
-    userCommentSecondBtn.style.display = "flex";
-    userCommentSecondBtn.style.marginLeft = "-5px";
-    userCommentSecondBtn.style.top = "50px";
-    userCommentSecondBtn.style.position = "absolute";
-    toggleValue = true;
-  } else {
-    userCommentSecondBtn.style.display = "none";
-    userCommentSecondBtn.style.marginLeft = "-5px";
-    userCommentSecondBtn.style.top = "50px";
-    userCommentSecondBtn.style.position = "absolute";
+  if (toggleValue === true) {
+    for (var i = 0; i < userCommentSecondBtn.length; i++) {
+      userCommentSecondBtn[i].style.display = "flex";
+      userCommentSecondBtn[i].style.marginLeft = "-40px";
+      userCommentSecondBtn[i].style.top = "50px";
+      userCommentSecondBtn[i].style.position = "absolute";
+    }
+
     toggleValue = false;
+  } else {
+    for (var _i = 0; _i < userCommentSecondBtn.length; _i++) {
+      userCommentSecondBtn[_i].style.display = "none";
+    }
+
+    toggleValue = true;
   }
 };
 
@@ -213,7 +215,25 @@ videoCommentsBox.addEventListener("keydown", handleStop);
 videoCommentTextarea.addEventListener("click", handleText);
 videoCommentTextarea.addEventListener("input", handleText);
 videoCommentCancleBtn.addEventListener("click", hanldeTextCancle);
-deleteBtn && deleteBtn.addEventListener("click", handleDelete, false);
-userCommentFirstdBtn.addEventListener("click", handleDeleteBtn);
-userCommentContainerBox.addEventListener("mouseover", hanldeBtnOver);
-userCommentContainerBox.addEventListener("mouseleave", hanldeBtnLeave);
+
+if (form) {
+  form.addEventListener("submit", handleSubmit);
+}
+
+if (deleteBtns) {
+  for (var i = 0; i < deleteBtns.length; i++) {
+    deleteBtns[i].addEventListener("click", handleDelete);
+  }
+}
+
+if (userCommentFirstdBtn) {
+  for (var _i2 = 0; _i2 < userCommentFirstdBtn.length; _i2++) {
+    userCommentFirstdBtn[_i2].addEventListener("click", handleDeleteBtn);
+  }
+}
+
+if (userCommentContainerBox) {
+  for (var _i3 = 0; _i3 < userCommentContainerBox.length; _i3++) {
+    userCommentContainerBox[_i3].addEventListener("mouseleave", hanldeBtnLeave);
+  }
+}

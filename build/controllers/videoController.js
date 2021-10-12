@@ -33,10 +33,10 @@ var home = /*#__PURE__*/function () {
 
           case 2:
             videos = _context.sent;
-            return _context.abrupt("return", res.render("home", {
+            res.render("home", {
               pageTitle: "Home",
               videos: videos
-            }));
+            });
 
           case 4:
           case "end":
@@ -72,8 +72,8 @@ var watch = /*#__PURE__*/function () {
               break;
             }
 
-            return _context2.abrupt("return", res.render("404", {
-              pageTitle: "Video not found."
+            return _context2.abrupt("return", res.status(404).render("404", {
+              pageTitle: "Video not found"
             }));
 
           case 6:
@@ -119,7 +119,7 @@ var getEdit = /*#__PURE__*/function () {
             }
 
             return _context3.abrupt("return", res.status(404).render("404", {
-              pageTitle: "Video not found."
+              pageTitle: "Video not found"
             }));
 
           case 7:
@@ -128,14 +128,14 @@ var getEdit = /*#__PURE__*/function () {
               break;
             }
 
-            req.flash("error", "승인되지 않았습니다");
+            req.flash("error", "You are not the owner of the video");
             return _context3.abrupt("return", res.status(403).redirect("/"));
 
           case 10:
-            return _context3.abrupt("return", res.render("edit", {
-              pageTitle: "Edit: ".concat(video.title),
+            res.render("edit", {
+              pageTitle: "Edit ".concat(video.title),
               video: video
-            }));
+            });
 
           case 11:
           case "end":
@@ -164,7 +164,7 @@ var postEdit = /*#__PURE__*/function () {
             id = req.params.id;
             _req$body = req.body, title = _req$body.title, description = _req$body.description, hashtags = _req$body.hashtags;
             _context4.next = 5;
-            return _Video["default"].exists({
+            return _Video["default"].findById({
               _id: id
             });
 
@@ -176,8 +176,8 @@ var postEdit = /*#__PURE__*/function () {
               break;
             }
 
-            return _context4.abrupt("return", res.status(404).render("404", {
-              pageTitle: "Video not found."
+            return _context4.abrupt("return", res.render("404", {
+              pageTitle: "Video not found"
             }));
 
           case 8:
@@ -186,22 +186,23 @@ var postEdit = /*#__PURE__*/function () {
               break;
             }
 
-            req.flash("success", "변경 사항이 저장되었습니다");
-            return _context4.abrupt("return", res.redirect("/videos/".concat(id)));
+            req.flash("error", "You are not the the owner of the video.");
+            return _context4.abrupt("return", res.status(403).redirect("/"));
 
           case 11:
-            _context4.next = 13;
+            console.log("====================================" + title);
+            _context4.next = 14;
             return _Video["default"].findByIdAndUpdate(id, {
               title: title,
               description: description,
               hashtags: _Video["default"].formatHashtags(hashtags)
             });
 
-          case 13:
-            req.flash("error", "본인 계정의 영상이 아닙니다");
-            return _context4.abrupt("return", res.status(403).redirect("/"));
+          case 14:
+            req.flash("success", "Change saved");
+            return _context4.abrupt("return", res.redirect("/videos/".concat(id)));
 
-          case 15:
+          case 16:
           case "end":
             return _context4.stop();
         }
@@ -226,7 +227,7 @@ exports.getUpload = getUpload;
 
 var postUpload = /*#__PURE__*/function () {
   var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(req, res) {
-    var _id, _req$files, video, thumb, _req$body2, title, description, hashtags, isHeroku, newVideo, user;
+    var _id, _req$files, video, thumb, _req$body2, title, description, hashtags, newVideo, user;
 
     return regeneratorRuntime.wrap(function _callee5$(_context5) {
       while (1) {
@@ -234,15 +235,17 @@ var postUpload = /*#__PURE__*/function () {
           case 0:
             _id = req.session.user._id;
             _req$files = req.files, video = _req$files.video, thumb = _req$files.thumb;
+            console.log(video, thumb);
             _req$body2 = req.body, title = _req$body2.title, description = _req$body2.description, hashtags = _req$body2.hashtags;
-            isHeroku = process.env.NODE_ENV === "production";
             _context5.prev = 4;
             _context5.next = 7;
             return _Video["default"].create({
               title: title,
               description: description,
-              fileUrl: video[0].path,
-              thumbUrl: thumb[0].path,
+              fileUrl: isLocal ? "/" + video[0].path : video[0].location,
+              thumbUrl: isLocal ? "/" + thumb[0].destination + thumb[0].filename : thumb[0].location,
+              // fileUrl: video[0].path,
+              // thumbUrl: "/" + thumb[0].destination + thumb[0].filename,
               owner: _id,
               hashtags: _Video["default"].formatHashtags(hashtags)
             });
@@ -284,14 +287,14 @@ exports.postUpload = postUpload;
 
 var deleteVideo = /*#__PURE__*/function () {
   var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(req, res) {
-    var id, _id, video;
+    var _id, id, video;
 
     return regeneratorRuntime.wrap(function _callee6$(_context6) {
       while (1) {
         switch (_context6.prev = _context6.next) {
           case 0:
-            id = req.params.id;
             _id = req.session.user._id;
+            id = req.params.id;
             _context6.next = 4;
             return _Video["default"].findById(id);
 
@@ -304,7 +307,7 @@ var deleteVideo = /*#__PURE__*/function () {
             }
 
             return _context6.abrupt("return", res.status(404).render("404", {
-              pageTitle: "Video not found."
+              pageTitle: "Video not found"
             }));
 
           case 7:
@@ -355,7 +358,7 @@ var search = /*#__PURE__*/function () {
             _context7.next = 5;
             return _Video["default"].find({
               title: {
-                $regex: new RegExp("".concat(keyword, "$"), "i")
+                $regex: new RegExp("".concat(keyword), "i")
               }
             }).populate("owner");
 
@@ -453,7 +456,6 @@ var createComment = /*#__PURE__*/function () {
             return _Comment["default"].create({
               text: text,
               owner: user._id,
-              // username: username,
               video: id
             });
 
@@ -482,39 +484,40 @@ exports.createComment = createComment;
 
 var deleteComment = /*#__PURE__*/function () {
   var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10(req, res) {
-    var user, id, comment, video;
+    var user, _req$body3, videoId, commentId, video, commenDelSuccess;
+
     return regeneratorRuntime.wrap(function _callee10$(_context10) {
       while (1) {
         switch (_context10.prev = _context10.next) {
           case 0:
-            user = req.session.user, id = req.params.id;
+            user = req.session.user, _req$body3 = req.body, videoId = _req$body3.videoId, commentId = _req$body3.commentId;
             _context10.next = 3;
-            return _Comment["default"].findById(id).populate("owner");
+            return _Video["default"].findById(videoId);
 
           case 3:
-            comment = _context10.sent;
-            _context10.next = 6;
-            return _Video["default"].findById(comment.video);
-
-          case 6:
             video = _context10.sent;
 
-            if (!(String(comment.owner._id) !== String(user._id))) {
-              _context10.next = 9;
+            if (video) {
+              _context10.next = 6;
               break;
             }
 
             return _context10.abrupt("return", res.sendStatus(404));
 
-          case 9:
-            _context10.next = 11;
-            return _Comment["default"].findByIdAndRemove(comment.id);
+          case 6:
+            _context10.next = 8;
+            return _Comment["default"].deleteOne({
+              _id: commentId,
+              video: video.id
+            });
 
-          case 11:
-            video.comments.remove(id);
+          case 8:
+            commenDelSuccess = _context10.sent;
+            video.comments.pull(commentId);
+            video.save();
             return _context10.abrupt("return", res.sendStatus(200));
 
-          case 13:
+          case 12:
           case "end":
             return _context10.stop();
         }
