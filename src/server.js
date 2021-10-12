@@ -36,12 +36,14 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/core", express.static("node_modules/@ffmpeg/core/dist"));
-app.use((req, res, next) => {
-  res.header("Cross-Origin-Embedder-Policy", "require-corp");
-  res.header("Cross-Origin-Opener-Policy", "same-origin");
-  next();
-});
+[
+  {
+    AllowedHeaders: ["*"],
+    AllowedMethods: ["GET", "PUT", "POST", "DELETE"],
+    AllowedOrigins: ["https://wetubecloneapp.herokuapp.com/"],
+    ExposeHeaders: [],
+  },
+];
 
 app.use(flash());
 app.use(localsMiddleware);
