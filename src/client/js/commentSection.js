@@ -93,7 +93,7 @@ const handleDelete = async (event) => {
   const comment = event.target.parentNode.parentNode.parentNode;
   const commentId = comment.dataset.id;
   console.log(commentId);
-    const { status } = await fetch(
+  const { status } = await fetch(
     `/api/videos/${videoId}/comment/${commentId}/commentDelete`,
     {
       method: "DELETE",
@@ -104,7 +104,6 @@ const handleDelete = async (event) => {
     user.remove();
     comment.remove();
   }
-};
 };
 
 const locationReloadDelete = () => {
