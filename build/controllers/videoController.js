@@ -495,23 +495,23 @@ var deleteComment = /*#__PURE__*/function () {
             video = _context10.sent;
 
             if (video) {
-              _context10.next = 7;
+              _context10.next = 6;
               break;
             }
 
-            console.log("fail");
             return _context10.abrupt("return", res.sendStatus(404));
 
-          case 7:
-            _context10.next = 9;
+          case 6:
+            _context10.next = 8;
             return _Comment["default"].deleteOne({
               _id: commentId,
               video: video.id
             });
 
-          case 9:
+          case 8:
             commenDelSuccess = _context10.sent;
-            video.comments["delete"]();
+            video.comments.pull(commentId);
+            video.save();
             return _context10.abrupt("return", res.sendStatus(200));
 
           case 12:

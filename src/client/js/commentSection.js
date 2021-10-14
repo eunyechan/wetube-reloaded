@@ -74,23 +74,17 @@ const handleSubmit = async (event) => {
 const handleDelete = async (event) => {
   const comment = event.target.parentNode.parentNode.parentNode;
   const commentId = comment.dataset.id;
-  const videoId = videoContainer.dataset.id;
-  console.log(comment);
   console.log(commentId);
-  console.log(videoId);
-  const response = await fetch(`/api/videos/${commentId}/delete`, {
+  const response = await fetch(`/api/videos/${commentId}/commentDelete`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      commentId,
-    }),
+    body: JSON.stringify({ commentId }),
   });
-  if (response.status === 201) {
-    deleteComment(event);
-  } else {
-    console.log("fail");
+  if (response.status === 200) {
+    locationReloadDelete();
+    console.log("asd");
   }
 
   // const { videoId } = videoContainer.dataset.id;

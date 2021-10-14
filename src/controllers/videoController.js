@@ -160,14 +160,14 @@ export const deleteComment = async (req, res) => {
   } = req;
   const video = await Video.findById(videoId);
   if (!video) {
-    console.log("fail");
     return res.sendStatus(404);
   }
   const commenDelSuccess = await Comment.deleteOne({
     _id: commentId,
     video: video.id,
   });
-  video.comments.delete();
+  video.comments.pull(commentId);
+  video.save();
   return res.sendStatus(200);
 };
 
