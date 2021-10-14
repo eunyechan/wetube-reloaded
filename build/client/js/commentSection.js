@@ -106,16 +106,19 @@ var handleSubmit = /*#__PURE__*/function () {
 
 var handleDelete = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(event) {
-    var comment, commentId, response;
+    var comment, commentId, videoId, response;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             comment = event.target.parentNode.parentNode.parentNode;
             commentId = comment.dataset.id;
+            videoId = videoContainer.dataset.id;
+            console.log(comment);
             console.log(commentId);
-            _context2.next = 5;
-            return (0, _nodeFetch["default"])("/api/videos/".concat(commentId, "/commentDelete"), {
+            console.log(videoId);
+            _context2.next = 8;
+            return (0, _nodeFetch["default"])("/api/videos/".concat(commentId, "/delete"), {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json"
@@ -125,15 +128,32 @@ var handleDelete = /*#__PURE__*/function () {
               })
             });
 
-          case 5:
+          case 8:
             response = _context2.sent;
 
-            if (response.status === 200) {
-              locationReloadDelete();
-              console.log("asd");
-            }
+            if (response.status === 201) {
+              deleteComment(event);
+            } else {
+              console.log("fail");
+            } // const { videoId } = videoContainer.dataset.id;
+            // const comment = event.currentTarget.parentElement;
+            // const user = comment.previousElementSibling;
+            // console.log(user);
+            // console.log(videoId);
+            // const { commentId } = comment.dataset;
+            // const { status } = await fetch(
+            //   `/api/videos/${videoId}/comment/${commentId}/delete`,
+            //   {
+            //     method: "DELETE",
+            //   }
+            // );
+            // if (status === 200) {
+            //   user.remove();
+            //   comment.remove();
+            // }
 
-          case 7:
+
+          case 10:
           case "end":
             return _context2.stop();
         }

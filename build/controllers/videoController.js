@@ -177,7 +177,7 @@ var postEdit = /*#__PURE__*/function () {
             }
 
             return _context4.abrupt("return", res.render("404", {
-              pageTitle: "Video not found"
+              pageTitle: "비디오를 찾을 수 없습니다"
             }));
 
           case 8:
@@ -186,7 +186,7 @@ var postEdit = /*#__PURE__*/function () {
               break;
             }
 
-            req.flash("error", "You are not the the owner of the video.");
+            req.flash("error", "비디오 계정의 주인이 아닙니다");
             return _context4.abrupt("return", res.status(403).redirect("/"));
 
           case 11:
@@ -241,10 +241,6 @@ var postUpload = /*#__PURE__*/function () {
             return _Video["default"].create({
               title: title,
               description: description,
-              // fileUrl: isLocal ? "/" + video[0].path : video[0].location,
-              // thumbUrl: isLocal
-              //   ? "/" + thumb[0].destination + thumb[0].filename
-              //   : thumb[0].location,
               fileUrl: video[0].location,
               thumbUrl: thumb[0].location,
               owner: _id,
@@ -499,23 +495,23 @@ var deleteComment = /*#__PURE__*/function () {
             video = _context10.sent;
 
             if (video) {
-              _context10.next = 6;
+              _context10.next = 7;
               break;
             }
 
+            console.log("fail");
             return _context10.abrupt("return", res.sendStatus(404));
 
-          case 6:
-            _context10.next = 8;
+          case 7:
+            _context10.next = 9;
             return _Comment["default"].deleteOne({
               _id: commentId,
               video: video.id
             });
 
-          case 8:
+          case 9:
             commenDelSuccess = _context10.sent;
-            video.comments.pull(commentId);
-            video.save();
+            video.comments["delete"]();
             return _context10.abrupt("return", res.sendStatus(200));
 
           case 12:
@@ -529,6 +525,24 @@ var deleteComment = /*#__PURE__*/function () {
   return function deleteComment(_x19, _x20) {
     return _ref10.apply(this, arguments);
   };
-}();
+}(); // export const deleteComment = async (req, res) => {
+//   const { id } = req.params;
+//   const { _id } = req.session.user;
+//   const comment = await Comment.findById(id).populate("video");
+//   const video = comment.video;
+//   if (!comment) {
+//     req.flash("error", "The comment does not exist.");
+//     return res.sendStatus(400);
+//   }
+//   if (String(comment.owner) !== String(_id)) {
+//     req.flash("error", "You are not the owner of the comment.");
+//     return res.sendStatus(400);
+//   }
+//   video.comments = video.comments.filter((comment) => String(comment) !== id);
+//   video.save();
+//   await Comment.findByIdAndDelete(id);
+//   return res.sendStatus(200);
+// };
+
 
 exports.deleteComment = deleteComment;

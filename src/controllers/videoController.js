@@ -154,39 +154,43 @@ export const createComment = async (req, res) => {
 };
 
 export const deleteComment = async (req, res) => {
-  // const {
-  //   session: { user },
-  //   body: { videoId, commentId },
-  // } = req;
-  // const video = await Video.findById(videoId);
-  // if (!video) {
-  //   return res.sendStatus(404);
-  // }
-  // const commenDelSuccess = await Comment.deleteOne({
-  //   _id: commentId,
-  //   video: video.id,
-  // });
-  // video.save();
-  // return res.sendStatus(200);
-  const { id } = req.params;
-  const { _id } = req.session.user;
-
-  const comment = await Comment.findById(id).populate("video");
-  const video = comment.video;
-
-  if (!comment) {
-    req.flash("error", "The comment does not exist.");
-    return res.sendStatus(400);
+  const {
+    session: { user },
+    body: { videoId, commentId },
+  } = req;
+  const video = await Video.findById(videoId);
+  if (!video) {
+    console.log("fail");
+    return res.sendStatus(404);
   }
-
-  if (String(comment.owner) !== String(_id)) {
-    req.flash("error", "You are not the owner of the comment.");
-    return res.sendStatus(400);
-  }
-
-  video.comments = video.comments.filter((comment) => String(comment) !== id);
-  video.save();
-
-  await Comment.findByIdAndDelete(id);
+  const commenDelSuccess = await Comment.deleteOne({
+    _id: commentId,
+    video: video.id,
+  });
+  video.comments.delete();
   return res.sendStatus(200);
 };
+
+// export const deleteComment = async (req, res) => {
+//   const { id } = req.params;
+//   const { _id } = req.session.user;
+
+//   const comment = await Comment.findById(id).populate("video");
+//   const video = comment.video;
+
+//   if (!comment) {
+//     req.flash("error", "The comment does not exist.");
+//     return res.sendStatus(400);
+//   }
+
+//   if (String(comment.owner) !== String(_id)) {
+//     req.flash("error", "You are not the owner of the comment.");
+//     return res.sendStatus(400);
+//   }
+
+//   video.comments = video.comments.filter((comment) => String(comment) !== id);
+//   video.save();
+
+//   await Comment.findByIdAndDelete(id);
+//   return res.sendStatus(200);
+// };

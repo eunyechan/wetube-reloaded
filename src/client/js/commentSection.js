@@ -72,45 +72,45 @@ const handleSubmit = async (event) => {
 };
 
 const handleDelete = async (event) => {
-  // const comment = event.target.parentNode.parentNode.parentNode;
-  // const commentId = comment.dataset.id;
-  // const videoId = videoContainer.dataset.id;
-  // console.log(videoId);
-
-  // const response = await fetch(`/api/videos/${commentId}/commentDelete`, {
-  //   method: "DELETE",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  // });
-  // if (response === 200) {
-  //   locationReloadDelete();
-  //   console.log("asd");
-  // } else {
-  //   console.log("fail");
-  //   console.log(response);
-  // }
-
-  const videoId = videoContainer.dataset.id;
   const comment = event.target.parentNode.parentNode.parentNode;
-  const user = comment.previousElementSibling;
-  console.log(user);
-  console.log(videoId);
   const commentId = comment.dataset.id;
+  const videoId = videoContainer.dataset.id;
+  console.log(comment);
   console.log(commentId);
-
-  const { status } = await fetch(
-    `/api/videos/${videoId}/comment/${commentId}/commentDelete`,
-    {
-      method: "DELETE",
-    }
-  );
-
-  if (status === 200) {
-    user.remove();
-    comment.remove();
-    locationReloadDelete();
+  console.log(videoId);
+  const response = await fetch(`/api/videos/${commentId}/delete`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      commentId,
+    }),
+  });
+  if (response.status === 201) {
+    deleteComment(event);
+  } else {
+    console.log("fail");
   }
+
+  // const { videoId } = videoContainer.dataset.id;
+  // const comment = event.currentTarget.parentElement;
+  // const user = comment.previousElementSibling;
+  // console.log(user);
+  // console.log(videoId);
+  // const { commentId } = comment.dataset;
+
+  // const { status } = await fetch(
+  //   `/api/videos/${videoId}/comment/${commentId}/delete`,
+  //   {
+  //     method: "DELETE",
+  //   }
+  // );
+
+  // if (status === 200) {
+  //   user.remove();
+  //   comment.remove();
+  // }
 };
 
 const locationReloadDelete = () => {
