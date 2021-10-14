@@ -170,7 +170,6 @@ export const deleteComment = async (req, res) => {
     _id: commentId,
     video: video.id,
   });
-  video.comments.pull(commentId);
   video.save();
   return res.sendStatus(200);
 };

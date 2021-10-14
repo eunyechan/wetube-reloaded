@@ -71,38 +71,20 @@ const handleSubmit = async (event) => {
   }
 };
 
-// const handleDelete = async (event) => {
-//   const comment = event.target.parentNode.parentNode.parentNode;
-//   const commentId = comment.dataset.id;
-//   console.log(commentId);
-//   const response = await fetch(`/api/videos/${commentId}/commentDelete`, {
-//     method: "DELETE",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({ commentId }),
-//   });
-//   if (response.status === 200) {
-//     locationReloadDelete();
-//     console.log("asd");
-//   }
-// };
-
 const handleDelete = async (event) => {
-  const { videoId } = videoContainer.dataset;
   const comment = event.target.parentNode.parentNode.parentNode;
   const commentId = comment.dataset.id;
   console.log(commentId);
-  const { status } = await fetch(
-    `/api/videos/${videoId}/comment/${commentId}/commentDelete`,
-    {
-      method: "DELETE",
-    }
-  );
-
-  if (status === 200) {
-    user.remove();
-    comment.remove();
+  const response = await fetch(`/api/videos/${commentId}/commentDelete`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ commentId }),
+  });
+  if (response.status === 200) {
+    locationReloadDelete();
+    console.log("asd");
   }
 };
 
