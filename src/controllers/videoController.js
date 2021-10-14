@@ -43,10 +43,10 @@ export const postEdit = async (req, res) => {
   const { title, description, hashtags } = req.body;
   const video = await Video.findById({ _id: id });
   if (!video) {
-    return res.render("404", { pageTitle: "Video not found" });
+    return res.render("404", { pageTitle: "비디오를 찾을 수 없습니다" });
   }
   if (String(video.owner) !== String(_id)) {
-    req.flash("error", "You are not the the owner of the video.");
+    req.flash("error", "비디오 계정의 주인이 아닙니다");
     return res.status(403).redirect("/");
   }
   console.log("====================================" + title);
@@ -73,10 +73,6 @@ export const postUpload = async (req, res) => {
     const newVideo = await Video.create({
       title,
       description,
-      // fileUrl: isLocal ? "/" + video[0].path : video[0].location,
-      // thumbUrl: isLocal
-      //   ? "/" + thumb[0].destination + thumb[0].filename
-      //   : thumb[0].location,
       fileUrl: video[0].location,
       thumbUrl: thumb[0].location,
       owner: _id,
@@ -158,18 +154,39 @@ export const createComment = async (req, res) => {
 };
 
 export const deleteComment = async (req, res) => {
-  const {
-    session: { user },
-    body: { videoId, commentId },
-  } = req;
-  const video = await Video.findById(videoId);
-  if (!video) {
-    return res.sendStatus(404);
+  // const {
+  //   session: { user },
+  //   body: { videoId, commentId },
+  // } = req;
+  // const video = await Video.findById(videoId);
+  // if (!video) {
+  //   return res.sendStatus(404);
+  // }
+  // const commenDelSuccess = await Comment.deleteOne({
+  //   _id: commentId,
+  //   video: video.id,
+  // });
+  // video.save();
+  // return res.sendStatus(200);
+  const { id } = req.params;
+  const { _id } = req.session.user;
+
+  const comment = await Comment.findById(id).populate("video");
+  const video = comment.video;
+
+  if (!comment) {
+    req.flash("error", "The comment does not exist.");
+    return res.sendStatus(400);
   }
-  const commenDelSuccess = await Comment.deleteOne({
-    _id: commentId,
-    video: video.id,
-  });
+
+  if (String(comment.owner) !== String(_id)) {
+    req.flash("error", "You are not the owner of the comment.");
+    return res.sendStatus(400);
+  }
+
+  video.comments = video.comments.filter((comment) => String(comment) !== id);
   video.save();
+
+  await Comment.findByIdAndDelete(id);
   return res.sendStatus(200);
 };
