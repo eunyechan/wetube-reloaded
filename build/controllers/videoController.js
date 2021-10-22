@@ -481,20 +481,19 @@ exports.createComment = createComment;
 
 var deleteComment = /*#__PURE__*/function () {
   var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10(req, res) {
-    var user, _req$body3, videoId, commentId, video, commenDelSuccess;
-
+    var id, comment;
     return regeneratorRuntime.wrap(function _callee10$(_context10) {
       while (1) {
         switch (_context10.prev = _context10.next) {
           case 0:
-            user = req.session.user, _req$body3 = req.body, videoId = _req$body3.videoId, commentId = _req$body3.commentId;
+            id = req.params.id;
             _context10.next = 3;
-            return _Video["default"].findById(videoId);
+            return _Comment["default"].findById(id);
 
           case 3:
-            video = _context10.sent;
+            comment = _context10.sent;
 
-            if (video) {
+            if (comment) {
               _context10.next = 6;
               break;
             }
@@ -502,19 +501,21 @@ var deleteComment = /*#__PURE__*/function () {
             return _context10.abrupt("return", res.sendStatus(404));
 
           case 6:
-            _context10.next = 8;
-            return _Comment["default"].deleteOne({
-              _id: commentId,
-              video: video.id
-            });
+            if (!(String(req.session.user._id) !== String(comment.owner))) {
+              _context10.next = 8;
+              break;
+            }
+
+            return _context10.abrupt("return", res.sendStatus(404));
 
           case 8:
-            commenDelSuccess = _context10.sent;
-            video.comments.pull(commentId);
-            video.save();
-            return _context10.abrupt("return", res.sendStatus(200));
+            _context10.next = 10;
+            return _Comment["default"].findByIdAndDelete(id);
 
-          case 12:
+          case 10:
+            return _context10.abrupt("return", res.sendStatus(201));
+
+          case 11:
           case "end":
             return _context10.stop();
         }

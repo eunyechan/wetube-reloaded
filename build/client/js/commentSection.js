@@ -111,26 +111,21 @@ var handleDelete = /*#__PURE__*/function () {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            comment = event.target.parentNode.parentNode.parentNode;
+            comment = event.target.parentElement.parentElement.parentElement.parentElement.parentElement;
             commentId = comment.dataset.id;
+            console.log(comment);
             console.log(commentId);
-            _context2.next = 5;
-            return (0, _nodeFetch["default"])("/api/videos/".concat(commentId, "/commentDelete"), {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify({
-                commentId: commentId
-              })
+            _context2.next = 6;
+            return (0, _nodeFetch["default"])("/api/video/".concat(commentId, "/commentDelete"), {
+              method: "DELETE"
             });
 
-          case 5:
+          case 6:
             response = _context2.sent;
 
-            if (response.status === 200) {
+            if (response.status === 201) {
               locationReloadDelete();
-              console.log("asd");
+              comment.remove();
             } // const { videoId } = videoContainer.dataset.id;
             // const comment = event.currentTarget.parentElement;
             // const user = comment.previousElementSibling;
@@ -149,7 +144,7 @@ var handleDelete = /*#__PURE__*/function () {
             // }
 
 
-          case 7:
+          case 8:
           case "end":
             return _context2.stop();
         }

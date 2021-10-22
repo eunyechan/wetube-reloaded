@@ -74,8 +74,8 @@ block content
     div.video__comments
         ul 
             each comment in video.comments.reverse()
-                div.user__comment__container-box
-                    li.user__comment-list(data-id=comment.id)
+                div.user__comment__container-box(data-id=comment.id)
+                    li.user__comment-list
                         span=comment.text
                         div.user__comment__hover-firstbtn(data-id=comment.id)
                             i.fas.fa-ellipsis-v.user__comment__hover__firstbtn-icon

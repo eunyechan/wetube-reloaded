@@ -28,7 +28,7 @@ const userCommentSecondBtn = document.getElementsByClassName(
 let toggleValue = true;
 
 const addComment = (text, id) => {
-  locationReloadSubmit();
+  // locationReloadSubmit();
   // const videoComments = document.querySelector(".video__comments ul");
   // const newComment = document.createElement("li");
   // newComment.dataset.id = id;
@@ -66,45 +66,24 @@ const handleSubmit = async (event) => {
   });
   if (response.status === 201) {
     textarea.value = "";
-    const { newCommentId } = await response.json();
-    addComment(text, newCommentId);
+    // addComment(text, newCommentId);
   }
 };
 
 const handleDelete = async (event) => {
-  const comment = event.target.parentNode.parentNode.parentNode;
+  const comment =
+    event.target.parentNode.parentNode.parentNode.parentNode.parentNode;
   const commentId = comment.dataset.id;
+  console.log(comment);
   console.log(commentId);
   const response = await fetch(`/api/videos/${commentId}/commentDelete`, {
     method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ commentId }),
   });
-  if (response.status === 200) {
+
+  if (response.status === 201) {
     locationReloadDelete();
-    console.log("asd");
+    comment.remove();
   }
-
-  // const { videoId } = videoContainer.dataset.id;
-  // const comment = event.currentTarget.parentElement;
-  // const user = comment.previousElementSibling;
-  // console.log(user);
-  // console.log(videoId);
-  // const { commentId } = comment.dataset;
-
-  // const { status } = await fetch(
-  //   `/api/videos/${videoId}/comment/${commentId}/delete`,
-  //   {
-  //     method: "DELETE",
-  //   }
-  // );
-
-  // if (status === 200) {
-  //   user.remove();
-  //   comment.remove();
-  // }
 };
 
 const locationReloadDelete = () => {

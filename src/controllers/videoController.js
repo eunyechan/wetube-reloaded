@@ -153,44 +153,34 @@ export const createComment = async (req, res) => {
   return res.status(201).json({ newCommentId: comment._id });
 };
 
-export const deleteComment = async (req, res) => {
-  const {
-    session: { user },
-    body: { videoId, commentId },
-  } = req;
-  const video = await Video.findById(videoId);
-  if (!video) {
-    return res.sendStatus(404);
-  }
-  const commenDelSuccess = await Comment.deleteOne({
-    _id: commentId,
-    video: video.id,
-  });
-  video.comments.pull(commentId);
-  video.save();
-  return res.sendStatus(200);
-};
-
 // export const deleteComment = async (req, res) => {
 //   const { id } = req.params;
-//   const { _id } = req.session.user;
 
-//   const comment = await Comment.findById(id).populate("video");
-//   const video = comment.video;
+//   const comment = await Comment.findById(id);
 
 //   if (!comment) {
-//     req.flash("error", "The comment does not exist.");
-//     return res.sendStatus(400);
+//     return res.sendStatus(404);
 //   }
 
-//   if (String(comment.owner) !== String(_id)) {
-//     req.flash("error", "You are not the owner of the comment.");
-//     return res.sendStatus(400);
+//   if (String(req.session.user._id) !== String(comment.owner)) {
+//     return res.sendStatus(404);
 //   }
-
-//   video.comments = video.comments.filter((comment) => String(comment) !== id);
-//   video.save();
-
 //   await Comment.findByIdAndDelete(id);
-//   return res.sendStatus(200);
+//   return res.sendStatus(201);
 // };
+
+export const deleteComment = async (req, res) => {
+  const { id } = req.params;
+
+  const comment = await Comment.findById(id);
+
+  if (!comment) {
+    return res.sendStatus(404);
+  }
+
+  if (String(req.session.user._id) !== String(comment.owner)) {
+    return res.sendStatus(404);
+  }
+  await Comment.findByIdAndDelete(id);
+  return res.sendStatus(201);
+};
