@@ -77,7 +77,7 @@ block content
                 div.user__comment__container-box(data-id=comment.id)
                     li.user__comment-list
                         span=comment.text
-                        div.user__comment__hover-firstbtn(data-id=comment.id)
+                        div.user__comment__hover-firstbtn
                             i.fas.fa-ellipsis-v.user__comment__hover__firstbtn-icon
                                 if String(comment.owner._id) === String(loggedInUser._id)
                                     button#user__comment-deletebtn.user__comment-deletebtn(data-commentid=comment.id)

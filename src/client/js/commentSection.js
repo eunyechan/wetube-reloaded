@@ -28,26 +28,37 @@ const userCommentSecondBtn = document.getElementsByClassName(
 let toggleValue = true;
 
 const addComment = (text, id) => {
-  // locationReloadSubmit();
   // const videoComments = document.querySelector(".video__comments ul");
-  // const newComment = document.createElement("li");
-  // newComment.dataset.id = id;
-  // newComment.className = "video__comment";
-  // const icon = document.createElement("i");
-  // icon.className = "fas fa-comment";
-  // icon.innerText = ` ${text}`;
-  // const span2 = document.createElement("span");
-  // span2.innerText = "❌";
-  // span2.className = "deleteBtn";
-  // newComment.appendChild(icon);
-  // newComment.appendChild(span2);
-  // videoComments.prepend(newComment);
-  // span2.addEventListener("click", handleDelete);
-};
+  // const userCommentContainerBox = document.createElement("div");
+  // userCommentContainerBox.className = "user__comment__container-box";
+  // const commentList = document.createElement("li");
+  // commentList.className = "user__comment-list";
+  // const span = document.createElement("span");
+  // const userCommentFirstdBtn = document.createElement("div");
+  // userCommentFirstdBtn.className = "user__comment__hover-firstbtn";
+  // const userCommentFirstdBtnIcon = document.createElement("i");
+  // userCommentFirstdBtnIcon.className =
+  //   "fas.fa-ellipsis-v user__comment__hover__firstbtn-icon";
+  // const userCommentSecondBtn = document.createElement("button");
+  // userCommentSecondBtn.className = "user__comment-deletebtn";
+  // const deleteBtns = document.createElement("i");
+  // deleteBtns.className = "far.fa-trash-alt, user__comment__deletebtn-span";
+  // const userCommentDeletebtnSpan = document.createElement("span");
+  // userCommentDeletebtnSpan.className = "user__comment__deletebtn-span";
 
-const locationReloadSubmit = () => {
+  // userCommentSecondBtn.append(deleteBtns, userCommentDeletebtnSpan);
+  // userCommentFirstdBtnIcon.append(userCommentSecondBtn);
+  // userCommentFirstdBtn.append(userCommentFirstdBtnIcon);
+  // span.innerText = `${text}`;
+  // commentList.append(span, userCommentFirstdBtn);
+  // userCommentContainerBox.append(commentList);
+  // videoComments.prepend(userCommentContainerBox);
   setTimeout("location.reload()");
 };
+
+// const locationReloadSubmit = () => {
+
+// };
 
 const handleSubmit = async (event) => {
   event.preventDefault();
@@ -66,7 +77,7 @@ const handleSubmit = async (event) => {
   });
   if (response.status === 201) {
     textarea.value = "";
-    // addComment(text, newCommentId);
+    addComment(text);
   }
 };
 
@@ -81,20 +92,21 @@ const handleDelete = async (event) => {
   });
 
   if (response.status === 201) {
-    locationReloadDelete();
     comment.remove();
-  }
-};
-
-const locationReloadDelete = () => {
-  setTimeout("location.reload()");
-  if (window.location.reload === true) {
-    videoCommentList.style.display = "none";
   }
 };
 
 const handleStop = (e) => {
   e.stopPropagation();
+};
+
+const inputFocus = () => {
+  videoCommentTextarea.style.borderBottom =
+    "1px solid rgba(238, 238, 238, 0.6)";
+};
+const inputBlur = () => {
+  videoCommentTextarea.style.borderBottom =
+    "1px solid rgba(238, 238, 238, 0.2)";
 };
 
 const handleText = () => {
@@ -147,6 +159,8 @@ const handleDeleteBtn = () => {
 };
 
 videoCommentsBox.addEventListener("keydown", handleStop);
+videoCommentTextarea.addEventListener("focus", inputFocus);
+videoCommentTextarea.addEventListener("blur", inputBlur);
 videoCommentTextarea.addEventListener("click", handleText);
 videoCommentTextarea.addEventListener("input", handleText);
 videoCommentCancleBtn.addEventListener("click", hanldeTextCancle);
