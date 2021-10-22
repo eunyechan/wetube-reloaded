@@ -10,7 +10,6 @@
   .video__data-box {
     display: flex;
     justify-content: space-between;
-    // background-color: red;
   }
   .video__createdAt {
     font-size: 12px;
@@ -39,14 +38,7 @@
       display: flex;
     }
   }
-  .video__editDelete-box {
-    display: flex;
-    width: 60%;
-    justify-content: end;
-    margin-left: 150px;
-    padding-top: 40px;
-    text-align: center;
-  }
+
   .video__hashtags {
     display: flex;
     margin-top: 40px;
@@ -63,36 +55,42 @@
       background-color: white;
     }
   }
-
-  .video__edit-btn {
-    display: flex;
-    background-color: transparent;
-    color: white;
-    border: 1px solid steelblue;
-    border-radius: 9999px;
-    padding: 20px;
-    &:hover {
-      animation: sheen 0.5s ease-in-out;
-      background-color: white;
-      color: steelblue !important;
-    }
-  }
-  .video__delete-btn {
-    display: flex;
-    margin-left: 20px;
-    background-color: transparent;
-    color: white;
-    border: 1px solid rgba($color: $red, $alpha: 1);
-    border-radius: 9999px;
-    padding: 20px;
-    &:hover {
-      animation: sheen 0.5s ease-in-out;
-      background-color: white;
-      color: rgba($color: $red, $alpha: 1) !important;
-    }
+}
+.video__editDelete-box {
+  display: flex;
+  width: 60%;
+  justify-content: end;
+  margin-left: 150px;
+  padding-top: 40px;
+  text-align: center;
+}
+.video__edit-btn {
+  display: flex;
+  background-color: transparent;
+  color: white;
+  border: 1px solid steelblue;
+  border-radius: 9999px;
+  padding: 20px;
+  &:hover {
+    animation: sheen 0.5s ease-in-out;
+    background-color: white;
+    color: steelblue !important;
   }
 }
-
+.video__delete-btn {
+  display: flex;
+  margin-left: 20px;
+  background-color: transparent;
+  color: white;
+  border: 1px solid rgba($color: $red, $alpha: 1);
+  border-radius: 9999px;
+  padding: 20px;
+  &:hover {
+    animation: sheen 0.5s ease-in-out;
+    background-color: white;
+    color: rgba($color: $red, $alpha: 1) !important;
+  }
+}
 #video__comments-box {
   width: 100%;
   position: relative;
