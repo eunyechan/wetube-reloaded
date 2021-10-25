@@ -46,6 +46,7 @@ const videoKeyButton = (e) => {
 const handlePlayClick = (e) => {
   if (video.paused) {
     video.play();
+    handleLoadedMetadata();
   } else {
     video.pause();
   }
