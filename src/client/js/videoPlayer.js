@@ -159,7 +159,7 @@ const handleEnded = () => {
 };
 
 video.addEventListener("click", handlePlayClick);
-video.addEventListener("loadeddata", handleLoadedMetadata);
+video.addEventListener("mousemove", handleLoadedMetadata);
 video.addEventListener("timeupdate", handleTimeUpdate);
 video.addEventListener("timeupdate", handleTimelineProgress);
 video.addEventListener("ended", handleEnded);
