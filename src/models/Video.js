@@ -22,7 +22,7 @@ videoSchema.static("formatHashtags", function (hashtags) {
     .replace(" ", "")
     .split(",")
     .map((word) =>
-      word.startsWith("#")
+      word.startsWith("#", " , ", ", #")
         ? word.replace(regex, "")
         : `#${word.replace(regex, "")}`
     );
