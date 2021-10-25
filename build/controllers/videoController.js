@@ -199,7 +199,7 @@ var postEdit = /*#__PURE__*/function () {
             });
 
           case 14:
-            req.flash("success", "Change saved");
+            req.flash("success", "변경사항이 저장되었습니다");
             return _context4.abrupt("return", res.redirect("/videos/".concat(id)));
 
           case 16:
@@ -227,7 +227,7 @@ exports.getUpload = getUpload;
 
 var postUpload = /*#__PURE__*/function () {
   var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(req, res) {
-    var _id, _req$files, video, thumb, _req$body2, title, description, hashtags, newVideo, user;
+    var _id, _req$files, video, thumb, _req$body2, title, description, hashtags, isHeroku, newVideo, user;
 
     return regeneratorRuntime.wrap(function _callee5$(_context5) {
       while (1) {
@@ -236,43 +236,44 @@ var postUpload = /*#__PURE__*/function () {
             _id = req.session.user._id;
             _req$files = req.files, video = _req$files.video, thumb = _req$files.thumb;
             _req$body2 = req.body, title = _req$body2.title, description = _req$body2.description, hashtags = _req$body2.hashtags;
-            _context5.prev = 3;
-            _context5.next = 6;
+            isHeroku = process.env.NODE_ENV === "production";
+            _context5.prev = 4;
+            _context5.next = 7;
             return _Video["default"].create({
               title: title,
               description: description,
-              fileUrl: video[0].location,
-              thumbUrl: thumb[0].location,
+              fileUrl: isHeroku ? video[0].location : video[0].path,
+              thumbUrl: isHeroku ? thumb[0].location : video[0].path,
               owner: _id,
               hashtags: _Video["default"].formatHashtags(hashtags)
             });
 
-          case 6:
+          case 7:
             newVideo = _context5.sent;
-            _context5.next = 9;
+            _context5.next = 10;
             return _User["default"].findById(_id);
 
-          case 9:
+          case 10:
             user = _context5.sent;
             user.videos.push(newVideo._id);
             user.save();
             return _context5.abrupt("return", res.redirect("/"));
 
-          case 15:
-            _context5.prev = 15;
-            _context5.t0 = _context5["catch"](3);
+          case 16:
+            _context5.prev = 16;
+            _context5.t0 = _context5["catch"](4);
             console.log(_context5.t0);
             return _context5.abrupt("return", res.status(400).render("upload", {
               pageTitle: "Upload Video",
               errorMessage: _context5.t0._message
             }));
 
-          case 19:
+          case 20:
           case "end":
             return _context5.stop();
         }
       }
-    }, _callee5, null, [[3, 15]]);
+    }, _callee5, null, [[4, 16]]);
   }));
 
   return function postUpload(_x9, _x10) {
@@ -526,24 +527,6 @@ var deleteComment = /*#__PURE__*/function () {
   return function deleteComment(_x19, _x20) {
     return _ref10.apply(this, arguments);
   };
-}(); // export const deleteComment = async (req, res) => {
-//   const { id } = req.params;
-//   const { _id } = req.session.user;
-//   const comment = await Comment.findById(id).populate("video");
-//   const video = comment.video;
-//   if (!comment) {
-//     req.flash("error", "The comment does not exist.");
-//     return res.sendStatus(400);
-//   }
-//   if (String(comment.owner) !== String(_id)) {
-//     req.flash("error", "You are not the owner of the comment.");
-//     return res.sendStatus(400);
-//   }
-//   video.comments = video.comments.filter((comment) => String(comment) !== id);
-//   video.save();
-//   await Comment.findByIdAndDelete(id);
-//   return res.sendStatus(200);
-// };
-
+}();
 
 exports.deleteComment = deleteComment;
