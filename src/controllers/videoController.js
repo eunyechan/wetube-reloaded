@@ -55,7 +55,7 @@ export const postEdit = async (req, res) => {
     description,
     hashtags: Video.formatHashtags(hashtags),
   });
-  req.flash("success", "Change saved");
+  req.flash("success", "변경사항이 저장되었습니다");
   return res.redirect(`/videos/${id}`);
 };
 

@@ -178,7 +178,7 @@ export const postEdit = async (req, res) => {
     { new: true }
   );
   req.session.user = updatedUser;
-  req.flash("수정을 완료하였습니다");
+  req.flash("success", "수정을 완료하였습니다");
   return res.redirect("/");
 };
 
