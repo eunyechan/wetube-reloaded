@@ -161,7 +161,7 @@ export const postEdit = async (req, res) => {
     if (foundUser && foundUser._id.toString() !== _id) {
       return res.status(HTTP_BAD_REQUEST).render("edit-profile", {
         pageTitle: "Edit Profile",
-        errorMessage: "This username/email is already taken.",
+        errorMessage: "이름 또는 이메일이 이미 사용 중입니다.",
       });
     }
   }
@@ -178,7 +178,8 @@ export const postEdit = async (req, res) => {
     { new: true }
   );
   req.session.user = updatedUser;
-  return res.redirect("/users/edit");
+  req.flash("수정을 완료하였습니다");
+  return res.redirect("/");
 };
 
 export const getChangePassword = (req, res) => {
