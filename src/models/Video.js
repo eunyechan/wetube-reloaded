@@ -17,11 +17,11 @@ const videoSchema = new mongoose.Schema({
 });
 
 videoSchema.static("formatHashtags", function (hashtags) {
-  const regex = / /gi;
+  const regex = /\s/g;
   return hashtags
     .split(",")
     .map((word) =>
-      word.startsWith("#") ? word.replace(regex, " ") : `# ${word}`
+      word.startsWith("#") ? word.replace(regex, "") : `#${word}`
     );
 });
 
