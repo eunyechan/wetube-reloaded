@@ -6,6 +6,7 @@
   .video__title {
     font-size: 26px;
     margin-bottom: 5px;
+    margin-top: 5px;
   }
   .video__data-box {
     display: flex;
@@ -14,15 +15,6 @@
   .video__createdAt {
     font-size: 12px;
     display: flex;
-    .video__created__dat-box {
-      display: flex;
-      position: relative;
-      width: 100%;
-      .video__createdAt-date {
-        display: flex;
-        font-size: 14px;
-      }
-    }
     .video__owner-name {
       color: rgb(132, 200, 245);
       text-decoration: underline;
@@ -35,6 +27,16 @@
       margin-bottom: 15px;
       font-size: 18px;
       display: flex;
+    }
+  }
+  .video__created__dat-box {
+    margin-top: 20px;
+    display: flex;
+    position: relative;
+    width: 100%;
+    .video__createdAt-date {
+      display: flex;
+      font-size: 14px;
     }
   }
 
@@ -52,7 +54,7 @@
 .video__hashtags {
   display: flex;
   margin-top: 40px;
-  font-size: 18px;
+  font-size: 15px;
   color: rgb(48, 126, 199);
 }
 
