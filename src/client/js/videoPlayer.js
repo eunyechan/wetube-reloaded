@@ -119,6 +119,12 @@ const hanleVolumeProgress = (e) => {
     volumeProgress +
     "%)";
   volumeRange.style.background = color;
+
+  if (volumeRange.value === volumeRange.min) {
+    muteBtnIcon.classList = "fas fa-volume-mute";
+  } else {
+    muteBtnIcon.classList = "fas fa-volume-up";
+  }
 };
 
 const handleTimelineChange = (event) => {
