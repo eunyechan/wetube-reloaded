@@ -99,6 +99,12 @@ const handleTimelineProgress = () => {
     timelineProgress +
     "%)";
   timeline.style.background = color;
+
+  if (timeline.value === timeline.max) {
+    playBtnIcon.classList = "fas fa-play";
+  } else {
+    playBtnIcon.classList = "fas fa-pause";
+  }
 };
 
 const hanleVolumeProgress = (e) => {
