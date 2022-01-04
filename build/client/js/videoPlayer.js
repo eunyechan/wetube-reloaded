@@ -41,6 +41,7 @@ var videoKeyButton = function videoKeyButton(e) {
 var handlePlayClick = function handlePlayClick(e) {
   if (video.paused) {
     video.play();
+    handleLoadedMetadata();
   } else {
     video.pause();
   }
@@ -88,12 +89,24 @@ var handleTimelineProgress = function handleTimelineProgress() {
   var timelineProgress = (timeline.value - timeline.min) / (timeline.max - timeline.min) * 100;
   var color = "linear-gradient(90deg, rgb(255,36,36)" + timelineProgress + "%, rgb(189,189,189)" + timelineProgress + "%)";
   timeline.style.background = color;
+
+  if (timeline.value === timeline.max) {
+    playBtnIcon.classList = "fas fa-play";
+  } else {
+    playBtnIcon.classList = "fas fa-pause";
+  }
 };
 
 var hanleVolumeProgress = function hanleVolumeProgress(e) {
   var volumeProgress = (volumeRange.value - volumeRange.min) / (volumeRange.max - volumeRange.min) * 100;
   var color = "linear-gradient(90deg, rgb(255,255,255)" + volumeProgress + "%, rgb(189,189,189)" + volumeProgress + "%)";
   volumeRange.style.background = color;
+
+  if (volumeRange.value === volumeRange.min) {
+    muteBtnIcon.classList = "fas fa-volume-mute";
+  } else {
+    muteBtnIcon.classList = "fas fa-volume-up";
+  }
 };
 
 var handleTimelineChange = function handleTimelineChange(event) {
@@ -144,7 +157,7 @@ var handleEnded = function handleEnded() {
 };
 
 video.addEventListener("click", handlePlayClick);
-video.addEventListener("loadeddata", handleLoadedMetadata);
+video.addEventListener("mousemove", handleLoadedMetadata);
 video.addEventListener("timeupdate", handleTimeUpdate);
 video.addEventListener("timeupdate", handleTimelineProgress);
 video.addEventListener("ended", handleEnded);

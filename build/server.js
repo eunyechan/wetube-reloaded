@@ -44,21 +44,15 @@ app.use((0, _expressSession["default"])({
     mongoUrl: process.env.DB_URL
   })
 }));
+app.use((0, _expressFlash["default"])());
+app.use(_middlewares.localsMiddleware);
+app.use("/uploads", _express["default"]["static"]("uploads"));
+app.use("/static", _express["default"]["static"]("assets"));
 app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Cross-Origin-Embedder-Policy", "require-corp");
-  res.header("Cross-Origin-Opener-Policy", "same-origin");
-  next();
-});
-app.use((0, _expressFlash["default"])());
-app.use(_middlewares.localsMiddleware);
-app.use("/uploads", _express["default"]["static"]("uploads"));
-app.use("/static", _express["default"]["static"]("assets"));
 app.use("/", _rootRouter["default"]);
 app.use("/videos", _videoRouter["default"]);
 app.use("/users", _userRouter["default"]);

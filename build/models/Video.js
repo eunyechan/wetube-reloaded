@@ -58,8 +58,9 @@ var videoSchema = new _mongoose["default"].Schema({
   }
 });
 videoSchema["static"]("formatHashtags", function (hashtags) {
-  return hashtags.split(",").map(function (word) {
-    return word.startsWith("#") ? word : "#".concat(word);
+  var regex = /\s/g;
+  return hashtags.replace(" ", "").split(",").map(function (word) {
+    return word.startsWith("#", " , ", ", #") ? word.replace(regex, "") : "#".concat(word.replace(regex, ""));
   });
 });
 
